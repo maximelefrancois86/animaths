@@ -1,0 +1,37 @@
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin-left: 2em;
+}
+
+#exerciseWording {
+	color:red;
+  position:relative;
+  padding-bottom: 0.5em;
+  border-bottom-style:solid;
+  border-bottom-color:red;
+  width: 75%;
+}
+
+#view {
+  position:relative;
+  width: 75%;
+}
+
+#view math {
+	border-style:solid;
+	border-color:black;
+	width:50%;
+	left:0em;
+}
+
+#help {
+	border-style:solid;
+	border-color:black;
+	position:absolute;
+	top: 20%;
+	left: 75%;
+	height: 80%;
+	width: 25%;
+}
