@@ -35,33 +35,19 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public abstract class MathMLElement extends Widget {
 
 	private static MathMLImpl impl = MathMLImpl.getInstance();
-	public static Map<Element,MathMLElement> map = new HashMap<Element,MathMLElement>();
 
-	private MathObjectElement mathObjectElement;
 	private Map<String,String> style = new HashMap<String,String>();
 
-	public MathMLElement(String elementName, MathObjectElement element) {
+	public MathMLElement(String elementName) {
 		setElement(impl.createElement(elementName));
-		setMathObjectElement(element);
-		map.put(getElement(), this);
-		setState(MathObjectElement.STATE_NONE);
-	}
-
-	public MathObjectElement getMathObjectElement() {
-		return mathObjectElement;
-	}
-
-	public void setMathObjectElement(MathObjectElement element) {
-		this.mathObjectElement = element;
+		setState(MathObjectElementPresenter.STATE_NONE);
 	}
 
 	public void appendChild(MathMLElement child) {
@@ -90,14 +76,17 @@ public abstract class MathMLElement extends Widget {
 
 	public void setState(short state) {
 		switch(state) {
-			case MathObjectElement.STATE_NONE :
+			case MathObjectElementPresenter.STATE_NONE :
 				removeStyleAttribute("background-color");
+				removeStyleAttribute("cursor");
 				break;
-			case MathObjectElement.STATE_SELECTABLE :
+			case MathObjectElementPresenter.STATE_SELECTABLE :
 				setStyleAttribute("background-color","#DDDDFF");
+				removeStyleAttribute("cursor");
 				break;
-			case MathObjectElement.STATE_SELECTED :
+			case MathObjectElementPresenter.STATE_SELECTED :
 				setStyleAttribute("background-color","#AAAAFF");
+				setStyleAttribute("cursor","-moz-grab");
 				break;
 		}
 		getElement().setAttribute("state",Integer.toString(state));
@@ -107,7 +96,7 @@ public abstract class MathMLElement extends Widget {
 		return (short) Integer.parseInt(getElement().getAttribute("state"));
 	}
 
-	abstract public MathMLElement clone(MathObjectElement element);
+	abstract public MathMLElement clone();
 	
 	public native float getBoundingClientLeft() /*-{
      return this.@fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement::getElement()().getBoundingClientRect().left;

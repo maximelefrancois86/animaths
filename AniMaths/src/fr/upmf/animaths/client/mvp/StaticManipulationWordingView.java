@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.mvp.widgets;
+package fr.upmf.animaths.client.mvp;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -8,12 +8,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
 
-public class StaticManipulationWordingWidget extends Composite implements HasValue<MathWordingWidget> {
+public class StaticManipulationWordingView extends Composite implements HasValue<MathWordingWidget> {
 	
 	private MathWordingWidget manipulationWordingWidget;
 	private Button replay;
 
-	public StaticManipulationWordingWidget() {
+	public StaticManipulationWordingView() {
 		FlowPanel panel = new FlowPanel();
 
 		manipulationWordingWidget = new MathWordingWidget();

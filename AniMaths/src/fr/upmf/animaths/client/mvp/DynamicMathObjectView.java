@@ -1,8 +1,5 @@
-package fr.upmf.animaths.client.mvp.widgets;
+package fr.upmf.animaths.client.mvp;
 
-import com.google.gwt.event.dom.client.HasMouseDownHandlers;
-import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
-import com.google.gwt.event.dom.client.HasMouseUpHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -11,10 +8,9 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public class DynamicMathObjectWidget extends StaticMathObjectWidget implements HasMouseMoveHandlers, HasMouseDownHandlers, HasMouseUpHandlers {
+public class DynamicMathObjectView extends StaticMathObjectView implements DynamicMathObjectPresenter.Display {
 
-	
-	public DynamicMathObjectWidget() {
+	public DynamicMathObjectView() {
 		super();
 	}
 

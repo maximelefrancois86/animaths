@@ -30,20 +30,12 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
 
 public abstract class MathMLGenericAtom extends MathMLElement {
 
-	public MathMLGenericAtom(String elementName, MathObjectElement element, String value) {
-		super(elementName, element);
-		if(value.charAt(0)=='&')
-			getElement().setInnerHTML(value);
-		else
-			getElement().setInnerText(value);
+	public MathMLGenericAtom(String elementName, String value) {
+		super(elementName);
+		getElement().setInnerText(value);
 	}
-
-    public MathMLGenericAtom clone(MathObjectElement element) {
-    	return new MathMLIdentifier(element,getElement().getInnerText());
-    }
 
 }

@@ -17,7 +17,10 @@ public class AniMathsClientModule extends AbstractPresenterModule {
 		
 		bind(EventBus.class).to(DefaultEventBus.class).in(Singleton.class);
 		
-		bindPresenter(AniMathsPresenter.class, AniMathsPresenter.Display.class, AniMathsView.class);
+		bindPresenter(AniMathsPresenter.class, AniMathsPresenter.Display.class, AniMathsView.class);		
+//		bindPresenter(StaticManipulationWordingPresenter.class, StaticManipulationWordingPresenter.Display.class, StaticManipulationWordingView.class);
+//		bindPresenter(StaticMathObjectPresenter.class, StaticMathObjectPresenter.Display.class, StaticMathObjectView.class);
+//		bindPresenter(DynamicMathObjectPresenter.class, DynamicMathObjectPresenter.Display.class, DynamicMathObjectView.class);
 		
 		bind(AppPresenter.class).in(Singleton.class);
 	}

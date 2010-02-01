@@ -5,6 +5,11 @@ h1 {
   margin-left: 2em;
 }
 
+math {
+  -moz-user-select: none;	
+  cursor:default;
+}
+
 #exerciseWording {
 	color:red;
   position:relative;

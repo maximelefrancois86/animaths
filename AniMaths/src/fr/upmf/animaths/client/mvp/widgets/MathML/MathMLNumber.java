@@ -29,17 +29,20 @@ under either the MPL or the GPL License."
 */
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
 public class MathMLNumber extends MathMLGenericAtom {
 	
 	static String elementName="mn";
 
-	public MathMLNumber(MathObjectElement element, String n) {
-        super(elementName, element, n);
+	public MathMLNumber(String n) {
+        super(elementName, n);
 	}
 
-	public MathMLNumber(MathObjectElement element, Number n) {
-        super(elementName, element, n.toString());
+	public MathMLNumber(Number n) {
+        super(elementName, n.toString());
+	}
+
+	@Override
+	public MathMLElement clone() {
+		return new MathMLNumber(getElement().getInnerText());
 	}
 }

@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-incubator-july-14-2009.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gin.jar"/>
@@ -11,5 +10,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dispatch-1.0.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-presenter-1.0.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

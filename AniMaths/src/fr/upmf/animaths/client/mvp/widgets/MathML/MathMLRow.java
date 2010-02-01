@@ -30,20 +30,17 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
-
 public class MathMLRow extends MathMLElement {
 	
 	static String elementName="mstyle";
 
-	public MathMLRow(MathObjectElement element) {
-		super(elementName, element);
+	public MathMLRow() {
+		super(elementName);
 		getElement().setAttribute("scriptlevel","0");
 		getElement().setAttribute("displaystyle","true");
 	}
 	
-	public MathMLRow clone(MathObjectElement element) {
-		return new MathMLRow(element);
+	public MathMLRow clone() {
+		return new MathMLRow();
 	}
 }

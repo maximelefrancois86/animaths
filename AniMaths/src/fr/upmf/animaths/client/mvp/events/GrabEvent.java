@@ -3,24 +3,23 @@ package fr.upmf.animaths.client.mvp.events;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class GrabEvent extends GwtEvent<GrabHandler>{
 
     private static final Type<GrabHandler> TYPE = new Type<GrabHandler>();
 
     private short state;
-    private MathObjectElement element;
+    private MathObjectElementPresenter<?> element;
     private MouseDownEvent event;
     
     public static Type<GrabHandler> getType() {
         return TYPE;
     }
 
-    public GrabEvent(MathMLElement widget, MouseDownEvent event) {
-    	this.state = widget.getState();
-    	this.element = widget.getMathObjectElement();
+    public GrabEvent(MathObjectElementPresenter<?> object, MouseDownEvent event) {
+    	this.state = object.getState();
+    	this.element = object;
     	this.event = event;
     }
     
@@ -42,7 +41,7 @@ public class GrabEvent extends GwtEvent<GrabHandler>{
 		return state;
 	}
 	
-	public MathObjectElement getElement() {
+	public MathObjectElementPresenter<?> getElement() {
 		return element;
 	}
 
