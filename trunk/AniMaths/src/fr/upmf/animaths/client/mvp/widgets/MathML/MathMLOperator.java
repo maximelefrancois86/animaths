@@ -29,18 +29,54 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
 public class MathMLOperator extends MathMLGenericAtom {
        
     static String elementName="mo";
 
-    public MathMLOperator(MathObjectElement element, String n) {
-            super(elementName, element, n);
+    public MathMLOperator(String n) {
+            super(elementName, n);
     }
 
-    public static MathMLOperator equality(MathObjectElement element) {
-            return new MathMLOperator(element, "=");
+    public static MathMLOperator equality() {
+            return new MathMLOperator("=");
     }
+    
+    public static MathMLOperator times() {
+    	return new MathMLOperator("×");
+    }
+    
+    public static MathMLOperator invisibleTimes() {
+    	return new MathMLOperator("⋅");
+    }
+    
+    public static MathMLOperator lFence() {
+    	MathMLOperator lFence = new MathMLOperator("(");
+    	lFence.getElement().setAttribute("form","prefix");
+    	lFence.getElement().setAttribute("fence","true");
+    	lFence.getElement().setAttribute("stretchy","true");
+    	lFence.getElement().setAttribute("symmetric","true");
+    	lFence.getElement().setAttribute("lspace","thinmathspace");
+    	return lFence;
+    }
+
+    public static MathMLOperator rFence() {
+    	MathMLOperator rFence = new MathMLOperator(")");
+    	rFence.getElement().setAttribute("form","postfix");
+    	rFence.getElement().setAttribute("fence","true");
+    	rFence.getElement().setAttribute("stretchy","true");
+    	rFence.getElement().setAttribute("symmetric","true");
+    	rFence.getElement().setAttribute("rspace","thinmathspace");
+    	return rFence;
+    }
+
+	@Override
+	public MathMLElement clone() {
+		String text = getElement().getInnerText();
+		if(text.equals("("))
+			return MathMLOperator.lFence();
+		if(text.equals(")"))
+			return MathMLOperator.rFence();
+		return new MathMLOperator(text);
+	}
 }
 

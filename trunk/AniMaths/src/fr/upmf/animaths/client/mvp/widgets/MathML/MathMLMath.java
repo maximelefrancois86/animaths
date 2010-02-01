@@ -26,28 +26,26 @@ deleting the provisions above and replace them with the notice and
 other provisions required by the GPL License. If you do not delete
 the provisions above, a recipient may use your version of this file
 under either the MPL or the GPL License."
-*/
+ */
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
 public class MathMLMath extends MathMLElement {
-	
-	static String elementName="math";
+
+	static String elementName = "math";
 	private boolean displayBlock;
-	
+
 	public MathMLMath(boolean displayBlock) {
-		super(elementName, null);
+		super(elementName);
 		this.displayBlock = displayBlock;
-		if(displayBlock)
-			getElement().setAttribute("mode","display"); //deprecated
-//			getElement().setAttribute("display","block"); // should be the new attribute
+		if (displayBlock)
+			getElement().setAttribute("mode", "display"); // deprecated
+			// getElement().setAttribute("display","block"); // should be the
+			// new attribute
 	}
-	
-    public MathMLMath clone(MathObjectElement element) {
-    	return new MathMLMath(displayBlock);
-    }
+
+	public MathMLMath clone() {
+		return new MathMLMath(displayBlock);
+	}
 
 }

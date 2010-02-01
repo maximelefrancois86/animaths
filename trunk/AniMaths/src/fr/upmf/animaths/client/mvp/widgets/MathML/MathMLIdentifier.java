@@ -30,15 +30,17 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
 public class MathMLIdentifier extends MathMLGenericAtom {
        
         static String elementName="mi";
 
-        public MathMLIdentifier(MathObjectElement element, String n) {
-                super(elementName, element, n);
+        public MathMLIdentifier(String n) {
+                super(elementName, n);
         }
-        
+
+		@Override
+		public MathMLElement clone() {
+			return new MathMLIdentifier(getElement().getInnerText());
+		}
 }
 

@@ -30,18 +30,16 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import fr.upmf.animaths.client.mvp.modele.MathObject.MathObjectElement;
-
 
 public class MathMLFrac extends MathMLElement {
 	
 	static String elementName="mfrac";
 
-	public MathMLFrac(MathObjectElement element) {
-		super(elementName, element);
+	public MathMLFrac() {
+		super(elementName);
 	}
 	
-	public MathMLFrac clone(MathObjectElement element) {
-		return new MathMLFrac(element);
+	public MathMLFrac clone() {
+		return new MathMLFrac();
 	}
 }
