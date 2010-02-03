@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLFrac;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLRow;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLFrac;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLRow;
 
 
 public class MathObjectMultiplyContainerPresenter extends MathObjectElementPresenter<MathObjectMultiplyContainerPresenter.Display> {
@@ -20,7 +20,7 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	private List<MathObjectMultiplyElementPresenter> numerator = new ArrayList<MathObjectMultiplyElementPresenter>();
 	private List<MathObjectMultiplyElementPresenter> denominator = new ArrayList<MathObjectMultiplyElementPresenter>();
 	
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		abstract public void setLFence(MathMLOperator lFence);
 		abstract public void setRFence(MathMLOperator rFence);
 		abstract public void setFrac(MathMLFrac frac);
@@ -34,7 +34,7 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	public MathObjectMultiplyContainerPresenter() {
-		super(new MathObjectMultiplyContainerView());
+		super(new MathObjectMultiplyContainerDisplay());
 	}
 
 	public MathObjectMultiplyContainerPresenter(MathObjectMultiplyElementPresenter ... children) {

@@ -1,10 +1,10 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLFrac;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLRow;
+import fr.upmf.animaths.client.mvp.MathML.MathMLFrac;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLRow;
 
-public class MathObjectMultiplyContainerView implements MathObjectMultiplyContainerPresenter.Display {
+public class MathObjectMultiplyContainerDisplay implements MathObjectMultiplyContainerPresenter.Display {
 
 	private MathMLOperator lFence;
 	private MathMLOperator rFence;
@@ -12,7 +12,7 @@ public class MathObjectMultiplyContainerView implements MathObjectMultiplyContai
 	private MathMLRow numeratorRow;
 	private MathMLRow denominatorRow;
 	
-	public MathObjectMultiplyContainerView() { }
+	public MathObjectMultiplyContainerDisplay() { }
 
 	@Override
 	public MathMLOperator getLFence() {

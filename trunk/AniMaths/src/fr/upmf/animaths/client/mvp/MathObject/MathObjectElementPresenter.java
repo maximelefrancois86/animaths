@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 
 /**
  * Abstract super-class for {@link BasicPresenter}s that work with GWT
@@ -20,7 +20,7 @@ import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
  * @param <D>
  *            The {@link WidgetDisplay} type.
  */
-public abstract class MathObjectElementPresenter<D extends MathObjectElementView> extends BasicPresenter<D> {
+public abstract class MathObjectElementPresenter<D extends MathObjectElementDisplay> extends BasicPresenter<D> {
 	
 	public static final short MATH_OBJECT_WRAPPER = 0;
 	public static final short MATH_OBJECT_EQUATION = 1;

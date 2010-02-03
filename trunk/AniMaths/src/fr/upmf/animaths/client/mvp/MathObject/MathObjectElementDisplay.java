@@ -2,6 +2,6 @@
 
 import net.customware.gwt.presenter.client.Display;
 
-public interface MathObjectElementView extends Display {
+public interface MathObjectElementDisplay extends Display {
 
 }

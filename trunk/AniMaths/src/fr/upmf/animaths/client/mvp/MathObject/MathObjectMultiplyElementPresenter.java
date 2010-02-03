@@ -1,8 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
 public class MathObjectMultiplyElementPresenter extends MathObjectElementPresenter<MathObjectMultiplyElementPresenter.Display> {
 
@@ -16,13 +16,13 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 	private boolean needsSign = true;
 	private MathObjectElementPresenter<?> child;
 
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		abstract public void setSign(MathMLOperator sign);
 		abstract public MathMLOperator getSign();
 	}
 
 	public MathObjectMultiplyElementPresenter() {
-		super(new MathObjectMultiplyElementView());
+		super(new MathObjectMultiplyElementDisplay());
 	}
 
 	public MathObjectMultiplyElementPresenter(MathObjectElementPresenter<?> child) {

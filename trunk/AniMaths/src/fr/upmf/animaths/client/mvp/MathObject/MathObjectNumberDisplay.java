@@ -1,12 +1,12 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLNumber;
+import fr.upmf.animaths.client.mvp.MathML.MathMLNumber;
 
-public class MathObjectNumberView implements MathObjectNumberPresenter.Display {
+public class MathObjectNumberDisplay implements MathObjectNumberPresenter.Display {
 
 	private MathMLNumber element;
 	
-	public MathObjectNumberView() {	}
+	public MathObjectNumberDisplay() {	}
 	
 	@Override
 	public void setElement(MathMLNumber element) {

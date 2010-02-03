@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
 public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<MathObjectAddContainerPresenter.Display> {
 
@@ -16,7 +16,7 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 
 	private List<MathObjectSignedElementPresenter> children = new ArrayList<MathObjectSignedElementPresenter>();
 	
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		abstract public void setLFence(MathMLOperator lFence);
 		abstract public void setRFence(MathMLOperator rFence);
 		abstract public MathMLOperator getLFence();
@@ -24,7 +24,7 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 	}
 
 	public MathObjectAddContainerPresenter() {
-		super(new MathObjectAddContainerView());
+		super(new MathObjectAddContainerDisplay());
 	}
 
 	public MathObjectAddContainerPresenter(MathObjectSignedElementPresenter ... children) {

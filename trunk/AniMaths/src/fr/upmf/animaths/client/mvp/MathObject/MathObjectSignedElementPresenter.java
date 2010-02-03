@@ -1,8 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
 public class MathObjectSignedElementPresenter extends MathObjectElementPresenter<MathObjectSignedElementPresenter.Display> {
 
@@ -15,7 +15,7 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	private boolean needsSign = true;
 	private MathObjectElementPresenter<?> child;
 	
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		abstract public void setLFence(MathMLOperator lFence);
 		abstract public void setRFence(MathMLOperator rFence);
 		abstract public void setSign(MathMLOperator sign);
@@ -25,7 +25,7 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	}
 
 	public MathObjectSignedElementPresenter() {
-		super(new MathObjectSignedElementView());
+		super(new MathObjectSignedElementDisplay());
 	}
 	
 	public MathObjectSignedElementPresenter(MathObjectElementPresenter<?> child) {
