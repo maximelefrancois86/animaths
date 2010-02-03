@@ -2,6 +2,9 @@ package fr.upmf.animaths.client.mvp;
 
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -49,6 +52,11 @@ public class AniMathsView extends Composite implements AniMathsPresenter.Display
 	@Override
 	public MathWordingWidget getExerciseWordingWidget() {
 		return exerciseWordingWidget;
+	}
+
+	@Override
+	public HandlerRegistration addMouseMoveHandler(MouseMoveHandler handler) {
+		return addDomHandler(handler,MouseMoveEvent.getType());
 	}
 
 }

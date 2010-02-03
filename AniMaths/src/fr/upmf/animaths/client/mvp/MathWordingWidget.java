@@ -29,7 +29,7 @@ public class MathWordingWidget extends Composite {
 				panel.getElement().appendChild((new Label((String) arg).getElement()).getChildNodes().getItem(0));
 			else if(arg instanceof MathObjectElementPresenter<?>) {
 				MathMLMath wrapper = new MathMLMath(false);
-				((MathObjectElementPresenter<?>) arg).clone().pack(wrapper);
+				((MathObjectElementPresenter<?>) arg).clone().pack(wrapper,null);
 				panel.add(wrapper);
 			}
 			else

@@ -1,5 +1,6 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
 
@@ -38,23 +39,26 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	}
 	
 	@Override
-	public void pack(MathMLElement mathMLParent) {
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MathMLOperator.lFence());
 			mathMLParent.appendChild(display.getLFence());
-			map.put(display.getLFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
 		if(needsSign||isMinus) {
 			display.setSign(new MathMLOperator(isMinus?"-":"+"));
 			mathMLParent.appendChild(display.getSign());
-			map.put(display.getSign().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getSign().getElement(),this);
 		}
-		child.pack(mathMLParent);
+		child.pack(mathMLParent, presenter);
 		if(needsFence) {
 			display.setRFence(MathMLOperator.rFence());
 			mathMLParent.appendChild(display.getRFence());
-			map.put(display.getRFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
 	}
 

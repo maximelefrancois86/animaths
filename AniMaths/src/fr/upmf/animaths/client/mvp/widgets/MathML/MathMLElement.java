@@ -80,7 +80,10 @@ public abstract class MathMLElement extends Widget {
 //	}
 
 	public void setState(short state) {
-		getElement().setAttribute("class",classNames.get((int) state));
+		if(state==0)
+			getElement().removeAttribute("class");
+		else
+			getElement().setAttribute("class",classNames.get((int) state));
 	}
 	
 	public short getState() {

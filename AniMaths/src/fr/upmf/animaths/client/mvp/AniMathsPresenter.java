@@ -8,6 +8,7 @@ import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
+import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.inject.Inject;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
@@ -32,7 +33,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public List<StaticMathObjectPresenter> staticMathObjectPresenters;
 	public List<StaticManipulationWordingPresenter> staticManipulationWordingPresenters;
 	
-	public interface Display extends WidgetDisplay {
+	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
 	}
 

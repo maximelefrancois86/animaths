@@ -1,11 +1,10 @@
-#Mon Feb 01 12:45:01 CET 2010
+#Wed Feb 03 16:37:58 CET 2010
 eclipse.preferences.version=1
 encoding//src/fr/upmf/animaths/client/mvp/AniMathsPresenter.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementPresenter.java=utf-8
 encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementView.java=utf-8
 encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementPresenter.java=utf-8
 encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementView.java=utf-8
-encoding//src/fr/upmf/animaths/client/mvp/modele/SelectableElement.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/modele/SelectionElement.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/widgets/MathML/MathMLElement.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/widgets/MathML/MathMLFrac.java=UTF-8

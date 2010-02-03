@@ -1,6 +1,6 @@
 package fr.upmf.animaths.client.mvp.events;
 
-import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
@@ -11,14 +11,14 @@ public class DragEvent extends GwtEvent<DragHandler>{
 
     private short state;
     private MathObjectElementPresenter<?> element;
-    private MouseMoveEvent event;
+    private NativeEvent event;
     
     public static Type<DragHandler> getType() {
         return TYPE;
     }
 
-    public DragEvent(MathObjectElementPresenter<?> element, MouseMoveEvent event) {
-    	this.state = element.getState();
+    public DragEvent(MathObjectElementPresenter<?> element, NativeEvent event) {
+//    	this.state = element.getState();
     	this.element = element;
     	this.event = event;
     }
@@ -33,7 +33,7 @@ public class DragEvent extends GwtEvent<DragHandler>{
 		return getType();
 	}
 	
-	public MouseMoveEvent getEvent() {
+	public NativeEvent getEvent() {
 		return event;
 	}
 	

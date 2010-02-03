@@ -25,11 +25,10 @@ import fr.upmf.animaths.client.mvp.events.FlyOverEvent;
 import fr.upmf.animaths.client.mvp.events.GrabEvent;
 import fr.upmf.animaths.client.mvp.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.mvp.events.SelectionEvent;
-import fr.upmf.animaths.client.mvp.modele.SelectableElement;
+import fr.upmf.animaths.client.mvp.modele.SelectionElement;
 
 public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathObjectPresenter.Display> {
 
-	private SelectableElement selectable = null;
 	int clientX = 0;
 	int clientY = 0;	
 
@@ -49,18 +48,19 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 
 		display.addMouseMoveHandler(new MouseMoveHandler(){
 			public void onMouseMove(MouseMoveEvent event) {
-				MathObjectElementPresenter<?> element = MathObjectElementPresenter.map.get(
+				MathObjectElementPresenter<?> element = map.get(
 						Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null) {
 					eventBus.fireEvent(new FlyOverEvent(element, event));
-					eventBus.fireEvent(new DragEvent(element, event));
+//					System.out.println("IN  dragged !");
+//					eventBus.fireEvent(new DragEvent(element, event));
 				}
 			}
 		});
 
 		display.addMouseDownHandler(new MouseDownHandler(){
 			public void onMouseDown(MouseDownEvent event) {	
-				MathObjectElementPresenter<?> element = MathObjectElementPresenter.map.get(
+				MathObjectElementPresenter<?> element = map.get(
 						Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null) {
 					clientX = event.getClientX();
@@ -72,10 +72,9 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 		
 		display.addMouseUpHandler(new MouseUpHandler(){
 			public void onMouseUp(MouseUpEvent event) {
-				MathObjectElementPresenter<?> element = MathObjectElementPresenter.map.get(
+				MathObjectElementPresenter<?> element = map.get(
 						Element.as(event.getNativeEvent().getEventTarget()));
 				if(element !=null) {
-					eventBus.fireEvent(new DropEvent(element, event));
 					if(Math.sqrt(Math.pow(clientX-event.getClientX(),2)+Math.pow(clientY-event.getClientY(),2))<10);
 						eventBus.fireEvent(new SelectionEvent(element, selectable, event));
 				}
@@ -84,13 +83,24 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 		 	public void onPreviewNativeEvent(NativePreviewEvent event) {
-		 		if (event.getTypeInt()==Event.ONKEYDOWN)
+		 		MathObjectElementPresenter<?> element;
+		 		switch(event.getTypeInt()) {
+		 		case Event.ONKEYDOWN :
 					eventBus.fireEvent(new SelectionChangeEvent(event.getNativeEvent().getKeyCode()));
+		 			break;
+		 		case Event.ONMOUSEMOVE :
+					element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
+					eventBus.fireEvent(new DragEvent(element, event.getNativeEvent()));
+					break;
+		 		case Event.ONMOUSEUP :
+					element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
+					eventBus.fireEvent(new DropEvent(element, event.getNativeEvent()));
+					break;
+		 		}
 		 	}
 		});
 		
-		selectable = new SelectableElement(eventBus);
-		selectable.setEnabled(true);
+		SelectionElement.getInstance().setEnabled(true);
 	}
 
 	

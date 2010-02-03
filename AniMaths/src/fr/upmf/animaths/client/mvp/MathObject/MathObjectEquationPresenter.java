@@ -1,5 +1,6 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
 
@@ -29,12 +30,13 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	}
 
 	@Override
-	public void pack(MathMLElement mathMLParent) {
-		leftHandSide.pack(mathMLParent);
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
+		leftHandSide.pack(mathMLParent, presenter);
 		display.setSign(MathMLOperator.equality());
 		mathMLParent.appendChild(display.getSign());
-		map.put(display.getSign().getElement(),this);
-		rightHandSide.pack(mathMLParent);
+		if(presenter!=null)
+			presenter.putDOMElement(display.getSign().getElement(),this);
+		rightHandSide.pack(mathMLParent, presenter);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLNumber;
 
@@ -24,10 +25,11 @@ public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathOb
 	}
 	
 	@Override
-	public void pack(MathMLElement mathMLParent) {
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
 		display.setElement(new MathMLNumber(value));
 		mathMLParent.appendChild(display.getElement());
-		map.put(display.getElement().getElement(),this);
+		if(presenter!=null)
+			presenter.putDOMElement(display.getElement().getElement(),this);
 	}
 
 	@Override

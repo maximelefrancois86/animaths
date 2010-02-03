@@ -3,6 +3,7 @@ package fr.upmf.animaths.client.mvp.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLFrac;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
@@ -43,13 +44,14 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	@Override
-	public void pack(MathMLElement mathMLParent) {
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
 		MathMLElement mmlp = mathMLParent;
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MathMLOperator.lFence());
 			mathMLParent.appendChild(display.getLFence());
-			map.put(display.getLFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
 		if(denominator.size()!=0) {
 			display.setFrac(new MathMLFrac());
@@ -63,15 +65,16 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 			if(numerator.size()==0)
 				addChild(new MathObjectMultiplyElementPresenter(new MathObjectNumberPresenter(1)));
 			for(MathObjectMultiplyElementPresenter child : denominator)
-				child.pack(display.getDenominatorRow());
+				child.pack(display.getDenominatorRow(), presenter);
 		}
 		numerator.get(0).setNeedsSign(false);
 		for(MathObjectMultiplyElementPresenter child : numerator)
-			child.pack(mmlp);
+			child.pack(mmlp, presenter);
 		if(needsFence) {
 			display.setRFence(MathMLOperator.rFence());
 			mathMLParent.appendChild(display.getRFence());
-			map.put(display.getRFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
 	}
 
