@@ -18,7 +18,8 @@ public class DropEvent extends GwtEvent<DropHandler>{
     }
 
     public DropEvent(MathObjectElementPresenter<?> object, NativeEvent event) {
-    	this.state = object.getState();
+    	if(object!=null)
+    		this.state = object.getState();
     	this.element = object;
     	this.event = event;
     }

@@ -4,6 +4,7 @@ import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.HasMouseDownHandlers;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.gwt.event.dom.client.HasMouseUpHandlers;
@@ -11,8 +12,6 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -36,25 +35,19 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 	}
 	
 	public DynamicMathObjectPresenter() {
-		super(new DynamicMathObjectView(), AniMathsPresenter.eventBus);
+		super(new DynamicMathObjectView());
 		bind();
 	}
 
 	@Override
 	protected void onBind() {
-		// Use RootPanel.get() to get the entire body element
-		// Add the widgets to the RootPanel
 		RootPanel.get("view").add(display.asWidget());
-
 		display.addMouseMoveHandler(new MouseMoveHandler(){
 			public void onMouseMove(MouseMoveEvent event) {
 				MathObjectElementPresenter<?> element = map.get(
 						Element.as(event.getNativeEvent().getEventTarget()));
-				if(element!=null) {
+				if(element!=null)
 					eventBus.fireEvent(new FlyOverEvent(element, event));
-//					System.out.println("IN  dragged !");
-//					eventBus.fireEvent(new DragEvent(element, event));
-				}
 			}
 		});
 
@@ -70,30 +63,24 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 			}
 		});
 		
-		display.addMouseUpHandler(new MouseUpHandler(){
-			public void onMouseUp(MouseUpEvent event) {
-				MathObjectElementPresenter<?> element = map.get(
-						Element.as(event.getNativeEvent().getEventTarget()));
-				if(element !=null) {
-					if(Math.sqrt(Math.pow(clientX-event.getClientX(),2)+Math.pow(clientY-event.getClientY(),2))<10);
-						eventBus.fireEvent(new SelectionEvent(element, selectable, event));
-				}
-			}
-		});
-		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 		 	public void onPreviewNativeEvent(NativePreviewEvent event) {
-		 		MathObjectElementPresenter<?> element;
+	 			EventTarget target = event.getNativeEvent().getEventTarget();
+	 			if(target==null)
+	 				System.out.println("erreur evitee");
+		 		MathObjectElementPresenter<?> element = (target==null)?null:map.get(Element.as(target));
 		 		switch(event.getTypeInt()) {
-		 		case Event.ONKEYDOWN :
+		 		case Event.ONKEYUP :
 					eventBus.fireEvent(new SelectionChangeEvent(event.getNativeEvent().getKeyCode()));
 		 			break;
 		 		case Event.ONMOUSEMOVE :
-					element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 					eventBus.fireEvent(new DragEvent(element, event.getNativeEvent()));
 					break;
 		 		case Event.ONMOUSEUP :
-					element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
+					MathObjectElementPresenter<?> nelement = map.get(
+							Element.as(event.getNativeEvent().getEventTarget()));
+					if(Math.sqrt(Math.pow(clientX-event.getNativeEvent().getClientX(),2)+Math.pow(clientY-event.getNativeEvent().getClientY(),2))<10);
+						eventBus.fireEvent(new SelectionEvent(nelement, event.getNativeEvent()));
 					eventBus.fireEvent(new DropEvent(element, event.getNativeEvent()));
 					break;
 		 		}

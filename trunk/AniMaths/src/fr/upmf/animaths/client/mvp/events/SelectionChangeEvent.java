@@ -10,6 +10,7 @@ public class SelectionChangeEvent extends GwtEvent<SelectionChangeHandler>{
     public static final int CHANGE_TO_PARENT = 90;
     public static final int CHANGE_TO_NEXT_SIBLING = 68;    
     public static final int CHANGE_TO_FIRST_CHILD = 83;
+    public static final int UNSELECT = 27;
     private int direction;
     
     public static Type<SelectionChangeHandler> getType() {
@@ -17,7 +18,7 @@ public class SelectionChangeEvent extends GwtEvent<SelectionChangeHandler>{
     }
 
     public SelectionChangeEvent(int direction) {
-    	this.direction = direction;    	
+    	this.direction = direction;
     }
     
 	@Override

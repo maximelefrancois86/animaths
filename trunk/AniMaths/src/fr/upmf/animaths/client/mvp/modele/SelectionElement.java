@@ -33,8 +33,6 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	private HandlerRegistration hrGrab;
 	private HandlerRegistration hrDrag;
 	private HandlerRegistration hrDrop;
-	private int clientX0;
-	private int clientY0;
 
 	private SelectionElement() { }
 	
@@ -45,20 +43,11 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	}
 
 	public void setEnabled(boolean enabled) {
-		if(enabled==true)
-			hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(), this);
-		else {
-			if(this.element!=null)
-				element.setState(MathObjectElementPresenter.STATE_NONE);
-			element = null;
-			hrFlyOver.removeHandler();
-		}
+		hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(), this);
 	}
 
 	@Override
 	public void onFlyOver(FlyOverEvent event) {
-		System.out.println("fly over !");
-
 		MathObjectElementPresenter<?> element = event.getElement();
 		if((element.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
 				||element.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
@@ -70,66 +59,128 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			this.element.setState(MathObjectElementPresenter.STATE_NONE);
 		this.element = element;
 		if(this.element==null) {
-			if(hrSelection!=null)
+			if(hrSelection!=null) {
 				hrSelection.removeHandler();
+				hrSelection = null;
+			}
 		}
 		else {
 			this.element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
-			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
+			if(hrSelection==null)
+				hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
 		}
 	}
 
 	@Override
 	public void onSelect(SelectionEvent event) {
-		System.out.println("select !");
-		hrFlyOver.removeHandler();
-		element.setState(MathObjectElementPresenter.STATE_SELECTED);
-		hrSelectionChange = eventBus.addHandler(SelectionChangeEvent.getType(),this);
-		hrGrab = eventBus.addHandler(GrabEvent.getType(),this);
+		if(event.getState()!=-1) {
+			System.out.println("select !");
+			if(hrFlyOver!=null) {
+				hrFlyOver.removeHandler();
+				hrFlyOver = null;
+			}
+			if(hrSelection!=null) {
+				hrSelection.removeHandler();
+				hrSelection = null;
+			}
+			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			if(hrSelectionChange==null)
+				hrSelectionChange = eventBus.addHandler(SelectionChangeEvent.getType(),this);
+			if(hrGrab==null)
+				hrGrab = eventBus.addHandler(GrabEvent.getType(),this);
+		}
 	}
 
 	@Override
 	public void onSelectionChange(SelectionChangeEvent event) {
+		System.out.println("select changed !");
 		element.setState(MathObjectElementPresenter.STATE_NONE);
 		switch(event.getDirection()) {
 		case SelectionChangeEvent.CHANGE_TO_PARENT:
 			element = element.getMathObjectParent();
+			element.setState(MathObjectElementPresenter.STATE_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_FIRST_CHILD:
 			element = element.getMathObjectFirstChild();
+			element.setState(MathObjectElementPresenter.STATE_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_PREVIOUS_SIBLING:
 			element = element.getMathObjectParent().getMathObjectPreviousChild(element);
+			element.setState(MathObjectElementPresenter.STATE_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_NEXT_SIBLING:
 			element = element.getMathObjectParent().getMathObjectNextChild(element);
+			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			break;
+		case SelectionChangeEvent.UNSELECT:
+			System.out.println("unselect !");
+			if(hrSelectionChange!=null) {
+				hrSelectionChange.removeHandler();
+				hrSelectionChange = null;
+			}
+			if(hrGrab!=null) {
+				hrGrab.removeHandler();
+				hrGrab = null;
+			}
+			element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
+			if(hrFlyOver==null)
+				hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(),this);
+			if(hrSelection==null)
+				hrSelection = eventBus.addHandler(SelectionEvent.getType(),this);
+			
+			
 			break;
 		}
-		element.setState(MathObjectElementPresenter.STATE_SELECTED);
 	}
 
 	@Override
 	public void onGrab(GrabEvent event) {
-//		if(element!=null)
-//		instance.copy.setElement(element.clone());
-//	RootPanel.get("drag").add(instance.copy.getDisplay().asWidget(),instance.clientX0,instance.clientY0);
-//	RootPanel.get("drag").getElement().setAttribute("style","left:"+(instance.clientX0+10)+";top:"+(instance.clientY0+10)+";");
-		if(element!=null) {
+		if(event.getElement().getState()==MathObjectElementPresenter.STATE_SELECTED) {
 			System.out.println("grabbed !");
+			if(hrSelectionChange!=null) {
+				hrSelectionChange.removeHandler();
+				hrSelectionChange = null;
+			}
+			if(hrGrab!=null) {
+				hrGrab.removeHandler();
+				hrGrab = null;
+			}
+			copy.setElement(element.clone());
+			RootPanel.get("drag").add(copy.getDisplay().asWidget());
+			RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
+			element.setState(MathObjectElementPresenter.STATE_DRAGGED);
+			if(hrDrag==null)
+				hrDrag = eventBus.addHandler(DragEvent.getType(),this);
+			if(hrDrop==null)
+				hrDrop = eventBus.addHandler(DropEvent.getType(),this);
 		}
 	}
 
 	@Override
 	public void onDrag(DragEvent event) {
-		System.out.println("dragged !");
-		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getEvent().getClientX()+10)+";top:"+(event.getEvent().getClientY()+10)+";");
+		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getClientX()+5)+";top:"+(event.getClientY()+10)+";");
 	}
 
 	@Override
 	public void onDrop(DropEvent event) {
 		System.out.println("dropped !");
-		setEnabled(false);
+		if(hrDrag!=null) {
+			hrDrag.removeHandler();
+			hrDrag = null;
+		}
+		if(hrDrop!=null) {
+			hrDrop.removeHandler();
+			hrDrop = null;
+		}
+		copy = new StaticMathObjectPresenter();
+		element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
+		if(hrSelection==null)
+			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
+		if(hrFlyOver==null)
+			hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(),this);
+		RootPanel.get("drag").getElement().setAttribute("style","left:0;top:0;");
+		RootPanel.get("drag").clear();
+		if(RootPanel.get("drag").getElement().hasChildNodes())
+			RootPanel.get("drag").getElement().getFirstChild().removeFromParent();
 	}
-
-
 }
