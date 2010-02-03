@@ -54,7 +54,11 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 	}
 
 	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
-		return child;
+		if(child.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
+				||child.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
+			return this;
+		else
+			return child.getMathObjectFirstChild();
 	}
 
 	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {

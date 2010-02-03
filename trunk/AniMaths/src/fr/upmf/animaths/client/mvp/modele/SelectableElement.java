@@ -57,7 +57,13 @@ public class SelectableElement implements FlyOverHandler {
 
 	@Override
 	public void onFlyOver(FlyOverEvent event) {
-		setElement(event.getElement());
+		MathObjectElementPresenter<?> element = event.getElement();
+		if((element.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
+				||element.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
+				&& element.getMathObjectParent().getType()!=MathObjectElementPresenter.MATH_OBJECT_EQUATION)
+			setElement(element.getMathObjectParent());
+		else
+			setElement(event.getElement());
 	}
 
 }

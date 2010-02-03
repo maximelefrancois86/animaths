@@ -17,7 +17,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 import fr.upmf.animaths.client.mvp.events.DragEvent;
@@ -46,7 +45,7 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 	protected void onBind() {
 		// Use RootPanel.get() to get the entire body element
 		// Add the widgets to the RootPanel
-		RootPanel.get("view").add((Widget)display);
+		RootPanel.get("view").add(display.asWidget());
 
 		display.addMouseMoveHandler(new MouseMoveHandler(){
 			public void onMouseMove(MouseMoveEvent event) {

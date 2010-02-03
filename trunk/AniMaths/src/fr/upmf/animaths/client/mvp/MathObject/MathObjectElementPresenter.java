@@ -40,6 +40,7 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementView
 	public static final short STATE_NONE = 0;
 	public static final short STATE_SELECTABLE = 1;
 	public static final short STATE_SELECTED = 2;
+	public static final short STATE_DRAGGED = 3;
 
 	public short state = STATE_NONE;
 	abstract public void setState(short state);

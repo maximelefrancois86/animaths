@@ -7,7 +7,20 @@ h1 {
 
 math {
   -moz-user-select: none;	
-  cursor:default;
+  cursor: default;
+}
+
+math .selectable {
+	background-color: #DDDDFF;
+}
+
+math .selected {
+	background-color: #AAAAFF;
+	cursor: -moz-grab;
+}
+
+math .dragged {
+	background-color: #AAAAAA;
 }
 
 #exerciseWording {
@@ -39,4 +52,8 @@ math {
 	left: 75%;
 	height: 80%;
 	width: 25%;
+}
+
+#drag {
+	position:absolute;
 }

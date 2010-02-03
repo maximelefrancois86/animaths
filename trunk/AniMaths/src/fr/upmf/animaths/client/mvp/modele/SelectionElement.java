@@ -5,25 +5,24 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.events.GrabEvent;
+import fr.upmf.animaths.client.mvp.events.GrabHandler;
 import fr.upmf.animaths.client.mvp.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.mvp.events.SelectionChangeHandler;
 import fr.upmf.animaths.client.mvp.events.SelectionEvent;
 import fr.upmf.animaths.client.mvp.events.SelectionHandler;
 
-public class SelectionElement implements SelectionHandler, SelectionChangeHandler {
+public class SelectionElement implements SelectionHandler, SelectionChangeHandler, GrabHandler {
 
 	private EventBus eventBus = null;
 	private MathObjectElementPresenter<?> element = null;
 	private HandlerRegistration hrSelection;
 	private HandlerRegistration hrSelectionChange;
+	private HandlerRegistration hrGrab;
 	private boolean enabled = false;
 
 	public SelectionElement(EventBus eventBus) {
 		this.eventBus = eventBus;
-	}
-
-	public MathObjectElementPresenter<?> getElement() {
-		return element;
 	}
 
 	public void setElement(MathObjectElementPresenter<?> element) {
@@ -36,10 +35,6 @@ public class SelectionElement implements SelectionHandler, SelectionChangeHandle
 			this.element.setState(MathObjectElementPresenter.STATE_SELECTED);
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
 	public void setEnabled(boolean enabled) {
 		if(enabled==false) {
 			if(this.element!=null)
@@ -47,10 +42,12 @@ public class SelectionElement implements SelectionHandler, SelectionChangeHandle
 			element = null;
 			hrSelection.removeHandler();
 			hrSelectionChange.removeHandler();
+			hrGrab.removeHandler();
 		}
 		else {
 			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
 			hrSelectionChange = eventBus.addHandler(SelectionChangeEvent.getType(), this);
+			hrGrab = eventBus.addHandler(GrabEvent.getType(),this);
 		}
 		this.enabled = enabled;
 	}
@@ -89,4 +86,19 @@ public class SelectionElement implements SelectionHandler, SelectionChangeHandle
 			break;
 		}
 	}
+
+	@Override
+	public void onGrab(GrabEvent event) {
+		DraggedElement dragged = new DraggedElement(eventBus, element, event);
+		dragged.setEnabled(true);
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public MathObjectElementPresenter<?> getElement() {
+		return element;
+	}
+
 }
