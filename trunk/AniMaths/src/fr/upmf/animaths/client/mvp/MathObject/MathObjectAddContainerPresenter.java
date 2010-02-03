@@ -3,6 +3,7 @@ package fr.upmf.animaths.client.mvp.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
 
@@ -33,20 +34,22 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 	}
 
 	@Override
-	public void pack(MathMLElement mathMLParent) {
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MathMLOperator.lFence());
 			mathMLParent.appendChild(display.getLFence());
-			map.put(display.getLFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
 		children.get(0).setNeedsSign(false);
 		for(MathObjectSignedElementPresenter child : children)
-			child.pack(mathMLParent);
+			child.pack(mathMLParent, presenter);
 		if(needsFence) {
 			display.setRFence(MathMLOperator.rFence());
 			mathMLParent.appendChild(display.getRFence());
-			map.put(display.getRFence().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
 	}
 	

@@ -4,21 +4,21 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.modele.SelectableElement;
+import fr.upmf.animaths.client.mvp.modele.SelectionElement;
 
 public class SelectionEvent extends GwtEvent<SelectionHandler>{
 
     private static final Type<SelectionHandler> TYPE = new Type<SelectionHandler>();
 
     private short state;
-    private SelectableElement selectable;
+    private SelectionElement selectable;
     private MouseUpEvent event;
     
     public static Type<SelectionHandler> getType() {
         return TYPE;
     }
 
-    public SelectionEvent(MathObjectElementPresenter<?> element, SelectableElement selectable, MouseUpEvent event) {
+    public SelectionEvent(MathObjectElementPresenter<?> element, SelectionElement selectable, MouseUpEvent event) {
     	this.state = element.getState();
     	this.selectable = selectable;
     	this.event = event;
@@ -42,7 +42,7 @@ public class SelectionEvent extends GwtEvent<SelectionHandler>{
 		return event;
 	}
 	
-	public SelectableElement getSelectableElement() {
+	public SelectionElement getSelectableElement() {
 		return selectable;
 	}
 

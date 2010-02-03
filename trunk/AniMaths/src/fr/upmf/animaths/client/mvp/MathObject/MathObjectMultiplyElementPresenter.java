@@ -1,11 +1,13 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
 
 public class MathObjectMultiplyElementPresenter extends MathObjectElementPresenter<MathObjectMultiplyElementPresenter.Display> {
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_MULTIPLY_ELEMENT;
+	@Override
 	public short getType() {
 		return type;
 	}
@@ -33,19 +35,23 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 		setDivided(isDivided);
 	}
 	
-	public void pack(MathMLElement mathMLParent) {
+	@Override
+	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
 		if(needsSign) {
 			display.setSign(MathMLOperator.times());
 			mathMLParent.appendChild(display.getSign());
-			map.put(display.getSign().getElement(),this);
+			if(presenter!=null)
+				presenter.putDOMElement(display.getSign().getElement(),this);
 		}
-		child.pack(mathMLParent);
+		child.pack(mathMLParent, presenter);
 	}
 
+	@Override
 	public MathObjectMultiplyElementPresenter clone() {
 		return new MathObjectMultiplyElementPresenter(child.clone(),isDivided);
 	}
 
+	@Override
 	public void setState(short state) {
 		this.state = state;
 		if(display.getSign()!=null)
@@ -53,6 +59,7 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 		child.setState(state);
 	}
 
+	@Override
 	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
 		if(child.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
 				||child.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
@@ -61,14 +68,17 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 			return child.getMathObjectFirstChild();
 	}
 
+	@Override
 	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
 		return mathObjectParent.getMathObjectNextChild(this);
 	}
 
+	@Override
 	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
 		return mathObjectParent.getMathObjectPreviousChild(this);
 	}
 
+	@Override
 	public int getBoundingClientLeft() {
 		if(display.getSign()!=null)
 			return (int) display.getSign().getBoundingClientLeft();
@@ -76,14 +86,17 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 			return child.getBoundingClientLeft();
 	}
 
+	@Override
 	public int getBoundingClientRight() {
 		return child.getBoundingClientRight();
 	}
 
+	@Override
 	public int getBoundingClientTop() {
 		return child.getBoundingClientTop();
 	}
 
+	@Override
 	public int getBoundingClientBottom() {
 			return child.getBoundingClientBottom();
 	}

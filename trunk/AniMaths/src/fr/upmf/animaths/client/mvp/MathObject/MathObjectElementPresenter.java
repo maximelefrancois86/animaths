@@ -1,17 +1,14 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.customware.gwt.presenter.client.BasicPresenter;
 import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
 
 /**
@@ -54,8 +51,6 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementView
 	public Place getPlace() {
 		return PLACE;
 	}
-
-	public static Map<Element,MathObjectElementPresenter<?>> map = new HashMap<Element,MathObjectElementPresenter<?>>();
 	
 	public MathObjectElementPresenter(D display) {
         super( display, AniMathsPresenter.eventBus );
@@ -80,7 +75,7 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementView
 
 	abstract public MathObjectElementPresenter<D> clone();
 
-	abstract public void pack(MathMLElement mathMLParent);
+	abstract public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter);
 	    	
 	@Override
 	protected void onBind() {

@@ -20,7 +20,8 @@ math .selected {
 }
 
 math .dragged {
-	background-color: #AAAAAA;
+	background-color: #CCCCCC;
+	color: #555555;
 }
 
 #exerciseWording {

@@ -1,5 +1,10 @@
 package fr.upmf.animaths.client.mvp;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gwt.dom.client.Element;
+
 import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
@@ -8,6 +13,7 @@ import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public abstract class MathObjectPresenter<D extends MathObjectView> extends WidgetPresenter<D>  {
 
+	public Map<Element,MathObjectElementPresenter<?>> map = new HashMap<Element,MathObjectElementPresenter<?>>();
 	protected MathObjectElementPresenter<?> element;
 
 	public MathObjectPresenter(D display, EventBus eventBus) {
@@ -16,9 +22,13 @@ public abstract class MathObjectPresenter<D extends MathObjectView> extends Widg
 
 	public void setElement(MathObjectElementPresenter<?> element) {
 		this.element = element;
-		element.pack(display.getWrapper());
+		element.pack(display.getWrapper(),this);
 	}	
 
+	public void putDOMElement(Element domElement, MathObjectElementPresenter<?> mathObjectElement) {
+		map.put(domElement, mathObjectElement);
+	}
+	
 	public MathObjectElementPresenter<?> getElement() {
 		return element;
 	}
