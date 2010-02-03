@@ -7,7 +7,7 @@ public class StaticMathObjectPresenter extends MathObjectPresenter<StaticMathObj
 	}
 	
 	public StaticMathObjectPresenter() {
-		super(new StaticMathObjectView(), AniMathsPresenter.eventBus);
+		super(new StaticMathObjectView());
 	}
 
 }

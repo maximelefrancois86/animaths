@@ -1,27 +1,25 @@
 package fr.upmf.animaths.client.mvp.events;
 
-import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.modele.SelectionElement;
 
 public class SelectionEvent extends GwtEvent<SelectionHandler>{
 
     private static final Type<SelectionHandler> TYPE = new Type<SelectionHandler>();
 
-    private short state;
-    private SelectionElement selectable;
-    private MouseUpEvent event;
+    private short state = -1;
+    private NativeEvent event;
     
     public static Type<SelectionHandler> getType() {
         return TYPE;
     }
 
-    public SelectionEvent(MathObjectElementPresenter<?> element, SelectionElement selectable, MouseUpEvent event) {
-    	this.state = element.getState();
-    	this.selectable = selectable;
-    	this.event = event;
+    public SelectionEvent(MathObjectElementPresenter<?> element, NativeEvent nativeEvent) {
+    	if(element!=null)
+    		this.state = element.getState();
+    	this.event = nativeEvent;
     }
     
 	@Override
@@ -38,12 +36,8 @@ public class SelectionEvent extends GwtEvent<SelectionHandler>{
 		return state;
 	}
 
-	public MouseUpEvent getEvent() {
+	public NativeEvent getEvent() {
 		return event;
 	}
 	
-	public SelectionElement getSelectableElement() {
-		return selectable;
-	}
-
 }

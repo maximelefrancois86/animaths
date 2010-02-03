@@ -12,6 +12,8 @@ public class GrabEvent extends GwtEvent<GrabHandler>{
     private short state;
     private MathObjectElementPresenter<?> element;
     private MouseDownEvent event;
+    private int clientX;
+    private int clientY;
     
     public static Type<GrabHandler> getType() {
         return TYPE;
@@ -21,6 +23,8 @@ public class GrabEvent extends GwtEvent<GrabHandler>{
     	this.state = object.getState();
     	this.element = object;
     	this.event = event;
+    	this.clientX = event.getClientX();
+    	this.clientY = event.getClientY();
     }
     
 	@Override
@@ -45,4 +49,11 @@ public class GrabEvent extends GwtEvent<GrabHandler>{
 		return element;
 	}
 
+	public int getClientX() {
+		return clientX;
+	}
+
+	public int getClientY() {
+		return clientY;
+	}
 }

@@ -3,12 +3,12 @@ package fr.upmf.animaths.client.mvp;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.dom.client.Element;
-
-import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
+
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public abstract class MathObjectPresenter<D extends MathObjectView> extends WidgetPresenter<D>  {
@@ -16,13 +16,16 @@ public abstract class MathObjectPresenter<D extends MathObjectView> extends Widg
 	public Map<Element,MathObjectElementPresenter<?>> map = new HashMap<Element,MathObjectElementPresenter<?>>();
 	protected MathObjectElementPresenter<?> element;
 
-	public MathObjectPresenter(D display, EventBus eventBus) {
-		super(display, eventBus);
+	public MathObjectPresenter(D display) {
+		super(display, AniMathsPresenter.eventBus);
 	}
 
 	public void setElement(MathObjectElementPresenter<?> element) {
 		this.element = element;
-		element.pack(display.getWrapper(),this);
+		if(element!=null)
+			element.pack(display.getWrapper(),this);
+		else
+			System.out.println("Probleme null dans MathObjectPresenter !");
 	}	
 
 	public void putDOMElement(Element domElement, MathObjectElementPresenter<?> mathObjectElement) {
