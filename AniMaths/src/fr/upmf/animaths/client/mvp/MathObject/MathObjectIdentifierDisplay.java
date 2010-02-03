@@ -1,12 +1,12 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLIdentifier;
+import fr.upmf.animaths.client.mvp.MathML.MathMLIdentifier;
 
-public class MathObjectIdentifierView implements MathObjectIdentifierPresenter.Display {
+public class MathObjectIdentifierDisplay implements MathObjectIdentifierPresenter.Display {
 
 	MathMLIdentifier element;
 	
-	public MathObjectIdentifierView() { }
+	public MathObjectIdentifierDisplay() { }
 	
 	@Override
 	public void setElement(MathMLIdentifier element) {

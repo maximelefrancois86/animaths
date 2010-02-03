@@ -1,15 +1,15 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectAddContainerView implements MathObjectAddContainerPresenter.Display {
+public class MathObjectSignedElementDisplay implements MathObjectSignedElementPresenter.Display {
 
 	private MathMLOperator lFence;
 	private MathMLOperator rFence;
+	private MathMLOperator sign;
 
-	public MathObjectAddContainerView() { }
+	public MathObjectSignedElementDisplay() { }
 
-	@Override
 	public MathMLOperator getLFence() {
 		return lFence;
 	}
@@ -17,6 +17,11 @@ public class MathObjectAddContainerView implements MathObjectAddContainerPresent
 	@Override
 	public MathMLOperator getRFence() {
 		return rFence;
+	}
+
+	@Override
+	public MathMLOperator getSign() {
+		return sign;
 	}
 
 	@Override
@@ -30,6 +35,11 @@ public class MathObjectAddContainerView implements MathObjectAddContainerPresent
 	}
 
 	@Override
+	public void setSign(MathMLOperator sign) {
+		this.sign = sign;
+	}
+
+	@Override
 	public void startProcessing() {
 	}
 
@@ -38,4 +48,3 @@ public class MathObjectAddContainerView implements MathObjectAddContainerPresent
 	}
 
 }
-

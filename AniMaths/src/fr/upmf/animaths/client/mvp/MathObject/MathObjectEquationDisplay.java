@@ -1,12 +1,12 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectEquationView implements MathObjectEquationPresenter.Display {
+public class MathObjectEquationDisplay implements MathObjectEquationPresenter.Display {
 
 	private MathMLOperator sign;
 	
-	public MathObjectEquationView() { }
+	public MathObjectEquationDisplay() { }
 	
 	@Override
 	public MathMLOperator getSign() {

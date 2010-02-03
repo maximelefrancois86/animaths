@@ -1,8 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
 public class MathObjectEquationPresenter extends MathObjectElementPresenter<MathObjectEquationPresenter.Display> {
 
@@ -14,13 +14,13 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	private MathObjectElementPresenter<?> leftHandSide;
 	private MathObjectElementPresenter<?> rightHandSide;
 	
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		abstract public void setSign(MathMLOperator sign);
 		abstract public MathMLOperator getSign();
 	}
 
 	public MathObjectEquationPresenter() {
-		super(new MathObjectEquationView());
+		super(new MathObjectEquationDisplay());
 	}
 	
 	public MathObjectEquationPresenter(MathObjectElementPresenter<?> leftHandSide, MathObjectElementPresenter<?> rightHandSide) {

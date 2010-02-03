@@ -1,8 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
 import fr.upmf.animaths.client.mvp.MathObjectPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLElement;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLNumber;
+import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
+import fr.upmf.animaths.client.mvp.MathML.MathMLNumber;
 
 
 public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathObjectNumberPresenter.Display> {
@@ -14,13 +14,13 @@ public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathOb
 
 	public Number value;
 	
-	public interface Display extends MathObjectElementView {
+	public interface Display extends MathObjectElementDisplay {
 		public void setElement(MathMLNumber element);
 		public MathMLNumber getElement();
 	}
 
 	public MathObjectNumberPresenter(Number value) {
-		super(new MathObjectNumberView());
+		super(new MathObjectNumberDisplay());
 		this.value = value;
 	}
 	

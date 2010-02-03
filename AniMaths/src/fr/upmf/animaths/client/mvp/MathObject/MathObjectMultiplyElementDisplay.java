@@ -1,12 +1,12 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectMultiplyElementView implements MathObjectMultiplyElementPresenter.Display {
+public class MathObjectMultiplyElementDisplay implements MathObjectMultiplyElementPresenter.Display {
 
 	private MathMLOperator sign;
 
-	public MathObjectMultiplyElementView() {}
+	public MathObjectMultiplyElementDisplay() {}
 
 	@Override
 	public MathMLOperator getSign() {
