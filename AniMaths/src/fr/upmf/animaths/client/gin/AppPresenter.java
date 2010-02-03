@@ -1,7 +1,9 @@
-package fr.upmf.animaths.client.mvp;
+package fr.upmf.animaths.client.gin;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
+
+import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 /**
  * Represents the main application
  * 

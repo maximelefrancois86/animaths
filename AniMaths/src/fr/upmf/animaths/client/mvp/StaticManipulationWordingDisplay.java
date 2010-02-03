@@ -8,12 +8,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
 
-public class StaticManipulationWordingView extends Composite implements HasValue<MathWordingWidget> {
+public class StaticManipulationWordingDisplay extends Composite implements HasValue<MathWordingWidget> {
 	
 	private MathWordingWidget manipulationWordingWidget;
 	private Button replay;
 
-	public StaticManipulationWordingView() {
+	public StaticManipulationWordingDisplay() {
 		FlowPanel panel = new FlowPanel();
 
 		manipulationWordingWidget = new MathWordingWidget();

@@ -18,13 +18,13 @@ import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.events.DragEvent;
-import fr.upmf.animaths.client.mvp.events.DropEvent;
-import fr.upmf.animaths.client.mvp.events.FlyOverEvent;
-import fr.upmf.animaths.client.mvp.events.GrabEvent;
-import fr.upmf.animaths.client.mvp.events.SelectionChangeEvent;
-import fr.upmf.animaths.client.mvp.events.SelectionEvent;
-import fr.upmf.animaths.client.mvp.modele.SelectionElement;
+import fr.upmf.animaths.client.mvp.interaction.SelectionElement;
+import fr.upmf.animaths.client.mvp.interaction.events.DragEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.DropEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.FlyOverEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.GrabEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.SelectionChangeEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.SelectionEvent;
 
 public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathObjectPresenter.Display> {
 
@@ -35,7 +35,7 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 	}
 	
 	public DynamicMathObjectPresenter() {
-		super(new DynamicMathObjectView());
+		super(new DynamicMathObjectDisplay());
 		bind();
 	}
 
