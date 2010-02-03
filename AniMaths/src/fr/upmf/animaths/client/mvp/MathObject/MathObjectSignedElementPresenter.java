@@ -77,17 +77,21 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 
 	@Override
 	public  MathObjectElementPresenter<?> getMathObjectFirstChild() {
-		return child;
+		if(child.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
+				||child.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
+			return this;
+		else
+			return child.getMathObjectFirstChild();
 	}
 
 	@Override
 	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
-		return this.child;
+		return mathObjectParent.getMathObjectNextChild(this);
 	}
 
 	@Override
 	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
-		return this.child;
+		return mathObjectParent.getMathObjectPreviousChild(this);
 	}
 
 	@Override

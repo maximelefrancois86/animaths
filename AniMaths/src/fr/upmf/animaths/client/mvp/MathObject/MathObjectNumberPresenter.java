@@ -48,12 +48,12 @@ public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathOb
 	
 	@Override
 	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
-		return this;
+		return mathObjectParent.getMathObjectNextChild(this);
 	}
 
 	@Override
 	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
-		return this;
+		return mathObjectParent.getMathObjectPreviousChild(this);
 	}
 
 	@Override

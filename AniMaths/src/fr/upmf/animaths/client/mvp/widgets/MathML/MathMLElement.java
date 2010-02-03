@@ -30,10 +30,7 @@ under either the MPL or the GPL License."
 
 package fr.upmf.animaths.client.mvp.widgets.MathML;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -42,8 +39,16 @@ import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 public abstract class MathMLElement extends Widget {
 
 	private static MathMLImpl impl = MathMLImpl.getInstance();
+	
+	private static final ArrayList<String> classNames = new ArrayList<String>();
+	static {
+		classNames.add(MathObjectElementPresenter.STATE_NONE,"");
+		classNames.add(MathObjectElementPresenter.STATE_SELECTABLE,"selectable");
+		classNames.add(MathObjectElementPresenter.STATE_SELECTED,"selected");
+		classNames.add(MathObjectElementPresenter.STATE_DRAGGED,"dragged");
+	};
 
-	private Map<String,String> style = new HashMap<String,String>();
+//	private Map<String,String> style = new HashMap<String,String>();
 
 	public MathMLElement(String elementName) {
 		setElement(impl.createElement(elementName));
@@ -55,45 +60,31 @@ public abstract class MathMLElement extends Widget {
 			getElement().appendChild(child.getElement());
 	}
 
-	public void setStyleAttribute(String key, String value) {
-		style.put(key,value);
-		updateStyle();		
-	}
-	
-	public void removeStyleAttribute(String key) {
-		style.remove(key);
-		updateStyle();		
-	}
-	
-	public void updateStyle() {
-		String value="";
-		for ( Iterator<Entry<String,String>> iter = style.entrySet().iterator(); iter.hasNext(); ) {
-			Entry<String,String> ent = (Entry<String,String>) iter.next();
-			value = value + ent.getKey() +":"+ent.getValue()+";";			
-		}
-		getElement().setAttribute("style", value);
-	}
+//	public void setStyleAttribute(String key, String value) {
+//		style.put(key,value);
+//		updateStyle();		
+//	}
+//	
+//	public void removeStyleAttribute(String key) {
+//		style.remove(key);
+//		updateStyle();		
+//	}
+//	
+//	public void updateStyle() {
+//		String value="";
+//		for ( Iterator<Entry<String,String>> iter = style.entrySet().iterator(); iter.hasNext(); ) {
+//			Entry<String,String> ent = (Entry<String,String>) iter.next();
+//			value = value + ent.getKey() +":"+ent.getValue()+";";			
+//		}
+//		getElement().setAttribute("style", value);
+//	}
 
 	public void setState(short state) {
-		switch(state) {
-			case MathObjectElementPresenter.STATE_NONE :
-				removeStyleAttribute("background-color");
-				removeStyleAttribute("cursor");
-				break;
-			case MathObjectElementPresenter.STATE_SELECTABLE :
-				setStyleAttribute("background-color","#DDDDFF");
-				removeStyleAttribute("cursor");
-				break;
-			case MathObjectElementPresenter.STATE_SELECTED :
-				setStyleAttribute("background-color","#AAAAFF");
-				setStyleAttribute("cursor","-moz-grab");
-				break;
-		}
-		getElement().setAttribute("state",Integer.toString(state));
+		getElement().setAttribute("class",classNames.get((int) state));
 	}
 	
 	public short getState() {
-		return (short) Integer.parseInt(getElement().getAttribute("state"));
+		return (short) classNames.indexOf(getElement().getAttribute("class"));
 	}
 
 	abstract public MathMLElement clone();
