@@ -11,7 +11,7 @@ import com.google.gwt.dom.client.Element;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
-public abstract class MathObjectPresenter<D extends MathObjectView> extends WidgetPresenter<D>  {
+public abstract class MathObjectPresenter<D extends MathObjectDisplay> extends WidgetPresenter<D>  {
 
 	public Map<Element,MathObjectElementPresenter<?>> map = new HashMap<Element,MathObjectElementPresenter<?>>();
 	protected MathObjectElementPresenter<?> element;

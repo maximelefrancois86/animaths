@@ -4,8 +4,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import fr.upmf.animaths.client.mvp.MathML.MathMLMath;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLMath;
 
 /**
  * The wording of an exercise...

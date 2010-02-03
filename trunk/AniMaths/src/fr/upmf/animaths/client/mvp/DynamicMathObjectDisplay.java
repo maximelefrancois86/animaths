@@ -8,9 +8,9 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public class DynamicMathObjectView extends StaticMathObjectView implements DynamicMathObjectPresenter.Display {
+public class DynamicMathObjectDisplay extends StaticMathObjectDisplay implements DynamicMathObjectPresenter.Display {
 
-	public DynamicMathObjectView() {
+	public DynamicMathObjectDisplay() {
 		super();
 	}
 

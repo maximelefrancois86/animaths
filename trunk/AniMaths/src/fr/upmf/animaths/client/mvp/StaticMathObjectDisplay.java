@@ -4,13 +4,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import fr.upmf.animaths.client.mvp.widgets.MathML.MathMLMath;
+import fr.upmf.animaths.client.mvp.MathML.MathMLMath;
 
-public class StaticMathObjectView extends Composite implements StaticMathObjectPresenter.Display {
+public class StaticMathObjectDisplay extends Composite implements StaticMathObjectPresenter.Display {
 
 	protected MathMLMath wrapper;
 
-	public StaticMathObjectView() {
+	public StaticMathObjectDisplay() {
 		wrapper = new MathMLMath(true);
 		initWidget(wrapper);
 	}

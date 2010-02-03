@@ -16,11 +16,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Maxime Lefrançois
  *
  */
-public class AniMathsView extends Composite implements AniMathsPresenter.Display {
+public class AniMathsDisplay extends Composite implements AniMathsPresenter.Display {
 
 	private MathWordingWidget exerciseWordingWidget;
 	
-	public AniMathsView() {
+	public AniMathsDisplay() {
 		final AbsolutePanel panel = new AbsolutePanel();
 
 		initWidget(panel);

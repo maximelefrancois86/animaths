@@ -6,7 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.gin.AniMathsGinjector;
-import fr.upmf.animaths.client.mvp.AppPresenter;
+import fr.upmf.animaths.client.gin.AppPresenter;
 
 public class AniMaths implements EntryPoint {
 	private final AniMathsGinjector injector = GWT.create(AniMathsGinjector.class);
