@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.mvp.interaction.events;
+package fr.upmf.animaths.client.mvp.interaction.events.dragndrop;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;

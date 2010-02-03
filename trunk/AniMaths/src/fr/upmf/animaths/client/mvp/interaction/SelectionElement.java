@@ -8,18 +8,18 @@ import com.google.gwt.user.client.ui.RootPanel;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.StaticMathObjectPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.interaction.events.DragEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.DragHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.DropEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.DropHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.FlyOverEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.FlyOverHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.GrabEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.GrabHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.SelectionChangeEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.SelectionChangeHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.SelectionEvent;
-import fr.upmf.animaths.client.mvp.interaction.events.SelectionHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionChangeEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionChangeHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionEvent;
+import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionHandler;
 
 public class SelectionElement implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler {
 	

@@ -1,7 +1,7 @@
 package fr.upmf.animaths.client.mvp.interaction.process;
 
-public interface Process {
+public class AddCommutation {
 
-
-//	public void replay();
+	
+	
 }
