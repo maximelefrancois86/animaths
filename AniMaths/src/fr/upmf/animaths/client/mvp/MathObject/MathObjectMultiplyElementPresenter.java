@@ -4,7 +4,7 @@ import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectMultiplyElementPresenter extends MathObjectElementPresenter<MathObjectMultiplyElementPresenter.Display> {
+public class MathObjectMultiplyElementPresenter extends MathObjectElementPresenter<MathObjectMultiplyElementPresenter.Display> implements IMathObjectHasOneChild {
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_MULTIPLY_ELEMENT;
 	@Override
@@ -16,9 +16,7 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 	private boolean needsSign = true;
 	private MathObjectElementPresenter<?> child;
 
-	public interface Display extends MathObjectElementDisplay {
-		abstract public void setSign(MathMLOperator sign);
-		abstract public MathMLOperator getSign();
+	public interface Display extends MathObjectElementDisplay, IMathObjectHasSign {
 	}
 
 	public MathObjectMultiplyElementPresenter() {
@@ -52,11 +50,11 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
 		if(display.getSign()!=null)
-			display.getSign().setState(state);
-		child.setState(state);
+			display.getSign().setStyleClass(styleClass);
+		child.setStyleClass(styleClass);
 	}
 
 	@Override
@@ -101,6 +99,17 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 			return child.getBoundingClientBottom();
 	}
 
+	@Override
+	public MathObjectElementPresenter<?> getChild() {
+		return child;
+	}
+	
+	@Override
+	public void setChild(MathObjectElementPresenter<?> child) {
+		child.setMathObjectParent(this);
+		this.child = child;
+	}
+
 	public void setNeedsSign(boolean needsSign) {
 		this.needsSign = needsSign;
 	}
@@ -113,17 +122,8 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 		return isDivided;
 	}
 
-	public MathObjectElementPresenter<?> getChild() {
-		return child;
-	}
-	
 	public void setDivided(boolean isDivided) {
 		this.isDivided = isDivided;
 	}		
-
-	public void setChild(MathObjectElementPresenter<?> child) {
-		child.setMathObjectParent(this);
-		this.child = child;
-	}
 
 }

@@ -5,28 +5,29 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLIdentifier;
 
 
-public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<MathObjectIdentifierPresenter.Display> {
+public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<MathObjectIdentifierPresenter.Display> implements IMathObjectHasValue<String>{
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER;
+	@Override
 	public short getType() {
 		return type;
 	}
 
-	public String name;
+	public String value;
 	
 	public interface Display extends MathObjectElementDisplay {
 		public void setElement(MathMLIdentifier element);
 		public MathMLIdentifier getElement();
 	}
 
-	public MathObjectIdentifierPresenter(String name) {
+	public MathObjectIdentifierPresenter(String value) {
 		super(new MathObjectIdentifierDisplay());
-		this.name = name;
+		this.value = value;
 	}
 	
 	@Override
 	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
-		display.setElement(new MathMLIdentifier(name));
+		display.setElement(new MathMLIdentifier(value));
 		mathMLParent.appendChild(display.getElement());
 		if(presenter!=null)
 			presenter.putDOMElement(display.getElement().getElement(),this);
@@ -34,13 +35,13 @@ public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<Ma
 
 	@Override
 	public MathObjectIdentifierPresenter clone() {
-		return new MathObjectIdentifierPresenter(name);
+		return new MathObjectIdentifierPresenter(value);
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
-		display.getElement().setState(state);
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
+		display.getElement().setStyleClass(styleClass);
 	}
 
 	@Override
@@ -78,12 +79,14 @@ public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<Ma
 		return (int) (display.getElement().getBoundingClientLeft()+display.getElement().getBoundingClientWidth());
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	@Override
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public String getName() {
-		return name;
+	@Override
+	public String getValue() {
+		return value;
 	}
 
 }

@@ -7,20 +7,17 @@ import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<MathObjectAddContainerPresenter.Display> {
+public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<MathObjectAddContainerPresenter.Display> implements IMathObjectHasSeveralChildren<MathObjectSignedElementPresenter> {
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_ADDITION_CONTAINER;
+	@Override
 	public short getType() {
 		return type;
 	}
 
 	private List<MathObjectSignedElementPresenter> children = new ArrayList<MathObjectSignedElementPresenter>();
 	
-	public interface Display extends MathObjectElementDisplay {
-		abstract public void setLFence(MathMLOperator lFence);
-		abstract public void setRFence(MathMLOperator rFence);
-		abstract public MathMLOperator getLFence();
-		abstract public MathMLOperator getRFence();
+	public interface Display extends MathObjectElementDisplay, IMathObjectHasFence {
 	}
 
 	public MathObjectAddContainerPresenter() {
@@ -62,14 +59,14 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
 		if(display.getLFence()!=null)
-			display.getLFence().setState(state);
+			display.getLFence().setStyleClass(styleClass);
 		if(display.getRFence()!=null)
-			display.getRFence().setState(state);
+			display.getRFence().setStyleClass(styleClass);
 		for(MathObjectSignedElementPresenter child : children)
-			child.setState(state);
+			child.setStyleClass(styleClass);
 	}
 
 	@Override
@@ -133,9 +130,11 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 		}
 	}
 
+	@Override
 	public void addChild(MathObjectSignedElementPresenter child) {
 		child.setMathObjectParent(this);
 		children.add(child);
-	}	
+	}
+
 }	
 

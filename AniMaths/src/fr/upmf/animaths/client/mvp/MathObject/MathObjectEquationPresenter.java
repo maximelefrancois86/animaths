@@ -7,6 +7,7 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 public class MathObjectEquationPresenter extends MathObjectElementPresenter<MathObjectEquationPresenter.Display> {
 
 	public static short type = MathObjectElementPresenter.MATH_OBJECT_EQUATION;
+	@Override
 	public short getType() {
 		return type;
 	}
@@ -14,9 +15,7 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	private MathObjectElementPresenter<?> leftHandSide;
 	private MathObjectElementPresenter<?> rightHandSide;
 	
-	public interface Display extends MathObjectElementDisplay {
-		abstract public void setSign(MathMLOperator sign);
-		abstract public MathMLOperator getSign();
+	public interface Display extends MathObjectElementDisplay, IMathObjectHasSign {
 	}
 
 	public MathObjectEquationPresenter() {
@@ -45,11 +44,11 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
-		leftHandSide.setState(state);
-		display.getSign().setState(state);
-		rightHandSide.setState(state);
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
+		leftHandSide.setStyleClass(styleClass);
+		display.getSign().setStyleClass(styleClass);
+		rightHandSide.setStyleClass(styleClass);
 	}
 
 	@Override

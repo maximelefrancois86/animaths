@@ -20,31 +20,20 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
  * @param <D>
  *            The {@link WidgetDisplay} type.
  */
-public abstract class MathObjectElementPresenter<D extends MathObjectElementDisplay> extends BasicPresenter<D> {
+public abstract class MathObjectElementPresenter<D extends MathObjectElementDisplay> extends BasicPresenter<D>
+												implements IMathObjectHasType, IMathObjectHasStyleClass, IMathObjectHasStyleDrop, IMathObjectHasZones {
 	
-	public static final short MATH_OBJECT_WRAPPER = 0;
-	public static final short MATH_OBJECT_EQUATION = 1;
-	public static final short MATH_OBJECT_NUMBER = 2;
-	public static final short MATH_OBJECT_IDENTIFIER = 3;
-	public static final short MATH_OBJECT_SIGNED_ELEMENT = 4;
-	public static final short MATH_OBJECT_ADDITION_CONTAINER = 5;
-	public static final short MATH_OBJECT_MULTIPLY_ELEMENT = 6;
-	public static final short MATH_OBJECT_MULTIPLY_CONTAINER = 7;
-	public static final short MATH_OBJECT_POWER = 8;
-
-	abstract public short getType();
-
-	public static final short STATE_NONE = 0;
-	public static final short STATE_SELECTABLE = 1;
-	public static final short STATE_SELECTED = 2;
-	public static final short STATE_DRAGGED = 3;
-
-	public short state = STATE_NONE;
-	abstract public void setState(short state);
-	public short getState() {
-		return state;
+	public short styleClass = STYLE_CLASS_NONE;
+	@Override
+	public short getStyleClass() {
+		return styleClass;
 	}
 
+//	public short styleDrop = STYLE_DROP_NONE;
+//	public short getStyle() {
+//		return styleDrop;
+//	}
+	
 	public static final Place PLACE = new Place("MathObject");
 
 	@Override
@@ -53,7 +42,7 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	}
 	
 	public MathObjectElementPresenter(D display) {
-        super( display, AniMathsPresenter.eventBus );
+        super(display, AniMathsPresenter.eventBus );
     }
     
 	protected MathObjectElementPresenter<?> mathObjectParent = null;
@@ -136,5 +125,13 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	abstract public int getBoundingClientTop();
 	abstract public int getBoundingClientRight();
 	abstract public int getBoundingClientBottom();
+	
+	
+//	abtract protected short isFlyOver(int x, int y) {
+////		int left = getBoundingClientLeft();
+////		int right = (int) (0.75*left + 0.25*getBoundingClientRight());
+////		return (left<x && x<right && getBoundingClientBottom()<x && x<getBoundingClientTop());
+//		return 0;
+//	}
 
 }
