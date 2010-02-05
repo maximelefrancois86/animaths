@@ -5,29 +5,33 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.mvp.AniMathsPresenter;
-import fr.upmf.animaths.client.mvp.StaticMathObjectPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabHandler;
-import fr.upmf.animaths.client.mvp.interaction.events.process.DragOverEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionChangeEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionChangeHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionHandler;
+import fr.upmf.animaths.client.mvp.presenter.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.presenter.MathObjectDynamicPresenter;
+import fr.upmf.animaths.client.mvp.presenter.MathObjectStaticPresenter;
+import fr.upmf.animaths.client.mvp.presenter.MathObject.MathObjectElementPresenter;
 
 public class SelectionElement implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler {
 	
 	private static SelectionElement instance;
+	
 	private EventBus eventBus = AniMathsPresenter.eventBus;	
+
+	private MathObjectDynamicPresenter presenter;
 	private MathObjectElementPresenter<?> element = null;
-	private StaticMathObjectPresenter copy = new StaticMathObjectPresenter();
+	private MathObjectStaticPresenter copy = new MathObjectStaticPresenter();
+
 	private HandlerRegistration hrFlyOver;
 	private HandlerRegistration hrSelection;
 	private HandlerRegistration hrSelectionChange;
@@ -37,9 +41,10 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 
 	private SelectionElement() { }
 	
-	public static SelectionElement getInstance() {
+	public static SelectionElement getInstance(MathObjectDynamicPresenter presenter) {
 		if(instance==null)
 			instance = new SelectionElement();
+		instance.presenter = presenter;
 		return instance;
 	}
 
@@ -156,8 +161,10 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	@Override
 	public void onDrag(DragEvent event) {
 		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getClientX()+5)+";top:"+(event.getClientY()+10)+";");
-		if(event.getElement()!=null)
-			eventBus.fireEvent(new DragOverEvent(copy,event));
+		MathObjectElementPresenter<?> element = event.getElement();
+		if(element==null)
+			element = presenter.getElement();
+		element.onDragOverZone(copy,event);
 	}
 
 	@Override
@@ -170,7 +177,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			hrDrop.removeHandler();
 			hrDrop = null;
 		}
-		copy = new StaticMathObjectPresenter();
+		copy = new MathObjectStaticPresenter();
 		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE);
 		if(hrSelection==null)
 			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);

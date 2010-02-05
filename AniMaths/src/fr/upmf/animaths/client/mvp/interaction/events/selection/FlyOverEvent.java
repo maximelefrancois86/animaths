@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.mvp.interaction.events.selection;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.presenter.MathObject.MathObjectElementPresenter;
 
 public class FlyOverEvent extends GwtEvent<FlyOverHandler>{
 
