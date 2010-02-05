@@ -161,10 +161,10 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	@Override
 	public void onDrag(DragEvent event) {
 		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getClientX()+5)+";top:"+(event.getClientY()+10)+";");
-		MathObjectElementPresenter<?> element = event.getElement();
-		if(element==null)
-			element = presenter.getElement();
-		element.onDragOverZone(copy,event);
+//		MathObjectElementPresenter<?> element = event.getElement();
+//		if(element==null)
+//			element = presenter.getElement();
+//		element.onDragOverZone(copy,event);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import fr.upmf.animaths.client.mvp.presenter.MathObjectStaticPresenter;
  * Abstract super-class for {@link BasicPresenter}s that work with GWT
  * {@link Widget}s via {@link WidgetDisplay}s.
  * 
- * @author Maxime Lefrançois
+ * @author Maxime Lefranï¿½ois
  * 
  * @param <D>
  *            The {@link WidgetDisplay} type.
@@ -129,7 +129,8 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	abstract public int getBoundingClientRight();
 	abstract public int getBoundingClientBottom();
 
-	abstract public void onDragOverZone(MathObjectStaticPresenter copy, DragEvent event);
+//	abstract public void onDragOverZone(MathObjectStaticPresenter copy, DragEvent event);
+	public void onDragOverZone(MathObjectStaticPresenter copy, DragEvent event){};
 	
 //	abtract protected short isFlyOver(int x, int y) {
 ////		int left = getBoundingClientLeft();

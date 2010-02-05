@@ -25,6 +25,7 @@ math .dragged {
 }
 
 #exerciseWording {
+	font-size: 10pt;
 	color:red;
   position:relative;
   padding-bottom: 0.5em;
@@ -33,6 +34,12 @@ math .dragged {
   width: 75%;
 }
 
+math {
+	font-size: 11pt;
+}
+
+
+/* EQUATIONS LIST */
 #view {
   position:relative;
   width: 75%;
@@ -44,6 +51,16 @@ math .dragged {
 	width:50%;
 	left:0em;
 }
+#view math * {
+	cursor: pointer;
+}
+#view .selectable {
+	background-color: #7CBBFF; /*blue*/
+}
+#view .selected {
+	background-color: #9AFF60; /*green*/
+	cursor: move;
+} 
 
 #help {
 	border-style:solid;
