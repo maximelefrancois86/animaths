@@ -2,15 +2,15 @@ package fr.upmf.animaths.client.mvp.interaction.events.process;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.StaticMathObjectPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragEvent;
+import fr.upmf.animaths.client.mvp.presenter.MathObjectStaticPresenter;
+import fr.upmf.animaths.client.mvp.presenter.MathObject.MathObjectElementPresenter;
 
 public class DragOverEvent extends GwtEvent<DragOverHandler>{
 
     private static final Type<DragOverHandler> TYPE = new Type<DragOverHandler>();
 
-    private StaticMathObjectPresenter copy = null;
+    private MathObjectStaticPresenter copy = null;
     private MathObjectElementPresenter<?> underElement = null;
     private MathObjectElementPresenter<?> aboveElement = null;
     private DragEvent event = null;
@@ -21,7 +21,7 @@ public class DragOverEvent extends GwtEvent<DragOverHandler>{
         return TYPE;
     }
 
-    public DragOverEvent(StaticMathObjectPresenter copy, DragEvent event) {
+    public DragOverEvent(MathObjectStaticPresenter copy, DragEvent event) {
     	this.copy = copy;
     	this.aboveElement = copy.getElement();
     	this.event = event;
@@ -44,7 +44,7 @@ public class DragOverEvent extends GwtEvent<DragOverHandler>{
 		return event;
 	}
 	
-	public StaticMathObjectPresenter getCopy() {
+	public MathObjectStaticPresenter getCopy() {
 		return copy;
 	}
 
