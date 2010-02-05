@@ -10,6 +10,7 @@ public class MathObjectSignedElementDisplay implements MathObjectSignedElementPr
 
 	public MathObjectSignedElementDisplay() { }
 
+	@Override
 	public MathMLOperator getLFence() {
 		return lFence;
 	}

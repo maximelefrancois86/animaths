@@ -18,7 +18,7 @@ public class FlyOverEvent extends GwtEvent<FlyOverHandler>{
     }
 
     public FlyOverEvent(MathObjectElementPresenter<?> element, MouseMoveEvent event) {
-    	this.state = element.getState();
+    	this.state = element.getStyleClass();
     	this.element = element;
     	this.event = event;
     }

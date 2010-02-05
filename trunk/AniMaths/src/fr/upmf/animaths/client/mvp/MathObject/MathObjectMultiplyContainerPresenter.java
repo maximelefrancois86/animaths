@@ -10,9 +10,10 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 import fr.upmf.animaths.client.mvp.MathML.MathMLRow;
 
 
-public class MathObjectMultiplyContainerPresenter extends MathObjectElementPresenter<MathObjectMultiplyContainerPresenter.Display> {
+public class MathObjectMultiplyContainerPresenter extends MathObjectElementPresenter<MathObjectMultiplyContainerPresenter.Display> implements IMathObjectHasSeveralChildren<MathObjectMultiplyElementPresenter>{
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_MULTIPLY_CONTAINER;
+	@Override
 	public short getType() {
 		return type;
 	}
@@ -20,14 +21,10 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	private List<MathObjectMultiplyElementPresenter> numerator = new ArrayList<MathObjectMultiplyElementPresenter>();
 	private List<MathObjectMultiplyElementPresenter> denominator = new ArrayList<MathObjectMultiplyElementPresenter>();
 	
-	public interface Display extends MathObjectElementDisplay {
-		abstract public void setLFence(MathMLOperator lFence);
-		abstract public void setRFence(MathMLOperator rFence);
+	public interface Display extends MathObjectElementDisplay, IMathObjectHasFence {
 		abstract public void setFrac(MathMLFrac frac);
 		abstract public void setNumeratorRow(MathMLRow numeratorRow);
 		abstract public void setDenominatorRow(MathMLRow denominatorRow);
-		abstract public MathMLOperator getLFence();
-		abstract public MathMLOperator getRFence();
 		abstract public MathMLFrac getFrac();
 		abstract public MathMLRow getNumeratorRow();
 		abstract public MathMLRow getDenominatorRow();
@@ -89,22 +86,22 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
 		if(display.getLFence()!=null)
-			display.getLFence().setState(state);
+			display.getLFence().setStyleClass(styleClass);
 		if(display.getRFence()!=null)
-			display.getRFence().setState(state);
+			display.getRFence().setStyleClass(styleClass);
 		if(display.getFrac()!=null)
-			display.getFrac().setState(state);
+			display.getFrac().setStyleClass(styleClass);
 		if(display.getNumeratorRow()!=null)
-			display.getNumeratorRow().setState(state);
+			display.getNumeratorRow().setStyleClass(styleClass);
 		if(display.getDenominatorRow()!=null)
-			display.getDenominatorRow().setState(state);
+			display.getDenominatorRow().setStyleClass(styleClass);
 		for(MathObjectMultiplyElementPresenter child : numerator)
-			child.setState(state);		
+			child.setStyleClass(styleClass);		
 		for(MathObjectMultiplyElementPresenter child : denominator)
-			child.setState(state);		
+			child.setStyleClass(styleClass);		
 	}
 
 	@Override
@@ -204,6 +201,7 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 		}
 	}
 
+	@Override
 	public void addChild(MathObjectMultiplyElementPresenter child) {
 		child.setMathObjectParent(this);
 		if(!child.isDivided())

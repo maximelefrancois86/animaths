@@ -9,22 +9,26 @@ public class DragEvent extends GwtEvent<DragHandler>{
 
     private static final Type<DragHandler> TYPE = new Type<DragHandler>();
 
-    private short state;
-    private MathObjectElementPresenter<?> element;
-    private NativeEvent event;
-    private int clientX;
-    private int clientY;
+    private short state = -1;
+    private MathObjectElementPresenter<?> element = null;
+    private NativeEvent event = null;
+    private int clientX = -1;
+    private int clientY = -1;
     
     public static Type<DragHandler> getType() {
         return TYPE;
     }
 
     public DragEvent(MathObjectElementPresenter<?> element, NativeEvent event) {
-//    	this.state = element.getState();
-    	this.element = element;
-    	this.event = event;
-    	this.clientX = event.getClientX();
-    	this.clientY = event.getClientY();
+    	if(element!=null) {
+    		this.state = element.getStyleClass();
+        	this.element = element;
+    	}
+    	if(event!=null) {
+	    	this.event = event;
+	    	this.clientX = event.getClientX();
+	    	this.clientY = event.getClientY();
+    	}
     }
     
 	@Override

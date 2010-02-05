@@ -5,9 +5,10 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLNumber;
 
 
-public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathObjectNumberPresenter.Display> {
+public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathObjectNumberPresenter.Display> implements IMathObjectHasValue<Number>{
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_NUMBER;
+	@Override
 	public short getType() {
 		return type;
 	}
@@ -38,9 +39,9 @@ public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathOb
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
-		display.getElement().setState(state);
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
+		display.getElement().setStyleClass(styleClass);
 	}
 
 	@Override
@@ -78,10 +79,12 @@ public class MathObjectNumberPresenter extends MathObjectElementPresenter<MathOb
 		return (int) (display.getElement().getBoundingClientLeft()+display.getElement().getBoundingClientWidth());
 	}
 
+	@Override
 	public void setValue(Number value) {
 		this.value = value;
 	}
 
+	@Override
 	public Number getValue() {
 		return value;
 	}

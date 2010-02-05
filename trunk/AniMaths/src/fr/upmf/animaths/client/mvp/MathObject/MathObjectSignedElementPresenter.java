@@ -4,7 +4,7 @@ import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
-public class MathObjectSignedElementPresenter extends MathObjectElementPresenter<MathObjectSignedElementPresenter.Display> {
+public class MathObjectSignedElementPresenter extends MathObjectElementPresenter<MathObjectSignedElementPresenter.Display> implements IMathObjectHasOneChild {
 
 	public static final short type = MathObjectElementPresenter.MATH_OBJECT_SIGNED_ELEMENT;
 	public short getType() {
@@ -15,13 +15,7 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	private boolean needsSign = true;
 	private MathObjectElementPresenter<?> child;
 	
-	public interface Display extends MathObjectElementDisplay {
-		abstract public void setLFence(MathMLOperator lFence);
-		abstract public void setRFence(MathMLOperator rFence);
-		abstract public void setSign(MathMLOperator sign);
-		abstract public MathMLOperator getLFence();
-		abstract public MathMLOperator getRFence();
-		abstract public MathMLOperator getSign();
+	public interface Display extends MathObjectElementDisplay, IMathObjectHasFence, IMathObjectHasSign {
 	}
 
 	public MathObjectSignedElementPresenter() {
@@ -68,15 +62,15 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	}
 
 	@Override
-	public void setState(short state) {
-		this.state = state;
+	public void setStyleClass(short styleClass) {
+		this.styleClass = styleClass;
 		if(display.getLFence()!=null)
-			display.getLFence().setState(state);
+			display.getLFence().setStyleClass(styleClass);
 		if(display.getRFence()!=null)
-			display.getRFence().setState(state);
+			display.getRFence().setStyleClass(styleClass);
 		if(display.getSign()!=null)
-			display.getSign().setState(state);
-		child.setState(state);
+			display.getSign().setStyleClass(styleClass);
+		child.setStyleClass(styleClass);
 	}
 
 	@Override
@@ -132,6 +126,17 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 			return child.getBoundingClientTop();
 	}
 
+	@Override
+	public MathObjectElementPresenter<?> getChild() {
+		return child;
+	}
+	
+	@Override
+	public void setChild(MathObjectElementPresenter<?> child) {
+		child.setMathObjectParent(this);
+		this.child = child;
+	}
+
 	public boolean isMinus() {
 		return isMinus;
 	}
@@ -146,15 +151,6 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 
 	public void setNeedsSign(boolean needsSign) {
 		this.needsSign = needsSign;
-	}
-
-	public MathObjectElementPresenter<?> getChild() {
-		return child;
-	}
-	
-	public void setChild(MathObjectElementPresenter<?> child) {
-		child.setMathObjectParent(this);
-		this.child = child;
 	}
 
 }

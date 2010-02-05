@@ -20,7 +20,7 @@ public class GrabEvent extends GwtEvent<GrabHandler>{
     }
 
     public GrabEvent(MathObjectElementPresenter<?> object, MouseDownEvent event) {
-    	this.state = object.getState();
+    	this.state = object.getStyleClass();
     	this.element = object;
     	this.event = event;
     	this.clientX = event.getClientX();

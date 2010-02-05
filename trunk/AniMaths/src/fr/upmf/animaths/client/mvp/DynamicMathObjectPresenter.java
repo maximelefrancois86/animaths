@@ -17,7 +17,6 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
-
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 import fr.upmf.animaths.client.mvp.interaction.SelectionElement;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DragEvent;
@@ -89,6 +88,7 @@ public class DynamicMathObjectPresenter extends MathObjectPresenter<DynamicMathO
 		});
 		
 		SelectionElement.getInstance().setEnabled(true);
+//		(new AddCommutation()).setEnabled(true);
 	}
 
 	

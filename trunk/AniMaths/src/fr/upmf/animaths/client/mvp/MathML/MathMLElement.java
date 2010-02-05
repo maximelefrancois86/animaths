@@ -31,6 +31,10 @@ under either the MPL or the GPL License."
 package fr.upmf.animaths.client.mvp.MathML;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -40,19 +44,53 @@ public abstract class MathMLElement extends Widget {
 
 	private static MathMLImpl impl = MathMLImpl.getInstance();
 	
-	private static final ArrayList<String> classNames = new ArrayList<String>();
+	private static final ArrayList<String> styleClasses = new ArrayList<String>();
 	static {
-		classNames.add(MathObjectElementPresenter.STATE_NONE,"");
-		classNames.add(MathObjectElementPresenter.STATE_SELECTABLE,"selectable");
-		classNames.add(MathObjectElementPresenter.STATE_SELECTED,"selected");
-		classNames.add(MathObjectElementPresenter.STATE_DRAGGED,"dragged");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_NONE,"");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE,"selectable");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_SELECTED,"selected");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_DRAGGED,"dragged");
 	};
 
-//	private Map<String,String> style = new HashMap<String,String>();
+	private Map<String,String> style = new HashMap<String,String>();
 
+//	public void setStyle(short style) {
+//		this.style = new HashMap<String,String>();
+//		switch(style) {
+//		case MathObjectElementPresenter.STATE_NONE:
+//			break;
+//		case MathObjectElementPresenter.STYLE_OK_LEFT:
+//			setStyleAttribute("border-left","plain 2px green");
+//			break;
+//		case MathObjectElementPresenter.STYLE_OK_RIGHT:
+//			setStyleAttribute("border-right","plain 2px green");
+//			break;
+//		case MathObjectElementPresenter.STYLE_OK_TOP:
+//			setStyleAttribute("border-top","plain 2px green");
+//			break;
+//		case MathObjectElementPresenter.STYLE_OK_BOTTOM:
+//			setStyleAttribute("border-bottom","plain 2px green");
+//			break;
+//		case MathObjectElementPresenter.STYLE_WARNING_LEFT:
+//			setStyleAttribute("border-left","plain 2px orange");
+//			break;
+//		case MathObjectElementPresenter.STYLE_WARNING_RIGHT:
+//			setStyleAttribute("border-right","plain 2px orange");
+//			break;
+//		case MathObjectElementPresenter.STYLE_WARNING_TOP:
+//			setStyleAttribute("border-top","plain 2px orange");
+//			break;
+//		case MathObjectElementPresenter.STYLE_WARNING_BOTTOM:
+//			setStyleAttribute("border-bottom","plain 2px orange");
+//			break;
+//		}
+//		
+//		updateStyle();
+//	}
+	
 	public MathMLElement(String elementName) {
 		setElement(impl.createElement(elementName));
-		setState(MathObjectElementPresenter.STATE_NONE);
+		setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
 	}
 
 	public void appendChild(MathMLElement child) {
@@ -60,34 +98,15 @@ public abstract class MathMLElement extends Widget {
 			getElement().appendChild(child.getElement());
 	}
 
-//	public void setStyleAttribute(String key, String value) {
-//		style.put(key,value);
-//		updateStyle();		
-//	}
-//	
-//	public void removeStyleAttribute(String key) {
-//		style.remove(key);
-//		updateStyle();		
-//	}
-//	
-//	public void updateStyle() {
-//		String value="";
-//		for ( Iterator<Entry<String,String>> iter = style.entrySet().iterator(); iter.hasNext(); ) {
-//			Entry<String,String> ent = (Entry<String,String>) iter.next();
-//			value = value + ent.getKey() +":"+ent.getValue()+";";			
-//		}
-//		getElement().setAttribute("style", value);
-//	}
-
-	public void setState(short state) {
-		if(state==0)
+	public void setStyleClass(short styleClass) {
+		if(styleClass==0)
 			getElement().removeAttribute("class");
 		else
-			getElement().setAttribute("class",classNames.get((int) state));
+			getElement().setAttribute("class",styleClasses.get((int) styleClass));
 	}
 	
-	public short getState() {
-		return (short) classNames.indexOf(getElement().getAttribute("class"));
+	public short getStyleClass() {
+		return (short) styleClasses.indexOf(getElement().getAttribute("class"));
 	}
 
 	abstract public MathMLElement clone();
@@ -107,5 +126,24 @@ public abstract class MathMLElement extends Widget {
 	 public native float getBoundingClientHeight() /*-{
      return this.@fr.upmf.animaths.client.mvp.MathML.MathMLElement::getElement()().getBoundingClientRect().height;
  }-*/;
+
+	public void setStyleAttribute(String key, String value) {
+		style.put(key,value);
+		updateStyle();		
+	}
+	
+	public void removeStyleAttribute(String key) {
+		style.remove(key);
+		updateStyle();		
+	}
+	
+	public void updateStyle() {
+		String value="";
+		for ( Iterator<Entry<String,String>> iter = style.entrySet().iterator(); iter.hasNext(); ) {
+			Entry<String,String> ent = (Entry<String,String>) iter.next();
+			value = value + ent.getKey() +":"+ent.getValue()+";";			
+		}
+		getElement().setAttribute("style", value);
+	}
 
 }

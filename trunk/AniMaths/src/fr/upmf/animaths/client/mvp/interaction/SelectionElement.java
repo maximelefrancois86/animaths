@@ -14,6 +14,7 @@ import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.DropHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.dragndrop.GrabHandler;
+import fr.upmf.animaths.client.mvp.interaction.events.process.DragOverEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverEvent;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.FlyOverHandler;
 import fr.upmf.animaths.client.mvp.interaction.events.selection.SelectionChangeEvent;
@@ -56,7 +57,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 		if(this.element==element)
 			return;
 		if(this.element!=null)
-			this.element.setState(MathObjectElementPresenter.STATE_NONE);
+			this.element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
 		this.element = element;
 		if(this.element==null) {
 			if(hrSelection!=null) {
@@ -65,7 +66,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			}
 		}
 		else {
-			this.element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
+			this.element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE);
 			if(hrSelection==null)
 				hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
 		}
@@ -82,7 +83,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 				hrSelection.removeHandler();
 				hrSelection = null;
 			}
-			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			if(hrSelectionChange==null)
 				hrSelectionChange = eventBus.addHandler(SelectionChangeEvent.getType(),this);
 			if(hrGrab==null)
@@ -92,23 +93,23 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 
 	@Override
 	public void onSelectionChange(SelectionChangeEvent event) {
-		element.setState(MathObjectElementPresenter.STATE_NONE);
+		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
 		switch(event.getDirection()) {
 		case SelectionChangeEvent.CHANGE_TO_PARENT:
 			element = element.getMathObjectParent();
-			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_FIRST_CHILD:
 			element = element.getMathObjectFirstChild();
-			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_PREVIOUS_SIBLING:
 			element = element.getMathObjectParent().getMathObjectPreviousChild(element);
-			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_NEXT_SIBLING:
 			element = element.getMathObjectParent().getMathObjectNextChild(element);
-			element.setState(MathObjectElementPresenter.STATE_SELECTED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.UNSELECT:
 			if(hrSelectionChange!=null) {
@@ -119,7 +120,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 				hrGrab.removeHandler();
 				hrGrab = null;
 			}
-			element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE);
 			if(hrFlyOver==null)
 				hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(),this);
 			if(hrSelection==null)
@@ -132,7 +133,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 
 	@Override
 	public void onGrab(GrabEvent event) {
-		if(event.getElement().getState()==MathObjectElementPresenter.STATE_SELECTED) {
+		if(event.getElement().getStyleClass()==MathObjectElementPresenter.STYLE_CLASS_SELECTED) {
 			if(hrSelectionChange!=null) {
 				hrSelectionChange.removeHandler();
 				hrSelectionChange = null;
@@ -144,7 +145,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			copy.setElement(element.clone());
 			RootPanel.get("drag").add(copy.getDisplay().asWidget());
 			RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
-			element.setState(MathObjectElementPresenter.STATE_DRAGGED);
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_DRAGGED);
 			if(hrDrag==null)
 				hrDrag = eventBus.addHandler(DragEvent.getType(),this);
 			if(hrDrop==null)
@@ -155,6 +156,8 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	@Override
 	public void onDrag(DragEvent event) {
 		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getClientX()+5)+";top:"+(event.getClientY()+10)+";");
+		if(event.getElement()!=null)
+			eventBus.fireEvent(new DragOverEvent(copy,event));
 	}
 
 	@Override
@@ -168,7 +171,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			hrDrop = null;
 		}
 		copy = new StaticMathObjectPresenter();
-		element.setState(MathObjectElementPresenter.STATE_SELECTABLE);
+		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE);
 		if(hrSelection==null)
 			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
 		if(hrFlyOver==null)

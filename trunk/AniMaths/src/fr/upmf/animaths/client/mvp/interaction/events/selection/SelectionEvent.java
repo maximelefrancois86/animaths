@@ -18,7 +18,7 @@ public class SelectionEvent extends GwtEvent<SelectionHandler>{
 
     public SelectionEvent(MathObjectElementPresenter<?> element, NativeEvent nativeEvent) {
     	if(element!=null)
-    		this.state = element.getState();
+    		this.state = element.getStyleClass();
     	this.event = nativeEvent;
     }
     
