@@ -20,12 +20,12 @@
       <inherits name="com.google.gwt.user.UserAgent"/>
 
         <!-- Fall through to this rule for all other browsers -->
-        <replace-with class="fr.upmf.animaths.client.mvp.display.MathML.MathMLImplStandard">
-                <when-type-is class="fr.upmf.animaths.client.mvp.display.MathML.MathMLImpl"/>
+        <replace-with class="fr.upmf.animaths.client.display.MathML.MathMLImplStandard">
+                <when-type-is class="fr.upmf.animaths.client.display.MathML.MathMLImpl"/>
         </replace-with>
         
-        <replace-with class="fr.upmf.animaths.client.mvp.display.MathML.MathMLImplIE">
-                <when-type-is class="fr.upmf.animaths.client.mvp.display.MathML.MathMLImpl"/>
+        <replace-with class="fr.upmf.animaths.client.display.MathML.MathMLImplIE">
+                <when-type-is class="fr.upmf.animaths.client.display.MathML.MathMLImpl"/>
                 <when-property-is name="user.agent" value="ie6"/>
         </replace-with>
  
