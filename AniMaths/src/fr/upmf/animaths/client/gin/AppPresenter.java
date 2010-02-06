@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.gin;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-import fr.upmf.animaths.client.mvp.presenter.AniMathsPresenter;
+import fr.upmf.animaths.client.presenter.AniMathsPresenter;
 /**
  * Represents the main application
  * 
