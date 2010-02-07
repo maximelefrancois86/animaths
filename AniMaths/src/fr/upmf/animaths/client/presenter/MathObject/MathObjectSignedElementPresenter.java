@@ -1,5 +1,7 @@
 package fr.upmf.animaths.client.presenter.MathObject;
 
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.display.MathObject.IMathObjectHasFence;
@@ -79,22 +81,22 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	}
 
 	@Override
-	public  MathObjectElementPresenter<?> getMathObjectFirstChild() {
+	public  MathObjectElementPresenter<?> getMathObjectFirstSelectableChild() {
 		if(child.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
 				||child.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
 			return this;
 		else
-			return child.getMathObjectFirstChild();
+			return child.getMathObjectFirstSelectableChild();
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
-		return mathObjectParent.getMathObjectNextChild(this);
+	public MathObjectElementPresenter<?> getMathObjectNextSelectableChild(MathObjectElementPresenter<?> child) {
+		return mathObjectParent.getMathObjectNextSelectableChild(this);
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
-		return mathObjectParent.getMathObjectPreviousChild(this);
+	public MathObjectElementPresenter<?> getMathObjectPreviousSelectableChild(MathObjectElementPresenter<?> child) {
+		return mathObjectParent.getMathObjectPreviousSelectableChild(this);
 	}
 
 	@Override
@@ -157,5 +159,21 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	public void setNeedsSign(boolean needsSign) {
 		this.needsSign = needsSign;
 	}
+
+	@Override
+	public Element getFirstDOMElement() {
+		if(display.getLFence()!=null)
+			return display.getLFence().getElement();
+		if(display.getSign()!=null)
+			return display.getSign().getElement();
+		return child.getFirstDOMElement();
+	}
+
+	@Override
+	public Element getLastDOMElement() {
+		if(display.getRFence()!=null)
+			return display.getRFence().getElement();
+		return child.getLastDOMElement();
+	}		
 
 }

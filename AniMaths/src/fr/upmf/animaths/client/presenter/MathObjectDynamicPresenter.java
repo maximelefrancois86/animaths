@@ -17,7 +17,7 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.display.DynamicMathObjectDisplay;
+import fr.upmf.animaths.client.display.MathObjectDynamicDisplay;
 import fr.upmf.animaths.client.interaction.SelectionElement;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DropEvent;
@@ -25,6 +25,7 @@ import fr.upmf.animaths.client.interaction.events.dragndrop.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.selection.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.selection.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.selection.SelectionEvent;
+import fr.upmf.animaths.client.interaction.process.core.AddCommutation;
 import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
 
 public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDynamicPresenter.Display> {
@@ -36,7 +37,7 @@ public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDy
 	}
 	
 	public MathObjectDynamicPresenter() {
-		super(new DynamicMathObjectDisplay());
+		super(new MathObjectDynamicDisplay());
 		bind();
 	}
 
@@ -45,8 +46,7 @@ public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDy
 		RootPanel.get("view").add(display.asWidget());
 		display.addMouseMoveHandler(new MouseMoveHandler(){
 			public void onMouseMove(MouseMoveEvent event) {
-				MathObjectElementPresenter<?> element = map.get(
-						Element.as(event.getNativeEvent().getEventTarget()));
+				MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null)
 					eventBus.fireEvent(new FlyOverEvent(element, event));
 			}
@@ -54,8 +54,7 @@ public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDy
 
 		display.addMouseDownHandler(new MouseDownHandler(){
 			public void onMouseDown(MouseDownEvent event) {	
-				MathObjectElementPresenter<?> element = map.get(
-						Element.as(event.getNativeEvent().getEventTarget()));
+				MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null) {
 					clientX = event.getClientX();
 					clientY = event.getClientY();
@@ -89,7 +88,7 @@ public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDy
 		});
 		
 		SelectionElement.getInstance(this).setEnabled(true);
-//		(new AddCommutation()).setEnabled(true);
+		AddCommutation.getInstance(this).setEnabled(true);
 	}
 
 	

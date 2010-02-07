@@ -1,27 +1,16 @@
 package fr.upmf.animaths.client.interaction.events.process;
 
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
-
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
 
 public class DropOverEvent extends GwtEvent<DropOverHandler>{
 
     private static final Type<DropOverHandler> TYPE = new Type<DropOverHandler>();
-
-    private short state;
-    private MathObjectElementPresenter<?> element;
-    private NativeEvent event;
     
     public static Type<DropOverHandler> getType() {
         return TYPE;
     }
 
-    public DropOverEvent(MathObjectElementPresenter<?> object, NativeEvent event) {
-    	if(object!=null)
-    		this.state = object.getStyleClass();
-    	this.element = object;
-    	this.event = event;
+    public DropOverEvent() {
     }
     
 	@Override
@@ -34,16 +23,4 @@ public class DropOverEvent extends GwtEvent<DropOverHandler>{
 		return getType();
 	}
 	
-	public NativeEvent getEvent() {
-		return event;
-	}
-	
-	public short getState() {
-		return state;
-	}
-	
-	public MathObjectElementPresenter<?> getElement() {
-		return element;
-	}
-
 }

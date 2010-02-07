@@ -23,10 +23,8 @@ public abstract class MathObjectPresenter<D extends MathObjectDisplay> extends W
 
 	public void setElement(MathObjectElementPresenter<?> element) {
 		this.element = element;
-		if(element!=null)
-			element.pack(display.getWrapper(),this);
-		else
-			System.out.println("Probleme null dans MathObjectPresenter !");
+		display.clearWrapper();
+		element.pack(display.getWrapper(),this);
 	}	
 
 	public void putDOMElement(Element domElement, MathObjectElementPresenter<?> mathObjectElement) {

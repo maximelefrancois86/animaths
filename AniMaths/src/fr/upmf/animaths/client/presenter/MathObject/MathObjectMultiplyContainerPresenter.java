@@ -3,6 +3,8 @@ package fr.upmf.animaths.client.presenter.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathML.MathMLFrac;
 import fr.upmf.animaths.client.display.MathML.MathMLOperator;
@@ -109,12 +111,12 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
+	public MathObjectElementPresenter<?> getMathObjectFirstSelectableChild() {
 		return numerator.get(0);
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectNextSelectableChild(MathObjectElementPresenter<?> child) {
 		int i = numerator.indexOf(child);
 		if(i!=-1) {
 			if(i!=numerator.size()-1)
@@ -136,7 +138,7 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectPreviousSelectableChild(MathObjectElementPresenter<?> child) {
 		int i = numerator.indexOf(child);
 		if(i!=-1) {
 			if(i!=0)
@@ -213,6 +215,31 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 		else
 			denominator.add(child);
 	}
-	
+
+	@Override
+	public Element getFirstDOMElement() {
+		if(display.getLFence()!=null)
+			return display.getLFence().getElement();
+		if(display.getFrac()!=null)
+			return display.getFrac().getElement();
+		return numerator.get(0).getFirstDOMElement();
+	}
+
+	@Override
+	public Element getLastDOMElement() {
+		if(display.getRFence()!=null)
+			return display.getRFence().getElement();
+		if(display.getFrac()!=null)
+			return display.getFrac().getElement();
+		return numerator.get(numerator.size()-1).getLastDOMElement();
+	}
+
+	@Override
+	public List<MathObjectMultiplyElementPresenter> getChildren() {
+		List<MathObjectMultiplyElementPresenter> children = new ArrayList<MathObjectMultiplyElementPresenter>();
+		children.addAll(numerator);
+		children.addAll(denominator);
+		return children;
+	}
 }	
 

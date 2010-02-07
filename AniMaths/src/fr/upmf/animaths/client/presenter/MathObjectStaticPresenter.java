@@ -1,7 +1,7 @@
 package fr.upmf.animaths.client.presenter;
 
 import fr.upmf.animaths.client.display.MathObjectDisplay;
-import fr.upmf.animaths.client.display.StaticMathObjectDisplay;
+import fr.upmf.animaths.client.display.MathObjectStaticDisplay;
 
 
 public class MathObjectStaticPresenter extends MathObjectPresenter<MathObjectStaticPresenter.Display> {
@@ -10,7 +10,7 @@ public class MathObjectStaticPresenter extends MathObjectPresenter<MathObjectSta
 	}
 	
 	public MathObjectStaticPresenter() {
-		super(new StaticMathObjectDisplay());
+		super(new MathObjectStaticDisplay());
 	}
 
 }

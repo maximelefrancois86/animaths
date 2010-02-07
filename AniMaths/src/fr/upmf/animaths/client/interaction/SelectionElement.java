@@ -5,12 +5,15 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragHandler;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DropEvent;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DropHandler;
 import fr.upmf.animaths.client.interaction.events.dragndrop.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.dragndrop.GrabHandler;
+import fr.upmf.animaths.client.interaction.events.process.DragOverEvent;
+import fr.upmf.animaths.client.interaction.events.process.DropOverEvent;
 import fr.upmf.animaths.client.interaction.events.selection.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.selection.FlyOverHandler;
 import fr.upmf.animaths.client.interaction.events.selection.SelectionChangeEvent;
@@ -55,10 +58,7 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	@Override
 	public void onFlyOver(FlyOverEvent event) {
 		MathObjectElementPresenter<?> element = event.getElement();
-		if((element.getType()==MathObjectElementPresenter.MATH_OBJECT_NUMBER
-				||element.getType()==MathObjectElementPresenter.MATH_OBJECT_IDENTIFIER)
-				&& element.getMathObjectParent().getType()!=MathObjectElementPresenter.MATH_OBJECT_EQUATION)
-			element = element.getMathObjectParent();
+		element = element.getMathObjectSelectableElement();
 		if(this.element==element)
 			return;
 		if(this.element!=null)
@@ -101,26 +101,26 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
 		switch(event.getDirection()) {
 		case SelectionChangeEvent.CHANGE_TO_PARENT:
-			element = element.getMathObjectParent();
+			element = element.getMathObjectFirstSelectableParent();
 			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_FIRST_CHILD:
-			element = element.getMathObjectFirstChild();
+			element = element.getMathObjectFirstSelectableChild();
 			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_PREVIOUS_SIBLING:
-			element = element.getMathObjectParent().getMathObjectPreviousChild(element);
+			element = element.getMathObjectParent().getMathObjectPreviousSelectableChild(element);
 			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.CHANGE_TO_NEXT_SIBLING:
-			element = element.getMathObjectParent().getMathObjectNextChild(element);
+			element = element.getMathObjectParent().getMathObjectNextSelectableChild(element);
 			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 			break;
 		case SelectionChangeEvent.UNSELECT:
 			if(hrSelectionChange!=null) {
 				hrSelectionChange.removeHandler();
 				hrSelectionChange = null;
-			}
+			}			
 			if(hrGrab!=null) {
 				hrGrab.removeHandler();
 				hrGrab = null;
@@ -130,9 +130,9 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 				hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(),this);
 			if(hrSelection==null)
 				hrSelection = eventBus.addHandler(SelectionEvent.getType(),this);
-			
-			
 			break;
+		default:
+			element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTED);
 		}
 	}
 
@@ -161,14 +161,20 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	@Override
 	public void onDrag(DragEvent event) {
 		RootPanel.get("drag").getElement().setAttribute("style","left:"+(event.getClientX()+5)+";top:"+(event.getClientY()+10)+";");
-//		MathObjectElementPresenter<?> element = event.getElement();
-//		if(element==null)
-//			element = presenter.getElement();
-//		element.onDragOverZone(copy,event);
+		MathObjectElementPresenter<?> element = event.getElement();
+		if(element==null)
+			element = presenter.getElement();
+		eventBus.fireEvent(new DragOverEvent(this.element, element.getMathObjectSelectableElement(), copy, event));
 	}
 
 	@Override
 	public void onDrop(DropEvent event) {
+		eventBus.fireEvent(new DropOverEvent());
+		finalizeDrop();
+	}
+	
+	public void finalizeDrop() {
+		MathMLOperator.getLocalisation(null).getElement().removeFromParent();
 		if(hrDrag!=null) {
 			hrDrag.removeHandler();
 			hrDrag = null;
@@ -177,12 +183,12 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 			hrDrop.removeHandler();
 			hrDrop = null;
 		}
-		copy = new MathObjectStaticPresenter();
-		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE);
+		element.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
 		if(hrSelection==null)
 			hrSelection = eventBus.addHandler(SelectionEvent.getType(), this);
 		if(hrFlyOver==null)
 			hrFlyOver = eventBus.addHandler(FlyOverEvent.getType(),this);
+		copy = new MathObjectStaticPresenter();
 		RootPanel.get("drag").getElement().setAttribute("style","left:0;top:0;");
 		RootPanel.get("drag").clear();
 		if(RootPanel.get("drag").getElement().hasChildNodes())
