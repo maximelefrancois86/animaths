@@ -1,5 +1,7 @@
 package fr.upmf.animaths.client.presenter.MathObject;
 
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathML.MathMLIdentifier;
 import fr.upmf.animaths.client.display.MathObject.MathObjectElementDisplay;
@@ -48,18 +50,18 @@ public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<Ma
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
+	public MathObjectElementPresenter<?> getMathObjectFirstSelectableChild() {
 		return this;
 	}
 	
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
-		return mathObjectParent.getMathObjectNextChild(this);
+	public MathObjectElementPresenter<?> getMathObjectNextSelectableChild(MathObjectElementPresenter<?> child) {
+		return mathObjectParent.getMathObjectNextSelectableChild(this);
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
-		return mathObjectParent.getMathObjectPreviousChild(this);
+	public MathObjectElementPresenter<?> getMathObjectPreviousSelectableChild(MathObjectElementPresenter<?> child) {
+		return mathObjectParent.getMathObjectPreviousSelectableChild(this);
 	}
 
 	@Override
@@ -92,4 +94,13 @@ public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<Ma
 		return value;
 	}
 
+	@Override
+	public Element getFirstDOMElement() {
+		return display.getElement().getElement();
+	}
+
+	@Override
+	public Element getLastDOMElement() {
+		return display.getElement().getElement();
+	}
 }

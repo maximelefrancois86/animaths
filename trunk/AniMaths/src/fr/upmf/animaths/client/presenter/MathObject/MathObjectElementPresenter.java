@@ -5,18 +5,18 @@ import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathObject.MathObjectElementDisplay;
-import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.presenter.AniMathsPresenter;
 import fr.upmf.animaths.client.presenter.MathObjectPresenter;
-import fr.upmf.animaths.client.presenter.MathObjectStaticPresenter;
 import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectHasStyleClass;
 import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectHasStyleDrop;
 import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectHasType;
 import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectHasZones;
+import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectSelection;
 
 /**
  * Abstract super-class for {@link BasicPresenter}s that work with GWT
@@ -28,7 +28,7 @@ import fr.upmf.animaths.client.presenter.MathObject.Interfaces.IMathObjectHasZon
  *            The {@link WidgetDisplay} type.
  */
 public abstract class MathObjectElementPresenter<D extends MathObjectElementDisplay> extends BasicPresenter<D>
-												implements IMathObjectHasType, IMathObjectHasStyleClass, IMathObjectHasStyleDrop, IMathObjectHasZones {
+												implements IMathObjectHasType, IMathObjectHasStyleClass, IMathObjectHasStyleDrop, IMathObjectHasZones, IMathObjectSelection {
 	
 	public short styleClass = STYLE_CLASS_NONE;
 	@Override
@@ -62,12 +62,21 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 
 	public void setMathObjectParent(MathObjectElementPresenter<?> mathObjectParent) {
 		this.mathObjectParent = mathObjectParent;
+	}	
+
+	@Override
+	public MathObjectElementPresenter<?> getMathObjectSelectableElement() {
+		MathObjectElementPresenter<?> moP = getMathObjectParent();
+		if(moP.getType()==MATH_OBJECT_SIGNED_ELEMENT
+				|| moP.getType()==MATH_OBJECT_MULTIPLY_ELEMENT)
+			return moP;
+		return this;
 	}
-	
-	abstract public MathObjectElementPresenter<?> getMathObjectFirstChild();
-	abstract public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child);
-	abstract public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child);
-	
+
+	@Override
+	public MathObjectElementPresenter<?> getMathObjectFirstSelectableParent() {
+		return getMathObjectParent().getMathObjectSelectableElement();
+	}
 
 	abstract public MathObjectElementPresenter<D> clone();
 
@@ -99,20 +108,19 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 			switch (this.getType()) {
 			case MATH_OBJECT_SIGNED_ELEMENT:
 				if (typeP == MATH_OBJECT_SIGNED_ELEMENT
-						|| typeP == MATH_OBJECT_POWER
-						|| typeP == MATH_OBJECT_MULTIPLY_ELEMENT)
+						|| typeP == MATH_OBJECT_MULTIPLY_CONTAINER
+						|| typeP == MATH_OBJECT_POWER)
 					return true;
 				return false;
 			case MATH_OBJECT_ADDITION_CONTAINER:
 				if (typeP == MATH_OBJECT_SIGNED_ELEMENT
-						|| typeP == MATH_OBJECT_POWER
-						|| typeP == MATH_OBJECT_MULTIPLY_ELEMENT)
+						|| typeP == MATH_OBJECT_MULTIPLY_ELEMENT
+						|| typeP == MATH_OBJECT_POWER)
 					return true;
 				return false;
 			case MATH_OBJECT_MULTIPLY_CONTAINER:
 				if (typeP == MATH_OBJECT_MULTIPLY_ELEMENT
-						|| typeP == MATH_OBJECT_POWER
-						|| typeP == MATH_OBJECT_MULTIPLY_ELEMENT)
+						|| typeP == MATH_OBJECT_POWER)
 					return true;
 				return false;
 			case MATH_OBJECT_POWER:
@@ -132,15 +140,65 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	abstract public int getBoundingClientTop();
 	abstract public int getBoundingClientRight();
 	abstract public int getBoundingClientBottom();
-
-//	abstract public void onDragOverZone(MathObjectStaticPresenter copy, DragEvent event);
-	public void onDragOverZone(MathObjectStaticPresenter copy, DragEvent event){};
 	
-//	abtract protected short isFlyOver(int x, int y) {
-////		int left = getBoundingClientLeft();
-////		int right = (int) (0.75*left + 0.25*getBoundingClientRight());
-////		return (left<x && x<right && getBoundingClientBottom()<x && x<getBoundingClientTop());
-//		return 0;
-//	}
+	@Override
+	public short getZone(int x, int y) {
+		int top = getBoundingClientTop();
+		int right = getBoundingClientRight();
+		int bottom = getBoundingClientBottom();
+		int left = getBoundingClientLeft();
+		if(x<left) // en dehors à gauche
+			return ZONE_NONE;
+		else
+			if(x<left+10) // couloir OUEST
+				if(y<top) // en dehors au dessus
+					return ZONE_NONE;
+				else
+					if(y<top+10) //partie Nord-Ouest
+						return ZONE_IN_NO;
+					else
+						if(y<bottom-10) //partie Ouest
+							return ZONE_IN_O;
+						else
+							if(y<bottom) // partie Sud-ouest
+								return ZONE_IN_SO;
+							else // en dehors au dessous
+								return ZONE_NONE;
+			else
+				if(x<right-10) // couloir CENTRE
+					if(y<top) // en dehors au dessus
+						return ZONE_NONE;
+					else
+						if(y<top+10) //partie Nord
+							return ZONE_IN_N;
+						else
+							if(y<bottom-10) //partie Centre
+								return ZONE_IN_C;
+							else
+								if(y<bottom) // partie Sud
+									return ZONE_IN_S;
+								else // en dehors au dessous
+									return ZONE_NONE;
+				else
+					if(x>right) // en dehors à droite
+						return ZONE_NONE;
+					else // couloir EST
+						if(y<top) // en dehors au dessus
+							return ZONE_NONE;
+						else
+							if(y<top+10) //partie Nord
+								return ZONE_IN_NE;
+							else
+								if(y<bottom-10) //partie Centre
+									return ZONE_IN_E;
+								else
+									if(y<bottom) // partie Sud
+										return ZONE_IN_SE;
+									else // en dehors au dessous
+										return ZONE_NONE;
+	}
+
+	abstract public Element getFirstDOMElement();
+	abstract public Element getLastDOMElement();
 
 }

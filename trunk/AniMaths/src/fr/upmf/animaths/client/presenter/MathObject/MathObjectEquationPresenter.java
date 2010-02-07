@@ -1,5 +1,7 @@
 package fr.upmf.animaths.client.presenter.MathObject;
 
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.display.MathObject.IMathObjectHasSign;
@@ -55,17 +57,17 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
+	public MathObjectElementPresenter<?> getMathObjectFirstSelectableChild() {
 		return leftHandSide;
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectNextSelectableChild(MathObjectElementPresenter<?> child) {
 		return (child==leftHandSide)?rightHandSide:leftHandSide;
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectPreviousSelectableChild(MathObjectElementPresenter<?> child) {
 		return (child==leftHandSide)?rightHandSide:leftHandSide;
 	}
 
@@ -107,4 +109,36 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 		this.rightHandSide = rightHandSide;
 	}
 
+	public short getZone(int x, int y) {
+		short zone = super.getZone(x, y);
+		int leftEq = (int) display.getSign().getBoundingClientLeft();
+		int rightEq = leftEq + (int) display.getSign().getBoundingClientWidth() ;
+		if(x<leftEq+10)
+			if(y<getBoundingClientTop())
+				return ZONE_EQ_LEFT_OUT_N;
+			else
+				if(y<getBoundingClientBottom())
+					return ZONE_EQ_LEFT;
+				else
+					return ZONE_EQ_LEFT_OUT_S;
+		if(x>rightEq-10)
+			if(y<getBoundingClientTop())
+				return ZONE_EQ_RIGHT_OUT_N;
+			else
+				if(y<getBoundingClientBottom())
+					return ZONE_EQ_RIGHT;
+				else
+					return ZONE_EQ_RIGHT_OUT_S;
+		return zone;
+	}
+	
+	@Override
+	public Element getFirstDOMElement() {
+		return leftHandSide.getFirstDOMElement();
+	}
+
+	@Override
+	public Element getLastDOMElement() {
+		return rightHandSide.getLastDOMElement();
+	}
 }

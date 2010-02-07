@@ -10,24 +10,20 @@ public class DragOverEvent extends GwtEvent<DragOverHandler>{
 
     private static final Type<DragOverHandler> TYPE = new Type<DragOverHandler>();
 
-    private MathObjectStaticPresenter copy = null;
-    private MathObjectElementPresenter<?> underElement = null;
-    private MathObjectElementPresenter<?> aboveElement = null;
+    private MathObjectElementPresenter<?> selectedElement = null;
+    private MathObjectElementPresenter<?> whereElement = null;
+    private MathObjectStaticPresenter copiedPresenter = null;
     private DragEvent event = null;
-    private int clientX = -1;
-    private int clientY = -1;
     
     public static Type<DragOverHandler> getType() {
         return TYPE;
     }
 
-    public DragOverEvent(MathObjectStaticPresenter copy, DragEvent event) {
-    	this.copy = copy;
-    	this.aboveElement = copy.getElement();
+    public DragOverEvent(MathObjectElementPresenter<?> selectedElement, MathObjectElementPresenter<?> whereElement, MathObjectStaticPresenter copiedPresenter, DragEvent event) {
+    	this.selectedElement = selectedElement;
+    	this.whereElement = whereElement;
+    	this.copiedPresenter = copiedPresenter;
     	this.event = event;
-    	this.underElement = event.getElement();
-    	this.clientX = event.getClientX();
-    	this.clientY = event.getClientY();
     }
     
 	@Override
@@ -43,24 +39,16 @@ public class DragOverEvent extends GwtEvent<DragOverHandler>{
 	public DragEvent getEvent() {
 		return event;
 	}
-	
-	public MathObjectStaticPresenter getCopy() {
-		return copy;
+
+	public MathObjectElementPresenter<?> getSelectedElement() {
+		return selectedElement;
 	}
 
-	public int getClientX() {
-		return clientX;
+	public MathObjectElementPresenter<?> getWhereElement() {
+		return whereElement;
 	}
 
-	public int getClientY() {
-		return clientY;
-	}
-
-	public MathObjectElementPresenter<?> getUnderElement() {
-		return underElement;
-	}
-
-	public MathObjectElementPresenter<?> getAboveElement() {
-		return aboveElement;
+	public MathObjectStaticPresenter getCopiedPresenter() {
+		return copiedPresenter;
 	}
 }

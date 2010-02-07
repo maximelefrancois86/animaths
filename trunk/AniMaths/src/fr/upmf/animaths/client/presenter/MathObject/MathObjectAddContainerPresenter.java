@@ -3,6 +3,8 @@ package fr.upmf.animaths.client.presenter.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.Element;
+
 import fr.upmf.animaths.client.display.MathML.MathMLElement;
 import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.display.MathObject.IMathObjectHasFence;
@@ -43,7 +45,7 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 			if(presenter!=null)
 				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
-		children.get(0).setNeedsSign(false);
+		setNeedsSigns();
 		for(MathObjectSignedElementPresenter child : children)
 			child.pack(mathMLParent, presenter);
 		if(needsFence) {
@@ -74,12 +76,12 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectFirstChild() {
+	public MathObjectElementPresenter<?> getMathObjectFirstSelectableChild() {
 		return children.get(0);
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectNextChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectNextSelectableChild(MathObjectElementPresenter<?> child) {
 		int i = children.indexOf(child);
 		if(i!=children.size()-1)
 			return children.get(i+1);
@@ -87,7 +89,7 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 	}
 
 	@Override
-	public MathObjectElementPresenter<?> getMathObjectPreviousChild(MathObjectElementPresenter<?> child) {
+	public MathObjectElementPresenter<?> getMathObjectPreviousSelectableChild(MathObjectElementPresenter<?> child) {
 		int i = children.indexOf(child);
 		if(i!=0)
 			return children.get(i-1);
@@ -140,5 +142,29 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 		children.add(child);
 	}
 
+	@Override
+	public Element getFirstDOMElement() {
+		if(display.getLFence()!=null)
+			return display.getLFence().getElement();
+		return children.get(0).getFirstDOMElement();
+	}
+
+	@Override
+	public Element getLastDOMElement() {
+		if(display.getRFence()!=null)
+			return display.getRFence().getElement();
+		return children.get(children.size()-1).getLastDOMElement();
+	}
+
+	@Override
+	public List<MathObjectSignedElementPresenter> getChildren() {
+		return children;
+	}
+
+	private void setNeedsSigns() {
+		children.get(0).setNeedsSign(false);
+		for(int i=1;i<children.size();i++)
+			children.get(i).setNeedsSign(true);
+	}
 }	
 
