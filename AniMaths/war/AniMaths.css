@@ -57,7 +57,7 @@ math {
 #view math .dragged {
 	background-color: #EEEEEE;
 	color: #888888;
-	cursor:alias;
+	cursor:-moz-grabbing;
 }
 
 /*Quand il est possible de sélectionner un deuxieme objet*/

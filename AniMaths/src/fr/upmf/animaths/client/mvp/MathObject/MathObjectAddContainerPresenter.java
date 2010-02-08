@@ -41,6 +41,8 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 			if(presenter!=null)
 				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
+		else
+			display.setLFence(null);
 		setNeedsSigns();
 		for(MathObjectSignedElementPresenter child : children)
 			child.pack(mathMLParent, presenter);
@@ -50,6 +52,8 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 			if(presenter!=null)
 				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
+		else
+			display.setRFence(null);
 	}
 	
 	@Override
@@ -152,7 +156,6 @@ public class MathObjectAddContainerPresenter extends MathObjectElementPresenter<
 		return children.get(children.size()-1).getLastDOMElement();
 	}
 
-	@Override
 	public List<MathObjectSignedElementPresenter> getChildren() {
 		return children;
 	}

@@ -43,12 +43,16 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 			if(presenter!=null)
 				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
+		else
+			display.setLFence(null);
 		if(needsSign||isMinus) {
 			display.setSign(new MathMLOperator(isMinus?"-":"+"));
 			mathMLParent.appendChild(display.getSign());
 			if(presenter!=null)
 				presenter.putDOMElement(display.getSign().getElement(),this);
 		}
+		else
+			display.setSign(null);
 		child.pack(mathMLParent, presenter);
 		if(needsFence) {
 			display.setRFence(MathMLOperator.rFence());
@@ -56,6 +60,8 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 			if(presenter!=null)
 				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
+		else
+			display.setRFence(null);
 	}
 
 	@Override

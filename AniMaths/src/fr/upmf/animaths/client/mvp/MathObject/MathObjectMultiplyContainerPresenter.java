@@ -52,6 +52,9 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 			if(presenter!=null)
 				presenter.putDOMElement(display.getLFence().getElement(),this);
 		}
+		else
+			display.setLFence(null);
+		setNeedsSigns();
 		if(denominator.size()!=0) {
 			display.setFrac(new MathMLFrac());
 			display.setNumeratorRow(new MathMLRow());
@@ -66,6 +69,11 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 			for(MathObjectMultiplyElementPresenter child : denominator)
 				child.pack(display.getDenominatorRow(), presenter);
 		}
+		else {
+			display.setFrac(null);
+			display.setNumeratorRow(null);
+			display.setDenominatorRow(null);
+		}
 		numerator.get(0).setNeedsSign(false);
 		for(MathObjectMultiplyElementPresenter child : numerator)
 			child.pack(mmlp, presenter);
@@ -75,6 +83,8 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 			if(presenter!=null)
 				presenter.putDOMElement(display.getRFence().getElement(),this);
 		}
+		else
+			display.setRFence(null);
 	}
 
 	@Override
@@ -230,12 +240,26 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 		return numerator.get(numerator.size()-1).getLastDOMElement();
 	}
 
-	@Override
-	public List<MathObjectMultiplyElementPresenter> getChildren() {
-		List<MathObjectMultiplyElementPresenter> children = new ArrayList<MathObjectMultiplyElementPresenter>();
-		children.addAll(numerator);
-		children.addAll(denominator);
-		return children;
+	public List<MathObjectMultiplyElementPresenter> getNumerator() {
+		return numerator;
 	}
+
+	public List<MathObjectMultiplyElementPresenter> getDenominator() {
+		return denominator;
+	}
+
+	private void setNeedsSigns() {
+		if(numerator.size()!=0) {
+			numerator.get(0).setNeedsSign(false);
+			for(int i=1;i<numerator.size();i++)
+				numerator.get(i).setNeedsSign(true);
+		}
+		if(denominator.size()!=0) {
+			denominator.get(0).setNeedsSign(false);
+			for(int i=1;i<denominator.size();i++)
+				denominator.get(i).setNeedsSign(true);
+		}
+	}
+
 }	
 
