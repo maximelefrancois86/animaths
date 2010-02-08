@@ -17,25 +17,26 @@ import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MathObjectDynamicPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectSignedElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectMultiplyContainerPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectMultiplyElementPresenter;
 
-public class AddCommutation implements MathObjectProcess{
+public class MultCommutation implements MathObjectProcess{
 
-	private static AddCommutation instance = new AddCommutation();
+	private static MultCommutation instance = new MultCommutation();
 	private EventBus eventBus = AniMathsPresenter.eventBus;
 	private SelectionElement selectionElement;
 	private MathObjectDynamicPresenter presenter;
 //	private MathObjectStaticPresenter copiedPresenter;
-	private MathObjectSignedElementPresenter selectedElement;
-	private MathObjectAddContainerPresenter parentOfSelected;
-	private MathObjectSignedElementPresenter whereElement;
+	private MathObjectMultiplyElementPresenter selectedElement;
+	private MathObjectMultiplyContainerPresenter parentOfSelected;
+	private boolean atNum ;
+	private MathObjectMultiplyElementPresenter whereElement;
 	private short zone;
 
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 
-	private AddCommutation() {}
+	private MultCommutation() {}
 
 	public static void setEnabled() {
 		instance.setHandler(GrabSelectedEvent.getType());
@@ -44,13 +45,14 @@ public class AddCommutation implements MathObjectProcess{
 	@Override
 	public void onGrabSelected(GrabSelectedEvent event) {
 		MathObjectElementPresenter<?> element = event.getSelectionElement().getSelectedElement();
-		if(element instanceof MathObjectSignedElementPresenter) {
+		if(element instanceof MathObjectMultiplyElementPresenter) {
 			selectionElement = event.getSelectionElement();
 			selectionElement.setProcessFound(true);
 			presenter = event.getSelectionElement().getPresenter();
 //			copiedPresenter = event.getSelectionElement().getCopiedPresenter();
-			selectedElement = (MathObjectSignedElementPresenter) element;
-			parentOfSelected = (MathObjectAddContainerPresenter) element.getMathObjectParent();
+			selectedElement = (MathObjectMultiplyElementPresenter) element;
+			parentOfSelected = (MathObjectMultiplyContainerPresenter) element.getMathObjectParent();
+			atNum = parentOfSelected.getNumerator().contains(selectedElement);
 			setHandler(DragSelectedEvent.getType());
 		}
 	}
@@ -58,7 +60,9 @@ public class AddCommutation implements MathObjectProcess{
 	@Override
 	public void onDragSelected(DragSelectedEvent event) {
 		MathObjectElementPresenter<?> element = event.getWhereElement();
-		if(parentOfSelected == element.getMathObjectParent()) {
+		if(parentOfSelected == element.getMathObjectParent()
+			&&(atNum && parentOfSelected.getNumerator().contains(element)
+			  || !atNum && parentOfSelected.getDenominator().contains(element))) {
 			zone = event.getZone();
 			switch(zone) {
 			case MathObjectElementPresenter.ZONE_IN_NO:
@@ -71,7 +75,7 @@ public class AddCommutation implements MathObjectProcess{
 					setHandler(DropSelectedEvent.getType());
 					selectionElement.setProcessFound(true);
 				}
-				whereElement = (MathObjectSignedElementPresenter) element;
+				whereElement = (MathObjectMultiplyElementPresenter) element;
 				break;
 			}
 		}
@@ -81,7 +85,11 @@ public class AddCommutation implements MathObjectProcess{
 	public void onDropSelected(DropSelectedEvent event) {
 		removeHandler(DragSelectedEvent.getType());
 		removeHandler(DropEvent.getType());
-		List<MathObjectSignedElementPresenter> children = parentOfSelected.getChildren();
+		List<MathObjectMultiplyElementPresenter> children;
+		if(atNum)
+			children = parentOfSelected.getNumerator();
+		else
+			children = parentOfSelected.getDenominator();
 		children.remove(children.indexOf(selectedElement));
 		int indexOfWhere = children.indexOf(whereElement);
 		switch(zone) {

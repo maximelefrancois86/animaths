@@ -21,6 +21,7 @@ import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.process.AddCommutation;
+import fr.upmf.animaths.client.interaction.process.MultCommutation;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathObjectDynamicPresenter.Display> {
@@ -72,6 +73,7 @@ public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathO
 		
 		SelectionElement.setPresenterAndRun(this);
 		AddCommutation.setEnabled();
+		MultCommutation.setEnabled();
 	}
 
 	

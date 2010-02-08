@@ -43,6 +43,8 @@ public class MathObjectMultiplyElementPresenter extends MathObjectElementPresent
 			if(presenter!=null)
 				presenter.putDOMElement(display.getSign().getElement(),this);
 		}
+		else
+			display.setSign(null);
 		child.pack(mathMLParent, presenter);
 	}
 
