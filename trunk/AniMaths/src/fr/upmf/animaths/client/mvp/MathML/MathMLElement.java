@@ -50,6 +50,12 @@ public abstract class MathMLElement extends Widget {
 		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_SELECTABLE,"selectable");
 		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_SELECTED,"selected");
 		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_DRAGGED,"dragged");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_OK_ADD,"okAdd");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_OK_DROP,"okDrop");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_NO_DROP,"noDrop");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_OK,"ok");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_CAUTION,"caution");
+		styleClasses.add(MathObjectElementPresenter.STYLE_CLASS_NO,"no");
 	};
 
 	private Map<String,String> style = new HashMap<String,String>();

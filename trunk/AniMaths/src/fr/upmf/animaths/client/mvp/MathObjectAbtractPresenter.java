@@ -11,12 +11,12 @@ import com.google.gwt.dom.client.Element;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
-public abstract class MathObjectPresenter<D extends MathObjectDisplay> extends WidgetPresenter<D>  {
+public abstract class MathObjectAbtractPresenter<D extends MathObjectAbstractDisplay> extends WidgetPresenter<D>  {
 
 	public Map<Element,MathObjectElementPresenter<?>> map = new HashMap<Element,MathObjectElementPresenter<?>>();
 	protected MathObjectElementPresenter<?> element;
 
-	public MathObjectPresenter(D display) {
+	public MathObjectAbtractPresenter(D display) {
 		super(display, AniMathsPresenter.eventBus);
 	}
 

@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.mvp.MathObject;
 
 import com.google.gwt.dom.client.Element;
 
-import fr.upmf.animaths.client.mvp.MathObjectPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
 
@@ -35,7 +35,7 @@ public class MathObjectSignedElementPresenter extends MathObjectElementPresenter
 	}
 	
 	@Override
-	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
+	public void pack(MathMLElement mathMLParent, MathObjectAbtractPresenter<?> presenter) {
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MathMLOperator.lFence());

@@ -4,20 +4,15 @@ import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.HasMouseDownHandlers;
-import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.gwt.event.dom.client.HasMouseUpHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.interaction.AddCommutation;
 import fr.upmf.animaths.client.interaction.SelectionElement;
 import fr.upmf.animaths.client.interaction.events.DragEvent;
 import fr.upmf.animaths.client.interaction.events.DropEvent;
@@ -25,14 +20,15 @@ import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
+import fr.upmf.animaths.client.interaction.process.AddCommutation;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
-public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDynamicPresenter.Display> {
+public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathObjectDynamicPresenter.Display> {
 
 	int clientX = 0;
 	int clientY = 0;	
 
-	public interface Display extends MathObjectStaticPresenter.Display, HasMouseMoveHandlers, HasMouseDownHandlers, HasMouseUpHandlers {
+	public interface Display extends MathObjectStaticPresenter.Display, HasMouseDownHandlers, HasMouseUpHandlers {
 	}
 	
 	public MathObjectDynamicPresenter() {
@@ -43,51 +39,39 @@ public class MathObjectDynamicPresenter extends MathObjectPresenter<MathObjectDy
 	@Override
 	protected void onBind() {
 		RootPanel.get("view").add(display.asWidget());
-		display.addMouseMoveHandler(new MouseMoveHandler(){
-			public void onMouseMove(MouseMoveEvent event) {
-				MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
-				if(element!=null)
-					eventBus.fireEvent(new FlyOverEvent(element, event));
-			}
-		});
-
 		display.addMouseDownHandler(new MouseDownHandler(){
 			public void onMouseDown(MouseDownEvent event) {	
 				MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null) {
 					clientX = event.getClientX();
 					clientY = event.getClientY();
-					eventBus.fireEvent(new GrabEvent(element, event));
+					eventBus.fireEvent(new GrabEvent(element.getStyleClass(), event));
 				}
 			}
 		});
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 		 	public void onPreviewNativeEvent(NativePreviewEvent event) {
-	 			EventTarget target = event.getNativeEvent().getEventTarget();
-	 			if(target==null)
-	 				System.out.println("erreur evitee");
-		 		MathObjectElementPresenter<?> element = (target==null)?null:map.get(Element.as(target));
+		 		MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 		 		switch(event.getTypeInt()) {
 		 		case Event.ONKEYUP :
 					eventBus.fireEvent(new SelectionChangeEvent(event.getNativeEvent().getKeyCode()));
 		 			break;
 		 		case Event.ONMOUSEMOVE :
+					eventBus.fireEvent(new FlyOverEvent(element));
 					eventBus.fireEvent(new DragEvent(element, event.getNativeEvent()));
 					break;
 		 		case Event.ONMOUSEUP :
-					MathObjectElementPresenter<?> nelement = map.get(
-							Element.as(event.getNativeEvent().getEventTarget()));
 					if(Math.sqrt(Math.pow(clientX-event.getNativeEvent().getClientX(),2)+Math.pow(clientY-event.getNativeEvent().getClientY(),2))<10);
-						eventBus.fireEvent(new SelectionEvent(nelement, event.getNativeEvent()));
+						eventBus.fireEvent(new SelectionEvent(element));
 					eventBus.fireEvent(new DropEvent(element, event.getNativeEvent()));
 					break;
 		 		}
 		 	}
 		});
 		
-		SelectionElement.getInstance(this).setEnabled(true);
-		AddCommutation.getInstance(this).setEnabled(true);
+		SelectionElement.setPresenterAndRun(this);
+		AddCommutation.setEnabled();
 	}
 
 	

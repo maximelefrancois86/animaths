@@ -5,25 +5,6 @@ h1 {
   margin-left: 2em;
 }
 
-math {
-  -moz-user-select: none;	
-  cursor: default;
-}
-
-math .selectable {
-	background-color: #DDDDFF;
-}
-
-math .selected {
-	background-color: #AAAAFF;
-	cursor: -moz-grab;
-}
-
-math .dragged {
-	background-color: #EEEEEE;
-	color: #888888;
-}
-
 #exerciseWording {
 	font-size: 10pt;
 	color:red;
@@ -34,12 +15,17 @@ math .dragged {
   width: 75%;
 }
 
+
 math {
-	font-size: 11pt;
+  -moz-user-select: none;	
+  font-size: 11pt;
+  cursor: default;
 }
 
+/**
+/* EQUATIONS LIST 
+*/
 
-/* EQUATIONS LIST */
 #view {
   position:relative;
   width: 75%;
@@ -51,16 +37,73 @@ math {
 	width:50%;
 	left:0em;
 }
+
 #view math * {
 	cursor: pointer;
 }
-#view .selectable {
-	background-color: #7CBBFF; /*blue*/
+
+/*L'objet sélectionnable*/
+#view math .selectable {
+	background-color: #DDDDFF;
 }
-#view .selected {
-	background-color: #9AFF60; /*green*/
-	cursor: move;
-} 
+
+/*L'objet slectionné*/
+#view math .selected {
+	background-color: #AAAAFF;
+	cursor: -moz-grab;
+}
+
+/*L'objet déplacé*/
+#view math .dragged {
+	background-color: #EEEEEE;
+	color: #888888;
+	cursor:alias;
+}
+
+/*Quand il est possible de sélectionner un deuxieme objet*/
+#view math .okAdd {
+	cursor:copy;
+}
+
+/*Quand il est possible de lâcher l'objet ici*/
+#view math .okDrop {
+	cursor:alias;
+}
+
+/*Quand il n'est pas permi de lâcher l'objet ici*/
+#view math .noDrop {
+	cursor:no-drop;
+}
+
+/**
+/*DRAGGED OBJECT 
+*/
+
+#drag {
+	position:absolute;
+}
+
+/*Tout va bien*/
+#drag math .ok {
+	background-color: #DDFFDD;
+	color: #33FF33;
+}
+
+/*Attention à quelquechose*/
+#drag math .caution {
+	background-color: #FFFFDD;
+	color: #FFFF33;
+}
+
+/*Impossible de lâcher*/
+#drag math .no {
+	background-color: #FFDDDD;
+	color: #FF333;
+}
+
+/**
+/*HELP
+*/
 
 #help {
 	border-style:solid;
@@ -72,6 +115,3 @@ math {
 	width: 25%;
 }
 
-#drag {
-	position:absolute;
-}

@@ -9,7 +9,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
-import fr.upmf.animaths.client.mvp.MathObjectPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 
 /**
@@ -22,7 +22,7 @@ import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
  *            The {@link WidgetDisplay} type.
  */
 public abstract class MathObjectElementPresenter<D extends MathObjectElementDisplay> extends BasicPresenter<D>
-												implements IMathObjectHasType, IMathObjectHasStyleClass, IMathObjectHasStyleDrop, IMathObjectHasZones, IMathObjectSelection {
+												implements IMathObjectHasType, IMathObjectHasStyleClass, IMathObjectHasZones, IMathObjectSelection {
 	
 	public short styleClass = STYLE_CLASS_NONE;
 	@Override
@@ -74,7 +74,7 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 
 	abstract public MathObjectElementPresenter<D> clone();
 
-	abstract public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter);
+	abstract public void pack(MathMLElement mathMLParent, MathObjectAbtractPresenter<?> presenter);
 	    	
 	@Override
 	protected void onBind() {
