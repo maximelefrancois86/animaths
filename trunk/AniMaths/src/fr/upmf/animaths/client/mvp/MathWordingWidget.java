@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client;
+package fr.upmf.animaths.client.mvp;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;

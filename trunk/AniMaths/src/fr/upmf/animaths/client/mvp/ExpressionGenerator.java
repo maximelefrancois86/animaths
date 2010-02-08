@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client;
+package fr.upmf.animaths.client.mvp;
 //package fr.upmf.animaths.client.mvp.modele;
 //
 //import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;

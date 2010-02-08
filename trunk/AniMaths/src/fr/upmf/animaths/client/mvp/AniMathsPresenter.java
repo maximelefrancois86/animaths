@@ -11,8 +11,6 @@ import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.inject.Inject;
 
-import fr.upmf.animaths.client.MathWordingWidget;
-import fr.upmf.animaths.client.StaticManipulationWordingPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectEquationPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectIdentifierPresenter;

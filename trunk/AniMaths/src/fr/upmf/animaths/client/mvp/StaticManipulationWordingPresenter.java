@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client;
+package fr.upmf.animaths.client.mvp;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
