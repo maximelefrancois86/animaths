@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.mvp.MathObject;
 
 import com.google.gwt.dom.client.Element;
 
-import fr.upmf.animaths.client.mvp.MathObjectPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLIdentifier;
 
@@ -28,7 +28,7 @@ public class MathObjectIdentifierPresenter extends MathObjectElementPresenter<Ma
 	}
 	
 	@Override
-	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
+	public void pack(MathMLElement mathMLParent, MathObjectAbtractPresenter<?> presenter) {
 		display.setElement(new MathMLIdentifier(value));
 		mathMLParent.appendChild(display.getElement());
 		if(presenter!=null)

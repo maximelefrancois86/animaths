@@ -69,16 +69,16 @@ public class MathMLOperator extends MathMLGenericAtom {
     	return rFence;
     }
 
-    private static MathMLOperator localization = new MathMLOperator("|");
-    static {
-    	localization.getElement().setAttribute("symmetric","false");
-    	localization.getElement().setAttribute("stretchy","true");
-    }
-    
-    public static MathMLOperator getLocalisation(String color) {
-    	localization.getElement().setAttribute("style","color:"+color+";");
-    	return localization;
-    }
+//    private static MathMLOperator localization = new MathMLOperator("|");
+//    static {
+//    	localization.getElement().setAttribute("symmetric","false");
+//    	localization.getElement().setAttribute("stretchy","true");
+//    }
+//    
+//    public static MathMLOperator getLocalisation(String color) {
+//    	localization.getElement().setAttribute("style","color:"+color+";");
+//    	return localization;
+//    }
     
 	@Override
 	public MathMLElement clone() {

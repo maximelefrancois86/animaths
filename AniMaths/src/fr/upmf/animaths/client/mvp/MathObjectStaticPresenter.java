@@ -2,9 +2,9 @@ package fr.upmf.animaths.client.mvp;
 
 
 
-public class MathObjectStaticPresenter extends MathObjectPresenter<MathObjectStaticPresenter.Display> {
+public class MathObjectStaticPresenter extends MathObjectAbtractPresenter<MathObjectStaticPresenter.Display> {
 
-	public interface Display extends MathObjectDisplay {
+	public interface Display extends MathObjectAbstractDisplay {
 	}
 	
 	public MathObjectStaticPresenter() {

@@ -1,6 +1,5 @@
 package fr.upmf.animaths.client.interaction.events;
 
-import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
@@ -9,18 +8,14 @@ public class FlyOverEvent extends GwtEvent<FlyOverHandler>{
 
     private static final Type<FlyOverHandler> TYPE = new Type<FlyOverHandler>();
 
-    private short state;
-    private MathObjectElementPresenter<?> element;
-    private MouseMoveEvent event;
+    private MathObjectElementPresenter<?> element = null;
     
     public static Type<FlyOverHandler> getType() {
         return TYPE;
     }
 
-    public FlyOverEvent(MathObjectElementPresenter<?> element, MouseMoveEvent event) {
-    	this.state = element.getStyleClass();
+    public FlyOverEvent(MathObjectElementPresenter<?> element) {
     	this.element = element;
-    	this.event = event;
     }
     
 	@Override
@@ -31,14 +26,6 @@ public class FlyOverEvent extends GwtEvent<FlyOverHandler>{
 	@Override
 	public com.google.gwt.event.shared.GwtEvent.Type<FlyOverHandler> getAssociatedType() {
 		return getType();
-	}
-	
-	public MouseMoveEvent getEvent() {
-		return event;
-	}
-	
-	public short getState() {
-		return state;
 	}
 	
 	public MathObjectElementPresenter<?> getElement() {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gwt.dom.client.Element;
 
-import fr.upmf.animaths.client.mvp.MathObjectPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MathMLFrac;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
@@ -43,7 +43,7 @@ public class MathObjectMultiplyContainerPresenter extends MathObjectElementPrese
 	}
 
 	@Override
-	public void pack(MathMLElement mathMLParent, MathObjectPresenter<?> presenter) {
+	public void pack(MathMLElement mathMLParent, MathObjectAbtractPresenter<?> presenter) {
 		MathMLElement mmlp = mathMLParent;
 		boolean needsFence = needsFence();
 		if(needsFence) {
