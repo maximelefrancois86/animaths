@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.interaction.process.core;
+package fr.upmf.animaths.client.interaction;
 //package fr.upmf.animaths.client.mvp.interaction.process;
 //
 //import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;

@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.interaction.events.selection;
+package fr.upmf.animaths.client.interaction.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
