@@ -4,8 +4,8 @@ import net.customware.gwt.presenter.client.EventBus;
 import fr.upmf.animaths.client.interaction.events.dragndrop.GrabHandler;
 import fr.upmf.animaths.client.interaction.events.process.DragOverHandler;
 import fr.upmf.animaths.client.interaction.events.process.DropOverHandler;
-import fr.upmf.animaths.client.presenter.AniMathsPresenter;
-import fr.upmf.animaths.client.presenter.MathObjectPresenter;
+import fr.upmf.animaths.client.mvp.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectPresenter;
 
 public abstract class MathObjectProcess implements GrabHandler, DragOverHandler, DropOverHandler {
 

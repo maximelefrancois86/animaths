@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.interaction.events.dragndrop;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class GrabEvent extends GwtEvent<GrabHandler>{
 

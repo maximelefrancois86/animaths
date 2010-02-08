@@ -1,19 +1,19 @@
-#Sat Feb 06 23:39:50 CET 2010
+#Mon Feb 08 10:53:58 CET 2010
 eclipse.preferences.version=1
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLElement.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLFrac.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLGenericAtom.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLIdentifier.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLImpl.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLImplIE.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLImplStandard.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLMath.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLNumber.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLOperator.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathML/MathMLRow.java=UTF-8
-encoding//src/fr/upmf/animaths/client/display/MathObject/MathObjectMultiplyElementDisplay.java=utf-8
-encoding//src/fr/upmf/animaths/client/display/MathObject/MathObjectSignedElementDisplay.java=utf-8
 encoding//src/fr/upmf/animaths/client/interaction/SelectionElement.java=UTF-8
-encoding//src/fr/upmf/animaths/client/presenter/AniMathsPresenter.java=UTF-8
-encoding//src/fr/upmf/animaths/client/presenter/MathObject/MathObjectMultiplyElementPresenter.java=utf-8
-encoding//src/fr/upmf/animaths/client/presenter/MathObject/MathObjectSignedElementPresenter.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/AniMathsPresenter.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLElement.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLFrac.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLGenericAtom.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLIdentifier.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImpl.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImplIE.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImplStandard.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLMath.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLNumber.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLOperator.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLRow.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementDisplay.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementPresenter.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementDisplay.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementPresenter.java=utf-8
