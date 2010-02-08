@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.interaction.process.core;
+package fr.upmf.animaths.client.interaction;
 
 import java.util.List;
 
@@ -7,10 +7,9 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-import fr.upmf.animaths.client.interaction.events.dragndrop.GrabEvent;
-import fr.upmf.animaths.client.interaction.events.process.DragOverEvent;
-import fr.upmf.animaths.client.interaction.events.process.DropOverEvent;
-import fr.upmf.animaths.client.interaction.process.MathObjectProcess;
+import fr.upmf.animaths.client.interaction.events.DragOverEvent;
+import fr.upmf.animaths.client.interaction.events.DropOverEvent;
+import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MathObjectDynamicPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;

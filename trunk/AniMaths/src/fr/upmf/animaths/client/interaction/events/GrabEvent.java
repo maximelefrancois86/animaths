@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.interaction.events.dragndrop;
+package fr.upmf.animaths.client.interaction.events;
 
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.shared.GwtEvent;

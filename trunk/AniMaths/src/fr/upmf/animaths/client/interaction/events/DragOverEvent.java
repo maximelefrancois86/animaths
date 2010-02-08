@@ -1,8 +1,7 @@
-package fr.upmf.animaths.client.interaction.events.process;
+package fr.upmf.animaths.client.interaction.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.mvp.MathObjectStaticPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
