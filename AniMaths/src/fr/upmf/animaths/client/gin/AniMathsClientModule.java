@@ -6,8 +6,8 @@ import net.customware.gwt.presenter.client.gin.AbstractPresenterModule;
 
 import com.google.inject.Singleton;
 
-import fr.upmf.animaths.client.display.AniMathsDisplay;
-import fr.upmf.animaths.client.presenter.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.AniMathsDisplay;
+import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 
 public class AniMathsClientModule extends AbstractPresenterModule {
 

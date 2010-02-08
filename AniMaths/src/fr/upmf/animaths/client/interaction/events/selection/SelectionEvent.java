@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.interaction.events.selection;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class SelectionEvent extends GwtEvent<SelectionHandler>{
 

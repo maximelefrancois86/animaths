@@ -7,16 +7,16 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.interaction.events.dragndrop.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.process.DragOverEvent;
 import fr.upmf.animaths.client.interaction.events.process.DropOverEvent;
 import fr.upmf.animaths.client.interaction.process.MathObjectProcess;
-import fr.upmf.animaths.client.presenter.AniMathsPresenter;
-import fr.upmf.animaths.client.presenter.MathObjectDynamicPresenter;
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectAddContainerPresenter;
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectSignedElementPresenter;
+import fr.upmf.animaths.client.mvp.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectDynamicPresenter;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectSignedElementPresenter;
 
 public class AddCommutation extends MathObjectProcess{
 

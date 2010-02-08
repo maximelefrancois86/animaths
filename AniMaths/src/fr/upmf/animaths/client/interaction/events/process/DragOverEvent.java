@@ -3,8 +3,8 @@ package fr.upmf.animaths.client.interaction.events.process;
 import com.google.gwt.event.shared.GwtEvent;
 
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
-import fr.upmf.animaths.client.presenter.MathObjectStaticPresenter;
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectStaticPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class DragOverEvent extends GwtEvent<DragOverHandler>{
 

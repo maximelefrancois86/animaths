@@ -5,7 +5,6 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.display.MathML.MathMLOperator;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragEvent;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DragHandler;
 import fr.upmf.animaths.client.interaction.events.dragndrop.DropEvent;
@@ -20,10 +19,11 @@ import fr.upmf.animaths.client.interaction.events.selection.SelectionChangeEvent
 import fr.upmf.animaths.client.interaction.events.selection.SelectionChangeHandler;
 import fr.upmf.animaths.client.interaction.events.selection.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.selection.SelectionHandler;
-import fr.upmf.animaths.client.presenter.AniMathsPresenter;
-import fr.upmf.animaths.client.presenter.MathObjectDynamicPresenter;
-import fr.upmf.animaths.client.presenter.MathObjectStaticPresenter;
-import fr.upmf.animaths.client.presenter.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectDynamicPresenter;
+import fr.upmf.animaths.client.mvp.MathObjectStaticPresenter;
+import fr.upmf.animaths.client.mvp.MathML.MathMLOperator;
+import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class SelectionElement implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler {
 	
