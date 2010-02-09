@@ -141,8 +141,8 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 		MathObjectElementPresenter<?> whereElement = event.getElement();
 		if(whereElement==null)
 			whereElement = presenter.getElement();
-		else
-			whereElement = whereElement.getMathObjectSelectableElement();
+//		else
+//			whereElement = whereElement.getMathObjectSelectableElement();
 		if(whereElement==selectedElement) {
 			whereElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_DRAGGED);
 			copiedPresenter.getElement().setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK);

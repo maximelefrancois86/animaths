@@ -107,26 +107,38 @@ public class MathObjectEquationPresenter extends MathObjectElementPresenter<Math
 	}
 
 	public short getZone(int x, int y) {
-		short zone = super.getZone(x, y);
 		int leftEq = (int) display.getSign().getBoundingClientLeft();
 		int rightEq = leftEq + (int) display.getSign().getBoundingClientWidth() ;
-		if(x<leftEq+10)
-			if(y<getBoundingClientTop())
-				return ZONE_EQ_LEFT_OUT_N;
+		int topEq = (int) display.getSign().getBoundingClientTop();
+		int bottomEq = topEq + (int) display.getSign().getBoundingClientHeight() ;
+		int midEq = (int) ((leftEq + rightEq)/2) ;
+//		if(leftEq<x && x<midEq)
+		if(x<midEq)
+			if(leftEq<x && topEq<x && x<bottomEq)
+				return ZONE_EQ_LEFT_IN;
 			else
-				if(y<getBoundingClientBottom())
-					return ZONE_EQ_LEFT;
-				else
-					return ZONE_EQ_LEFT_OUT_S;
-		if(x>rightEq-10)
-			if(y<getBoundingClientTop())
-				return ZONE_EQ_RIGHT_OUT_N;
+				return ZONE_EQ_LEFT_OUT;
+		else
+			if(x<rightEq && topEq<x && x<bottomEq)
+				return ZONE_EQ_RIGHT_IN;
 			else
-				if(y<getBoundingClientBottom())
-					return ZONE_EQ_RIGHT;
-				else
-					return ZONE_EQ_RIGHT_OUT_S;
-		return zone;
+				return ZONE_EQ_RIGHT_OUT;
+//			if(y<getBoundingClientTop())
+//				return ZONE_EQ_LEFT_OUT_N;
+//			else
+//				if(y<getBoundingClientBottom())
+//					return ZONE_EQ_LEFT;
+//				else
+//					return ZONE_EQ_LEFT_OUT_S;
+//		if(midEq<x && x<rightEq)
+//			if(y<getBoundingClientTop())
+//				return ZONE_EQ_RIGHT_OUT_N;
+//			else
+//				if(y<getBoundingClientBottom())
+//					return ZONE_EQ_RIGHT;
+//				else
+//					return ZONE_EQ_RIGHT_OUT_S;
+//		return super.getZone(x, y);
 	}
 	
 	@Override

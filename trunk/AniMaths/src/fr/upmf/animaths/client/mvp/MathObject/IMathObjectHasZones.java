@@ -13,12 +13,10 @@ public interface IMathObjectHasZones {
 	public static final short ZONE_IN_O = 7;
 	public static final short ZONE_IN_NO = 8;
 
-	public static final short ZONE_EQ_LEFT_OUT_N = 9;
-	public static final short ZONE_EQ_LEFT = 10;
-	public static final short ZONE_EQ_LEFT_OUT_S = 11;
-	public static final short ZONE_EQ_RIGHT_OUT_N = 12;
-	public static final short ZONE_EQ_RIGHT = 13;
-	public static final short ZONE_EQ_RIGHT_OUT_S = 14;
+	public static final short ZONE_EQ_LEFT_IN = 9;
+	public static final short ZONE_EQ_LEFT_OUT = 10;
+	public static final short ZONE_EQ_RIGHT_IN = 11;
+	public static final short ZONE_EQ_RIGHT_OUT = 12;
 
 	public short getZone(int x, int y);
 }

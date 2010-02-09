@@ -20,8 +20,9 @@ import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
-import fr.upmf.animaths.client.interaction.process.AddCommutation;
-import fr.upmf.animaths.client.interaction.process.MultCommutation;
+import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
 
 public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathObjectDynamicPresenter.Display> {
@@ -72,8 +73,10 @@ public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathO
 		});
 		
 		SelectionElement.setPresenterAndRun(this);
-		AddCommutation.setEnabled();
-		MultCommutation.setEnabled();
+		SEs_AC_Commutation.setEnabled();
+		MEs_MC_Commutation.setEnabled();
+		SEs_SEs_ChangeSign.setEnabled();
+//		SEs_AC_E_ChangeHandSide.setEnabled();
 	}
 
 	

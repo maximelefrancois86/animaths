@@ -70,7 +70,15 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		);
 		eq.setRightHandSide(
 			new MathObjectMultiplyContainerPresenter(
-					new MathObjectMultiplyElementPresenter(new MathObjectNumberPresenter(3)),
+					new MathObjectMultiplyElementPresenter(
+							new MathObjectSignedElementPresenter(
+									new MathObjectSignedElementPresenter(
+											new MathObjectSignedElementPresenter(
+													new MathObjectNumberPresenter(3),
+											true),
+									true),
+							true)
+					),
 					new MathObjectMultiplyElementPresenter(
 							new MathObjectAddContainerPresenter(
 									new MathObjectSignedElementPresenter(
