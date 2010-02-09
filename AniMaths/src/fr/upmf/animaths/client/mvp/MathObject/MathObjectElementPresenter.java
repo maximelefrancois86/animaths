@@ -61,9 +61,9 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	@Override
 	public MathObjectElementPresenter<?> getMathObjectSelectableElement() {
 		MathObjectElementPresenter<?> moP = getMathObjectParent();
-		if(moP.getType()==MATH_OBJECT_SIGNED_ELEMENT
+		if((moP.getType()==MATH_OBJECT_SIGNED_ELEMENT && getType()!=MATH_OBJECT_SIGNED_ELEMENT)
 				|| moP.getType()==MATH_OBJECT_MULTIPLY_ELEMENT)
-			return moP;
+			return moP.getMathObjectSelectableElement();
 		return this;
 	}
 
@@ -102,6 +102,7 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 			switch (this.getType()) {
 			case MATH_OBJECT_SIGNED_ELEMENT:
 				if (typeP == MATH_OBJECT_SIGNED_ELEMENT
+						|| typeP == MATH_OBJECT_MULTIPLY_ELEMENT
 						|| typeP == MATH_OBJECT_MULTIPLY_CONTAINER
 						|| typeP == MATH_OBJECT_POWER)
 					return true;

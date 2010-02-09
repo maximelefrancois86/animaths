@@ -101,6 +101,11 @@ math {
 	color: #FF333;
 }
 
+#focus {
+  	font-size: 14pt;
+	color:red;
+}
+
 /**
 /*HELP
 */
