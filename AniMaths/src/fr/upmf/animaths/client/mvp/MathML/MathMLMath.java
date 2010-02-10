@@ -48,4 +48,4 @@ public class MathMLMath extends MathMLElement {
 		return new MathMLMath(displayBlock);
 	}
 
-}
+  }

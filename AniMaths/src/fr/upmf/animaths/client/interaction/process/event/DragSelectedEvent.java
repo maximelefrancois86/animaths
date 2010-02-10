@@ -13,11 +13,15 @@ public class DragSelectedEvent extends GwtEvent<DragSelectedHandler>{
     }
 
     private MathObjectElementPresenter<?> whereElement = null;    
-    private short zone;
+    private short zoneH;
+    private short zoneV;
+    private boolean firstLevel;
 
-    public DragSelectedEvent(MathObjectElementPresenter<?> whereElement, short zone) {
+    public DragSelectedEvent(MathObjectElementPresenter<?> whereElement, short zoneH, short zoneV, boolean firstLevel) {
     	this.whereElement = whereElement;
-		this.zone = zone;
+		this.zoneH = zoneH;
+		this.zoneV = zoneV;
+		this.firstLevel = firstLevel;
     }
     
 	@Override
@@ -34,8 +38,16 @@ public class DragSelectedEvent extends GwtEvent<DragSelectedHandler>{
 		return whereElement;
 	}
 
-	public short getZone() {
-		return zone;
+	public short getZoneH() {
+		return zoneH;
+	}
+	
+	public short getZoneV() {
+		return zoneV;
+	}
+	
+	public boolean isFirstLevel() {
+		return firstLevel;
 	}
 	
 }

@@ -2,21 +2,25 @@ package fr.upmf.animaths.client.mvp.MathObject;
 
 public interface IMathObjectHasZones {
 
-	public static final short ZONE_NONE = -1;
-	public static final short ZONE_IN_C = 0;
-	public static final short ZONE_IN_N = 1;
-	public static final short ZONE_IN_NE = 2;
-	public static final short ZONE_IN_E = 3;
-	public static final short ZONE_IN_SE = 4;
-	public static final short ZONE_IN_S = 5;
-	public static final short ZONE_IN_SO = 6;
-	public static final short ZONE_IN_O = 7;
-	public static final short ZONE_IN_NO = 8;
+	public static final short ZONE_CENTER = 0;
 
-	public static final short ZONE_EQ_LEFT_IN = 9;
-	public static final short ZONE_EQ_LEFT_OUT = 10;
-	public static final short ZONE_EQ_RIGHT_IN = 11;
-	public static final short ZONE_EQ_RIGHT_OUT = 12;
+	public static final short ZONE_NNN = -3;
+	public static final short ZONE_NN = -2;
+	public static final short ZONE_N = -1;
+	
+	public static final short ZONE_S =  1;
+	public static final short ZONE_SS =  2;
+	public static final short ZONE_SSS =  3;
 
-	public short getZone(int x, int y);
+	public static final short ZONE_OOO = -3;
+	public static final short ZONE_OO = -2;
+	public static final short ZONE_O = -1;
+
+	public static final short ZONE_E =  1;
+	public static final short ZONE_EE =  2;
+	public static final short ZONE_EEE =  3;
+	
+
+	public short getZoneH(int x);
+	public short getZoneV(int y);
 }
