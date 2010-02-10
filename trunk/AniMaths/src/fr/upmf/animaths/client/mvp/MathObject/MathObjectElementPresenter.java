@@ -137,60 +137,53 @@ public abstract class MathObjectElementPresenter<D extends MathObjectElementDisp
 	abstract public int getBoundingClientBottom();
 	
 	@Override
-	public short getZone(int x, int y) {
-		int top = getBoundingClientTop();
-		int right = getBoundingClientRight();
-		int bottom = getBoundingClientBottom();
+	public short getZoneH(int x) {
+		int px = 10;
+		int pc = 5;
 		int left = getBoundingClientLeft();
-		if(x<left) // en dehors à gauche
-			return ZONE_NONE;
+		int right = getBoundingClientRight();
+		int center = (int)((left+right)/2);
+		int d = Math.min(px,(int)((right-left)/pc));
+		return getZone(x,left,center,right,d,d);
+	}
+
+	@Override
+	public short getZoneV(int y) {
+		int px = 10;
+		int pc = 5;
+		int top = getBoundingClientTop();
+		int bottom = getBoundingClientBottom();
+		int center = (int)((top+bottom)/2);
+		int d = Math.min(px,(int)((bottom-top)/pc));
+		return getZone(y,top,center,bottom,d,d);
+	}
+
+	/**
+	 * Permet de déterminer la zone où le curseur est, suivant un axe.
+	 * Bien qu'elle soit écrite pour l'axe vertical, cette fonction se comporte bien pour l'axe horizontal
+	 * @param y emplacement du pointer
+	 * @param top centre de la zone limite
+	 * @param center centre de la zone centrale
+	 * @param bottom centre de la zone limite
+	 * @param dIn tolérence autour du centre de la zone centrale
+	 * @param dOut tolérence autour du centre de la zone limite
+	 * @return une des 7 zones où on est
+	 */
+	protected short getZone(int y, int top, int center, int bottom, int dIn, int dOut) {
+		if(y<top-dOut) // en dehors à gauche
+			return ZONE_NNN;
+		else if(y<top+dOut)
+			return ZONE_NN;
+		else if(y<center-dIn)
+			return ZONE_N;
+		else if(y<center+dIn)
+			return ZONE_CENTER;
+		else if(y<bottom-dOut)
+			return ZONE_S;
+		else if(y<bottom+dOut)
+			return ZONE_SS;
 		else
-			if(x<left+10) // couloir OUEST
-				if(y<top) // en dehors au dessus
-					return ZONE_NONE;
-				else
-					if(y<top+10) //partie Nord-Ouest
-						return ZONE_IN_NO;
-					else
-						if(y<bottom-10) //partie Ouest
-							return ZONE_IN_O;
-						else
-							if(y<bottom) // partie Sud-ouest
-								return ZONE_IN_SO;
-							else // en dehors au dessous
-								return ZONE_NONE;
-			else
-				if(x<right-10) // couloir CENTRE
-					if(y<top) // en dehors au dessus
-						return ZONE_NONE;
-					else
-						if(y<top+10) //partie Nord
-							return ZONE_IN_N;
-						else
-							if(y<bottom-10) //partie Centre
-								return ZONE_IN_C;
-							else
-								if(y<bottom) // partie Sud
-									return ZONE_IN_S;
-								else // en dehors au dessous
-									return ZONE_NONE;
-				else
-					if(x>right) // en dehors à droite
-						return ZONE_NONE;
-					else // couloir EST
-						if(y<top) // en dehors au dessus
-							return ZONE_NONE;
-						else
-							if(y<top+10) //partie Nord
-								return ZONE_IN_NE;
-							else
-								if(y<bottom-10) //partie Centre
-									return ZONE_IN_E;
-								else
-									if(y<bottom) // partie Sud
-										return ZONE_IN_SE;
-									else // en dehors au dessous
-										return ZONE_NONE;
+			return ZONE_SSS;
 	}
 
 	abstract public Element getFirstDOMElement();

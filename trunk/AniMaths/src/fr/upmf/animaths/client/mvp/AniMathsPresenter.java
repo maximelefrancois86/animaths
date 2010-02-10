@@ -76,7 +76,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 											new MathObjectSignedElementPresenter(
 													new MathObjectNumberPresenter(3),
 											true),
-									true),
+									false),
 							true)
 					),
 					new MathObjectMultiplyElementPresenter(

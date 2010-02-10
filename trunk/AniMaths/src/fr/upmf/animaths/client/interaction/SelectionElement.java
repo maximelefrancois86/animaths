@@ -41,6 +41,8 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 	private MathObjectElementPresenter<?> selectedElement = null;
 	private MathObjectStaticPresenter copiedPresenter = new MathObjectStaticPresenter();
 	private boolean processFound = false;
+	private int greatestPriorityFound = 0;
+	private boolean processDone = false;
 
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 
@@ -141,36 +143,38 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 		MathObjectElementPresenter<?> whereElement = event.getElement();
 		if(whereElement==null)
 			whereElement = presenter.getElement();
-//		else
-//			whereElement = whereElement.getMathObjectSelectableElement();
 		if(whereElement==selectedElement) {
 			whereElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_DRAGGED);
 			copiedPresenter.getElement().setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK);
 			return;
 		}
-		processFound = false;
+		greatestPriorityFound = 0;
+		boolean firstLevel = true;
 		while(true) {
-			eventBus.fireEvent(new DragSelectedEvent(whereElement,whereElement.getZone(event.getClientX(),event.getClientY())));			
-			if(processFound || whereElement instanceof MathObjectEquationPresenter)
+			eventBus.fireEvent(new DragSelectedEvent(whereElement,whereElement.getZoneH(event.getClientX()),whereElement.getZoneV(event.getClientY()), firstLevel));
+			if(whereElement instanceof MathObjectEquationPresenter)
 				break;
 			whereElement = whereElement.getMathObjectParent();
+			firstLevel = false;
 		}
-		if(processFound) {
-			whereElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK_DROP);
-			copiedPresenter.getElement().setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK);
-		}
-		else {
+		if(greatestPriorityFound==0) {
 			whereElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NO_DROP);
 			copiedPresenter.getElement().setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NO);
+		}
+		else {
+			whereElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK_DROP);
+			copiedPresenter.getElement().setStyleClass(MathObjectElementPresenter.STYLE_CLASS_OK);
 		}
 	}
 
 	@Override
 	public void onDrop(DropEvent event) {
-		eventBus.fireEvent(new DropSelectedEvent());
+		processDone = false;
+		eventBus.fireEvent(new DropSelectedEvent(greatestPriorityFound));
 		removeHandler(DragEvent.getType());
 		removeHandler(DropEvent.getType());
 		selectedElement.setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
+		selectedElement = null;
 		setHandler(SelectionEvent.getType());
 		setHandler(FlyOverEvent.getType());
 		clearCopiedPresenter();
@@ -220,12 +224,24 @@ public class SelectionElement implements FlyOverHandler, SelectionHandler, Selec
 		RootPanel.get("drag").getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
 	}
 	
-	public boolean getProcessFound() {
-		return processFound;
+	public int getGreatestPriorityFound() {
+		return greatestPriorityFound;
 	}
 
-	public void setProcessFound(boolean processFound) {
-		this.processFound = processFound;
+	public void setPriorityOfProcess(int priority) {
+		greatestPriorityFound = Math.max(greatestPriorityFound,priority);
+	}
+
+	public void setProcessFound() {
+		processFound = true;
+	}
+
+	public boolean isProcessDone() {
+		return processDone;
+	}
+
+	public void setProcessDone() {
+		processDone = true;
 	}
 
 }

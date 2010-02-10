@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
@@ -60,43 +61,11 @@ public abstract class MathMLElement extends Widget {
 
 	private Map<String,String> style = new HashMap<String,String>();
 
-//	public void setStyle(short style) {
-//		this.style = new HashMap<String,String>();
-//		switch(style) {
-//		case MathObjectElementPresenter.STATE_NONE:
-//			break;
-//		case MathObjectElementPresenter.STYLE_OK_LEFT:
-//			setStyleAttribute("border-left","plain 2px green");
-//			break;
-//		case MathObjectElementPresenter.STYLE_OK_RIGHT:
-//			setStyleAttribute("border-right","plain 2px green");
-//			break;
-//		case MathObjectElementPresenter.STYLE_OK_TOP:
-//			setStyleAttribute("border-top","plain 2px green");
-//			break;
-//		case MathObjectElementPresenter.STYLE_OK_BOTTOM:
-//			setStyleAttribute("border-bottom","plain 2px green");
-//			break;
-//		case MathObjectElementPresenter.STYLE_WARNING_LEFT:
-//			setStyleAttribute("border-left","plain 2px orange");
-//			break;
-//		case MathObjectElementPresenter.STYLE_WARNING_RIGHT:
-//			setStyleAttribute("border-right","plain 2px orange");
-//			break;
-//		case MathObjectElementPresenter.STYLE_WARNING_TOP:
-//			setStyleAttribute("border-top","plain 2px orange");
-//			break;
-//		case MathObjectElementPresenter.STYLE_WARNING_BOTTOM:
-//			setStyleAttribute("border-bottom","plain 2px orange");
-//			break;
-//		}
-//		
-//		updateStyle();
-//	}
 	
 	public MathMLElement(String elementName) {
 		setElement(impl.createElement(elementName));
 		setStyleClass(MathObjectElementPresenter.STYLE_CLASS_NONE);
+		disableContextMenu(getElement());
 	}
 
 	public void appendChild(MathMLElement child) {
@@ -151,5 +120,47 @@ public abstract class MathMLElement extends Widget {
 		}
 		getElement().setAttribute("style", value);
 	}
+
+  /**
+   * Disables the browsers default context menu for the specified element.
+   * @param elem the element whose context menu will be disabled
+   */
+	public static native void disableContextMenu(Element elem) /*-{
+		elem.oncontextmenu=function() {  return false};
+	}-*/;
+
+//	public void setStyle(short style) {
+//	this.style = new HashMap<String,String>();
+//	switch(style) {
+//	case MathObjectElementPresenter.STATE_NONE:
+//		break;
+//	case MathObjectElementPresenter.STYLE_OK_LEFT:
+//		setStyleAttribute("border-left","plain 2px green");
+//		break;
+//	case MathObjectElementPresenter.STYLE_OK_RIGHT:
+//		setStyleAttribute("border-right","plain 2px green");
+//		break;
+//	case MathObjectElementPresenter.STYLE_OK_TOP:
+//		setStyleAttribute("border-top","plain 2px green");
+//		break;
+//	case MathObjectElementPresenter.STYLE_OK_BOTTOM:
+//		setStyleAttribute("border-bottom","plain 2px green");
+//		break;
+//	case MathObjectElementPresenter.STYLE_WARNING_LEFT:
+//		setStyleAttribute("border-left","plain 2px orange");
+//		break;
+//	case MathObjectElementPresenter.STYLE_WARNING_RIGHT:
+//		setStyleAttribute("border-right","plain 2px orange");
+//		break;
+//	case MathObjectElementPresenter.STYLE_WARNING_TOP:
+//		setStyleAttribute("border-top","plain 2px orange");
+//		break;
+//	case MathObjectElementPresenter.STYLE_WARNING_BOTTOM:
+//		setStyleAttribute("border-bottom","plain 2px orange");
+//		break;
+//	}
+//	
+//	updateStyle();
+//}
 
 }

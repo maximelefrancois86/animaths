@@ -4,6 +4,7 @@ import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.HasMouseDownHandlers;
 import com.google.gwt.event.dom.client.HasMouseUpHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -54,6 +55,9 @@ public class MathObjectDynamicPresenter extends MathObjectAbtractPresenter<MathO
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 		 	public void onPreviewNativeEvent(NativePreviewEvent event) {
+		 		EventTarget target = event.getNativeEvent().getEventTarget();
+		 		if(!Element.is(target))
+		 			return;
 		 		MathObjectElementPresenter<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 		 		switch(event.getTypeInt()) {
 		 		case Event.ONKEYUP :
