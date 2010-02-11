@@ -3,21 +3,21 @@ package fr.upmf.animaths.client.interaction.events;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class DropEvent extends GwtEvent<DropHandler>{
 
     private static final Type<DropHandler> TYPE = new Type<DropHandler>();
 
     private short state;
-    private MathObjectElementPresenter<?> element;
+    private MOElement<?> element;
     private NativeEvent event;
     
     public static Type<DropHandler> getType() {
         return TYPE;
     }
 
-    public DropEvent(MathObjectElementPresenter<?> object, NativeEvent event) {
+    public DropEvent(MOElement<?> object, NativeEvent event) {
     	if(object!=null)
     		this.state = object.getStyleClass();
     	this.element = object;
@@ -42,7 +42,7 @@ public class DropEvent extends GwtEvent<DropHandler>{
 		return state;
 	}
 	
-	public MathObjectElementPresenter<?> getElement() {
+	public MOElement<?> getElement() {
 		return element;
 	}
 

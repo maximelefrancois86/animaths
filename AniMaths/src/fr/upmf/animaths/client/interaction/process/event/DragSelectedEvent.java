@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.interaction.process.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class DragSelectedEvent extends GwtEvent<DragSelectedHandler>{
 
@@ -12,12 +12,12 @@ public class DragSelectedEvent extends GwtEvent<DragSelectedHandler>{
         return TYPE;
     }
 
-    private MathObjectElementPresenter<?> whereElement = null;    
+    private MOElement<?> whereElement = null;    
     private short zoneH;
     private short zoneV;
     private boolean firstLevel;
 
-    public DragSelectedEvent(MathObjectElementPresenter<?> whereElement, short zoneH, short zoneV, boolean firstLevel) {
+    public DragSelectedEvent(MOElement<?> whereElement, short zoneH, short zoneV, boolean firstLevel) {
     	this.whereElement = whereElement;
 		this.zoneH = zoneH;
 		this.zoneV = zoneV;
@@ -34,7 +34,7 @@ public class DragSelectedEvent extends GwtEvent<DragSelectedHandler>{
 		return getType();
 	}
 	
-	public MathObjectElementPresenter<?> getWhereElement() {
+	public MOElement<?> getWhereElement() {
 		return whereElement;
 	}
 

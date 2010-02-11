@@ -1,19 +1,19 @@
-#Mon Feb 08 11:12:48 CET 2010
+#Thu Feb 11 09:53:08 CET 2010
 eclipse.preferences.version=1
-encoding//src/fr/upmf/animaths/client/interaction/SelectionElement.java=UTF-8
+encoding//src/fr/upmf/animaths/client/interaction/MOCoreInteraction.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/AniMathsPresenter.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLElement.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLFrac.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLGenericAtom.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLIdentifier.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImpl.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImplIE.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLImplStandard.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLMath.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLNumber.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLOperator.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathML/MathMLRow.java=UTF-8
-encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementDisplay.java=utf-8
-encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectMultiplyElementPresenter.java=utf-8
-encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementDisplay.java=utf-8
-encoding//src/fr/upmf/animaths/client/mvp/MathObject/MathObjectSignedElementPresenter.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLElement.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLFrac.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLGenericAtom.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLIdentifier.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLImpl.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLImplIE.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLImplStandard.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLMath.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLNumber.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLOperator.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLRow.java=UTF-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MOMultiplyElement.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MOMultiplyElementDisplay.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MOSignedElement.java=utf-8
+encoding//src/fr/upmf/animaths/client/mvp/MathObject/MOSignedElementDisplay.java=utf-8

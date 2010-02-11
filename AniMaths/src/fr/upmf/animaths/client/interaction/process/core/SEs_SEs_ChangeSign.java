@@ -1,31 +1,31 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
-import fr.upmf.animaths.client.interaction.process.MathObjectProcess;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectMultiplyElementPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectSignedElementPresenter;
+import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_SEs_ChangeSign extends MathObjectProcess{
+public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 
 	private static final SEs_SEs_ChangeSign instance = new SEs_SEs_ChangeSign();
 	protected SEs_SEs_ChangeSign() {}
 	public static void setEnabled() {
-		MathObjectProcess.setEnabled(instance);
+		MOAbstractProcess.setEnabled(instance);
 	}
 
 	@Override
 	protected boolean isProcessInvolved() {
-		if(selectedElement instanceof MathObjectSignedElementPresenter) {
-			if(((MathObjectSignedElementPresenter) selectedElement).getChild() instanceof MathObjectSignedElementPresenter)
+		if(selectedElement instanceof MOSignedElement) {
+			if(((MOSignedElement) selectedElement).getChild() instanceof MOSignedElement)
 				return true;
-			if(((MathObjectSignedElementPresenter) selectedElement).getMathObjectParent() instanceof MathObjectSignedElementPresenter)
+			if(((MOSignedElement) selectedElement).getMathObjectParent() instanceof MOSignedElement)
 				return true;
 		}
-		if(selectedElement instanceof MathObjectMultiplyElementPresenter) {
-			MathObjectElementPresenter<?> child = ((MathObjectMultiplyElementPresenter) selectedElement).getChild();
-			if(child instanceof MathObjectSignedElementPresenter) {
-				MathObjectElementPresenter<?> greatChild = ((MathObjectSignedElementPresenter) child).getChild();
-				if(greatChild instanceof MathObjectSignedElementPresenter) {
+		if(selectedElement instanceof MOMultiplyElement) {
+			MOElement<?> child = ((MOMultiplyElement) selectedElement).getChild();
+			if(child instanceof MOSignedElement) {
+				MOElement<?> greatChild = ((MOSignedElement) child).getChild();
+				if(greatChild instanceof MOSignedElement) {
 					selectedElement = child;
 					return true;
 				}
@@ -36,8 +36,8 @@ public final class SEs_SEs_ChangeSign extends MathObjectProcess{
 
 	@Override
 	protected int getPriorityOfProcess() {
-		if(whereElement instanceof MathObjectSignedElementPresenter) {
-			MathObjectSignedElementPresenter where = (MathObjectSignedElementPresenter) whereElement;
+		if(whereElement instanceof MOSignedElement) {
+			MOSignedElement where = (MOSignedElement) whereElement;
 			if(where.getChild()==selectedElement || where.getMathObjectParent()==selectedElement) {
 				return 1;
 			}
@@ -47,10 +47,10 @@ public final class SEs_SEs_ChangeSign extends MathObjectProcess{
 
 	@Override
 	protected void executeProcess() {
-		assert whereElement instanceof MathObjectSignedElementPresenter;
-		assert selectedElement instanceof MathObjectSignedElementPresenter;
-		MathObjectSignedElementPresenter where = (MathObjectSignedElementPresenter) whereElement;
-		MathObjectSignedElementPresenter selected = (MathObjectSignedElementPresenter) selectedElement;
+		assert whereElement instanceof MOSignedElement;
+		assert selectedElement instanceof MOSignedElement;
+		MOSignedElement where = (MOSignedElement) whereElement;
+		MOSignedElement selected = (MOSignedElement) selectedElement;
 		if(where.getChild()==selectedElement) {
 			where.setMinus(where.isMinus()^selected.isMinus());
 			where.setChild(selected.getChild());
