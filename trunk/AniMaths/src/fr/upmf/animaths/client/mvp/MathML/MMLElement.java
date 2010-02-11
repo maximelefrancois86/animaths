@@ -57,6 +57,7 @@ public abstract class MMLElement extends Widget {
 		styleClasses.add(MOElement.STYLE_CLASS_OK,"ok");
 		styleClasses.add(MOElement.STYLE_CLASS_CAUTION,"caution");
 		styleClasses.add(MOElement.STYLE_CLASS_NO,"no");
+		styleClasses.add(MOElement.STYLE_CLASS_FOCUS,"focus");
 	};
 
 	private Map<String,String> style = new HashMap<String,String>();

@@ -12,6 +12,7 @@ public interface IMOHasStyleClass {
 	public static final short STYLE_CLASS_OK = 7;
 	public static final short STYLE_CLASS_CAUTION = 8;
 	public static final short STYLE_CLASS_NO = 9;
+	public static final short STYLE_CLASS_FOCUS = 10;
 	
 	public void setStyleClass(short styleClass);
 	public short getStyleClass();

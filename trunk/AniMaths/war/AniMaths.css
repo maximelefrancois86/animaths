@@ -101,7 +101,7 @@ math {
 	color: #FF333;
 }
 
-#focus {
+#drag math .focus {
   	font-size: 14pt;
 	color:red;
 }

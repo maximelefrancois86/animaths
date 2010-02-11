@@ -29,7 +29,7 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 	public MOAddContainer(MOSignedElement ... children) {
 		this();
 		for(MOSignedElement child : children)
-			addChild(child);
+			add(child);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 	public MOAddContainer clone() {
 		MOAddContainer object = new MOAddContainer();
 		for(MOSignedElement child : children)
-			object.addChild(child.clone());
+			object.add(child.clone());
 		return object;
 	}
 
@@ -136,10 +136,37 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		}
 	}
 
+	public int size() {
+		return children.size();		
+	}
+
 	@Override
-	public void addChild(MOSignedElement child) {
+	public void add(MOSignedElement child) {
 		child.setMathObjectParent(this);
 		children.add(child);
+	}
+
+	public void add(int index, MOSignedElement child) {
+		child.setMathObjectParent(this);
+		children.add(index, child);
+	}
+
+	@Override
+	public void add(MOSignedElement child, MOSignedElement refChild, boolean after) {
+		int index = children.indexOf(refChild);
+		assert index!=-1;
+		if(after)
+			index++;
+		add(index, child);
+	}
+
+	public MOSignedElement get(int index) {
+		return children.get(index);
+	}
+
+	@Override
+	public void remove(MOSignedElement child) {
+		children.remove(child);
 	}
 
 	@Override
@@ -156,14 +183,16 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		return children.get(children.size()-1).getLastDOMElement();
 	}
 
-	public List<MOSignedElement> getChildren() {
-		return children;
+	public void changeSign() {
+		for(MOSignedElement child: children)
+			child.setMinus(!child.isMinus());
 	}
-
+	
 	private void setNeedsSigns() {
 		children.get(0).setNeedsSign(false);
 		for(int i=1;i<children.size();i++)
 			children.get(i).setNeedsSign(true);
 	}
+
 }	
 

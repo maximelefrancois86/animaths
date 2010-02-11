@@ -22,14 +22,21 @@ import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeHandler;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionHandler;
+import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_AC_E_ChangeHandSide;
+import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
 import fr.upmf.animaths.client.mvp.MOStaticPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.IMOHasStyleClass;
+import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
+import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
 public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler {
 	
@@ -51,6 +58,10 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	public static void setPresenterAndRun(MODynamicPresenter presenter) {
 		MOCoreInteraction.presenter = presenter;
 		instance.setHandler(FlyOverEvent.getType());
+		SEs_AC_Commutation.setEnabled();
+		MEs_MC_Commutation.setEnabled();
+		SEs_SEs_ChangeSign.setEnabled();
+		SEs_AC_E_ChangeHandSide.setEnabled();
 	}
 
 	@Override
@@ -122,7 +133,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			if(processFound) {
 				removeHandler(SelectionChangeEvent.getType());
 				removeHandler(GrabEvent.getType());
-				initCopiedPresenter(selectedElement.clone());
+				initCopiedPresenter(selectedElement);
 				selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
 				setHandler(DragEvent.getType());
 				setHandler(DropEvent.getType());
@@ -201,29 +212,6 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		return selectedElement;
 	}
 	
-	public MOStaticPresenter getCopiedPresenter() {
-		return copiedPresenter;
-	}
-	
-	public void initCopiedPresenter(MOElement<?> element) {
-		clearCopiedPresenter();
-		copiedPresenter.setElement(selectedElement.clone());
-		RootPanel.get("drag").add(copiedPresenter.getDisplay().asWidget());
-		RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
-	}
-	
-	public void clearCopiedPresenter() {
-		copiedPresenter = new MOStaticPresenter();
-		RootPanel.get("drag").getElement().setAttribute("style","left:0;top:0;");
-		RootPanel.get("drag").clear();
-		if(RootPanel.get("drag").getElement().hasChildNodes())
-			RootPanel.get("drag").getElement().getFirstChild().removeFromParent();
-	}
-	
-	public void moveCopiedPresenter(int x, int y) {
-		RootPanel.get("drag").getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
-	}
-	
 	public int getGreatestPriorityFound() {
 		return greatestPriorityFound;
 	}
@@ -242,6 +230,45 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	public void setProcessDone() {
 		processDone = true;
+	}
+
+	public MOStaticPresenter getCopiedPresenter() {
+		return copiedPresenter;
+	}
+	
+	private void initCopiedPresenter(MOElement<?> element) {
+		clearCopiedPresenter();
+		copiedPresenter.setElement(element.clone());
+		RootPanel.get("drag").add(copiedPresenter.getDisplay().asWidget());
+		RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
+	}
+	
+	private void clearCopiedPresenter() {
+		copiedPresenter = new MOStaticPresenter();
+		RootPanel.get("drag").getElement().setAttribute("style","left:0;top:0;");
+		RootPanel.get("drag").clear();
+		if(RootPanel.get("drag").getElement().hasChildNodes())
+			RootPanel.get("drag").getElement().getFirstChild().removeFromParent();
+	}
+	
+	private void moveCopiedPresenter(int x, int y) {
+		RootPanel.get("drag").getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
+	}
+	
+	public void changeSign() {
+		MOElement<?> element = copiedPresenter.getElement();
+		if(element instanceof MOSignedElement)
+			((MOSignedElement) element).setMinus(!((MOSignedElement) element).isMinus());
+		else if(element instanceof MOAddContainer)
+			((MOAddContainer)element).changeSign();
+		else
+			element = new MOSignedElement(element,true);
+		copiedPresenter.setElement(element);
+		if(element instanceof MOSignedElement)
+			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
+		else if (element instanceof MOAddContainer)
+			for(int i=0;i<((MOAddContainer)element).size();i++)
+				((MOAddContainer)element).get(i).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
 	}
 
 }
