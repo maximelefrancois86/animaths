@@ -1,7 +1,5 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
-import java.util.List;
-
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -41,13 +39,7 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 
 	@Override
 	protected void executeProcess() {
-		assert whereElement instanceof MOSignedElement;
-		List<MOSignedElement> children = parentOfSelected.getChildren();
-		children.remove(children.indexOf(selected));
-		int indexOfWhere = children.indexOf(whereElement);
-		assert indexOfWhere != -1;
-		if(zoneH==MOElement.ZONE_EE)
-			indexOfWhere++;
-		children.add(indexOfWhere,selected);
+		parentOfSelected.remove(selected);
+		parentOfSelected.add(selected,(MOSignedElement)whereElement,zoneH==MOElement.ZONE_EE);
 	}
 }

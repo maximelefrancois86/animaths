@@ -39,11 +39,12 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	public MOMultiplyContainer(MOMultiplyElement ... children) {
 		this();
 		for(MOMultiplyElement child : children)
-			addChild(child);
+			add(child);
 	}
 
 	@Override
 	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+		checkChildrenPlaces();
 		MMLElement mmlp = mathMLParent;
 		boolean needsFence = needsFence();
 		if(needsFence) {
@@ -65,7 +66,7 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 			denominator.get(0).setNeedsSign(false);
 			mmlp = display.getNumeratorRow();
 			if(numerator.size()==0)
-				addChild(new MOMultiplyElement(new MONumber(1)));
+				add(new MOMultiplyElement(new MONumber(1)));
 			for(MOMultiplyElement child : denominator)
 				child.pack(display.getDenominatorRow(), presenter);
 		}
@@ -91,10 +92,23 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	public MOMultiplyContainer clone() {
 		MOMultiplyContainer object = new MOMultiplyContainer();
 		for(MOMultiplyElement child : numerator)
-			object.addChild(child.clone());
+			object.add(child.clone());
 		for(MOMultiplyElement child : denominator)
-			object.addChild(child.clone());
+			object.add(child.clone());
 		return object;
+	}
+
+	private void checkChildrenPlaces() {
+		for(MOMultiplyElement child : numerator)
+			if(child.isDivided()) {
+				numerator.remove(child);
+				denominator.add(child);
+			}
+		for(MOMultiplyElement child : denominator)
+			if(!child.isDivided()) {
+				denominator.remove(child);
+				numerator.add(child);
+			}
 	}
 
 	@Override
@@ -214,15 +228,6 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	}
 
 	@Override
-	public void addChild(MOMultiplyElement child) {
-		child.setMathObjectParent(this);
-		if(!child.isDivided())
-			numerator.add(child);
-		else
-			denominator.add(child);
-	}
-
-	@Override
 	public Element getFirstDOMElement() {
 		if(display.getLFence()!=null)
 			return display.getLFence().getElement();
@@ -240,14 +245,6 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 		return numerator.get(numerator.size()-1).getLastDOMElement();
 	}
 
-	public List<MOMultiplyElement> getNumerator() {
-		return numerator;
-	}
-
-	public List<MOMultiplyElement> getDenominator() {
-		return denominator;
-	}
-
 	private void setNeedsSigns() {
 		if(numerator.size()!=0) {
 			numerator.get(0).setNeedsSign(false);
@@ -259,6 +256,50 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 			for(int i=1;i<denominator.size();i++)
 				denominator.get(i).setNeedsSign(true);
 		}
+	}
+	
+	@Override
+	public void add(MOMultiplyElement child) {
+		child.setMathObjectParent(this);
+		List<MOMultiplyElement> children = (child.isDivided())? denominator: numerator;
+		children.add(child);
+	}
+
+	@Override
+	public void add(MOMultiplyElement child, MOMultiplyElement refChild, boolean after) {
+		child.setMathObjectParent(this);
+		int index = numerator.indexOf(refChild);
+		if(index!=-1) {
+			assert !child.isDivided() && !refChild.isDivided();
+			if(after)
+				index++;
+			numerator.add(index,child);
+		}
+		else {
+			index = denominator.indexOf(refChild);
+			assert index!=-1 && child.isDivided() && refChild.isDivided();
+			if(after)
+				index++;
+			denominator.add(index,child);
+		}
+	}
+
+	@Override
+	public void remove(MOMultiplyElement child) {
+		if(numerator.contains(child))
+			numerator.remove(child);
+		else {
+			assert denominator.contains(child);
+			denominator.remove(child);
+		}
+	}
+
+	public int sizeOfNumerator() {
+		return numerator.size();
+	}
+
+	public int sizeOfDenominator() {
+		return denominator.size();
 	}
 
 }	

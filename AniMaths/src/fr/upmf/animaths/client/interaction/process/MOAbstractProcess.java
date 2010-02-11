@@ -30,7 +30,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 	
-	protected MOCoreInteraction mOCoreInteraction;
+	protected MOCoreInteraction coreInteraction;
 	protected MODynamicPresenter presenter;
 	protected MOElement<?> selectedElement;
 
@@ -46,12 +46,12 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	@Override
 	public final void onGrabSelected(GrabSelectedEvent event) {
-		mOCoreInteraction = event.getSelectionElement();
-		presenter = mOCoreInteraction.getPresenter();
-		selectedElement = mOCoreInteraction.getSelectedElement();
+		coreInteraction = event.getSelectionElement();
+		presenter = coreInteraction.getPresenter();
+		selectedElement = coreInteraction.getSelectedElement();
 		if(isProcessInvolved()) {
 			setHandler(DragSelectedEvent.getType());
-			mOCoreInteraction.setProcessFound();
+			coreInteraction.setProcessFound();
 		}
 	}
 	
@@ -73,7 +73,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 			choosenZoneH = zoneH;
 			choosenZoneV = zoneV;
 			setHandler(DropSelectedEvent.getType());
-			mOCoreInteraction.setPriorityOfProcess(priorityOfProcess);
+			coreInteraction.setPriorityOfProcess(priorityOfProcess);
 		}
 	}
 	
@@ -81,14 +81,14 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	public final void onDropSelected(DropSelectedEvent event) {
 		removeHandler(DragSelectedEvent.getType());
 		removeHandler(DropSelectedEvent.getType());
-		if(mOCoreInteraction.isProcessDone() || mOCoreInteraction.getGreatestPriorityFound()!=priorityOfProcess)
+		if(coreInteraction.isProcessDone() || coreInteraction.getGreatestPriorityFound()!=priorityOfProcess)
 			return;
 		zoneH = choosenZoneH;
 		zoneV = choosenZoneV;
 		whereElement = choosenWhereElement;
 		executeProcess();
 		presenter.setElement(presenter.getElement());
-		mOCoreInteraction.setProcessDone();
+		coreInteraction.setProcessDone();
 	}
 	
 	protected abstract boolean isProcessInvolved();
