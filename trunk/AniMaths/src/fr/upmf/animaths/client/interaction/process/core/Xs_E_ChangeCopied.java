@@ -2,21 +2,10 @@ package fr.upmf.animaths.client.interaction.process.core;
 
 import java.util.List;
 
-import fr.upmf.animaths.client.interaction.SelectionElement;
-import fr.upmf.animaths.client.interaction.process.MathObjectProcess;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
-import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
-import fr.upmf.animaths.client.mvp.MathObjectDynamicPresenter;
-import fr.upmf.animaths.client.mvp.MathObjectStaticPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectEquationPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectIdentifierPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectNumberPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectSignedElementPresenter;
 
-public final class Xs_E_ChangeCopied extends MathObjectProcess{
+public final class Xs_E_ChangeCopied extends MOProcess{
 
 	private static final Xs_E_ChangeCopied instance = new Xs_E_ChangeCopied();
 	protected Xs_E_ChangeCopied() {}

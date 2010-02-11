@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.interaction.process.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.interaction.SelectionElement;
+import fr.upmf.animaths.client.interaction.MOCoreInteraction;
 
 public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
 
@@ -12,10 +12,10 @@ public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
         return TYPE;
     }
 
-    private SelectionElement selectionElement;
+    private MOCoreInteraction mOCoreInteraction;
 
-    public GrabSelectedEvent(SelectionElement selectionElement) {
-		this.selectionElement = selectionElement;
+    public GrabSelectedEvent(MOCoreInteraction mOCoreInteraction) {
+		this.mOCoreInteraction = mOCoreInteraction;
     }
     
 	@Override
@@ -28,8 +28,8 @@ public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
 		return getType();
 	}
 	
-	public SelectionElement getSelectionElement() {
-		return selectionElement;
+	public MOCoreInteraction getSelectionElement() {
+		return mOCoreInteraction;
 	}
 
 }

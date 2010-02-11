@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.interaction.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class SelectionEvent extends GwtEvent<SelectionHandler>{
 
@@ -14,7 +14,7 @@ public class SelectionEvent extends GwtEvent<SelectionHandler>{
         return TYPE;
     }
 
-    public SelectionEvent(MathObjectElementPresenter<?> element) {
+    public SelectionEvent(MOElement<?> element) {
     	if(element!=null)
     		this.styleClass = element.getStyleClass();
     }

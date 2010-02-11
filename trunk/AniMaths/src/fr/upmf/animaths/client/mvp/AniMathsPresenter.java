@@ -11,13 +11,13 @@ import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.inject.Inject;
 
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectAddContainerPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectEquationPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectIdentifierPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectMultiplyContainerPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectMultiplyElementPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectNumberPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectSignedElementPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
+import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
+import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
+import fr.upmf.animaths.client.mvp.MathObject.MONumber;
+import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
 /**
  * The business logic for AniMaths.
@@ -29,8 +29,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 
 	public static EventBus eventBus;
 	
-	private MathObjectDynamicPresenter mathObjectDynamicPresenter;
-	public List<MathObjectStaticPresenter> mathObjectStaticPresenters;
+	private MODynamicPresenter mODynamicPresenter;
+	public List<MOStaticPresenter> mOStaticPresenters;
 	public List<StaticManipulationWordingPresenter> staticManipulationWordingPresenters;
 	
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
@@ -49,19 +49,19 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	@Override
 	protected void onBind() {
 		
-		MathObjectIdentifierPresenter x = new MathObjectIdentifierPresenter("x");
-		MathObjectEquationPresenter eq = new MathObjectEquationPresenter();
+		MOIdentifier x = new MOIdentifier("x");
+		MOEquation eq = new MOEquation();
 		eq.setLeftHandSide(
-			new MathObjectAddContainerPresenter(
-					new MathObjectSignedElementPresenter(new MathObjectIdentifierPresenter("x"),true),
-					new MathObjectSignedElementPresenter(new MathObjectNumberPresenter(10)),
-					new MathObjectSignedElementPresenter(
-							new MathObjectMultiplyContainerPresenter(
-									new MathObjectMultiplyElementPresenter(new MathObjectNumberPresenter(2)),
-									new MathObjectMultiplyElementPresenter(
-											new MathObjectAddContainerPresenter(
-													new MathObjectSignedElementPresenter(new MathObjectIdentifierPresenter("x"),false),
-													new MathObjectSignedElementPresenter(new MathObjectNumberPresenter(1),true)
+			new MOAddContainer(
+					new MOSignedElement(new MOIdentifier("x"),true),
+					new MOSignedElement(new MONumber(10)),
+					new MOSignedElement(
+							new MOMultiplyContainer(
+									new MOMultiplyElement(new MONumber(2)),
+									new MOMultiplyElement(
+											new MOAddContainer(
+													new MOSignedElement(new MOIdentifier("x"),false),
+													new MOSignedElement(new MONumber(1),true)
 											)
 									)
 							)
@@ -69,25 +69,25 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			)
 		);
 		eq.setRightHandSide(
-			new MathObjectMultiplyContainerPresenter(
-					new MathObjectMultiplyElementPresenter(
-							new MathObjectSignedElementPresenter(
-									new MathObjectSignedElementPresenter(
-											new MathObjectSignedElementPresenter(
-													new MathObjectNumberPresenter(3),
+			new MOMultiplyContainer(
+					new MOMultiplyElement(
+							new MOSignedElement(
+									new MOSignedElement(
+											new MOSignedElement(
+													new MONumber(3),
 											true),
 									false),
 							true)
 					),
-					new MathObjectMultiplyElementPresenter(
-							new MathObjectAddContainerPresenter(
-									new MathObjectSignedElementPresenter(
-											new MathObjectMultiplyContainerPresenter(
-													new MathObjectMultiplyElementPresenter(new MathObjectNumberPresenter(2)),
-													new MathObjectMultiplyElementPresenter(new MathObjectIdentifierPresenter("x"))
+					new MOMultiplyElement(
+							new MOAddContainer(
+									new MOSignedElement(
+											new MOMultiplyContainer(
+													new MOMultiplyElement(new MONumber(2)),
+													new MOMultiplyElement(new MOIdentifier("x"))
 											)
 									),
-									new MathObjectSignedElementPresenter(new MathObjectNumberPresenter(1))
+									new MOSignedElement(new MONumber(1))
 							)
 					)
 			)
@@ -95,8 +95,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 
 		display.getExerciseWordingWidget().pack("Isoler ", x," dans l'équation ", eq);
 
-		mathObjectDynamicPresenter = new MathObjectDynamicPresenter();
-		mathObjectDynamicPresenter.setElement(eq);
+		mODynamicPresenter = new MODynamicPresenter();
+		mODynamicPresenter.setElement(eq);
 		
 	}
 

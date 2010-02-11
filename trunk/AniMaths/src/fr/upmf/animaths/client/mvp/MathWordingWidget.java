@@ -4,8 +4,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
-import fr.upmf.animaths.client.mvp.MathML.MathMLMath;
-import fr.upmf.animaths.client.mvp.MathObject.MathObjectElementPresenter;
+import fr.upmf.animaths.client.mvp.MathML.MMLMath;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 /**
  * The wording of an exercise...
@@ -27,9 +27,9 @@ public class MathWordingWidget extends Composite {
 		for(Object arg : args) {
 			if(arg instanceof String)
 				panel.getElement().appendChild((new Label((String) arg).getElement()).getChildNodes().getItem(0));
-			else if(arg instanceof MathObjectElementPresenter<?>) {
-				MathMLMath wrapper = new MathMLMath(false);
-				((MathObjectElementPresenter<?>) arg).clone().pack(wrapper,null);
+			else if(arg instanceof MOElement<?>) {
+				MMLMath wrapper = new MMLMath(false);
+				((MOElement<?>) arg).clone().pack(wrapper,null);
 				panel.add(wrapper);
 			}
 			else
