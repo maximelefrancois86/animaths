@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+@import "./server-typo.css";
+@import "./server-layout.css";
+@import "./AniMaths-typo.css";
+
+body {
+	margin: 0;
+	padding: 0;
+}
+#srv-header { margin-bottom: 0;}
+h1 {
+	top: 0;
+	left: 0;
+	margin: 0;
+	margin-left: .5em;
+}
+
+math {
+	-moz-user-select: none;
+	font-size: 11pt;
+	cursor: default;
+}
+
+/**
+/* EQUATIONS LIST 
+*/
+#exerciseWording, #view {
+	width: 70%;
+}
+#exerciseWording {
+	margin-bottom:1em;
+}
+#view {
+	float: left;
+}
+
+#view math {
+	
+}
+
+
+/*Attention � quelquechose*/
+#drag math .caution {
+	background-color: #FFFFDD;
+	color: #FFFF33;
+}
+
+/*Impossible de l�cher*/
+#drag math .no {
+	background-color: #FFDDDD;
+	color: #FF333;
+}
+
+#drag math .focus {
+  	font-size: 14pt;
+	color:red;
+}
+
+/**
+/*HELP
+*/
+#help {
+	float: right;
+	height: 100%;
+	width: 22%;
+	/*	position:absolute;
+	top: 20%;
+	left: 75%;
+	width: 25%;
+	*/
+}
