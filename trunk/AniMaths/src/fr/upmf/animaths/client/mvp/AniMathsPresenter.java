@@ -8,10 +8,12 @@ import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 
+import fr.upmf.animaths.client.AniMathsService;
+import fr.upmf.animaths.client.AniMathsServiceAsync;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
@@ -29,11 +31,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display> {
 
 	public static EventBus eventBus;
+	private static final AniMathsServiceAsync aniMathsService = GWT.create(AniMathsService.class);
 
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOStaticPresenter> mOStaticPresenters;
 	public List<StaticManipulationWordingPresenter> staticManipulationWordingPresenters;
-	PopupPanel popup ;	
+
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
 	}

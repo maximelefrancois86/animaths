@@ -7,6 +7,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
 h1 {
 	top: 0;
 	left: 0;
@@ -22,8 +23,12 @@ h1 {
   border-bottom-style:solid;
   border-bottom-color:red;
   width: *;
+}
+  
+#srv-header {
+  	margin-bottom: 0;
+}
 
-#srv-header { margin-bottom: 0;}
 #srv-header .gwt-Button{
 	padding:0 .25em;
 	margin:0.05em 0.25em;

@@ -5,18 +5,6 @@
 
 <web-app>
   
-  <!-- Servlets -->
-<!-- 
-  <servlet>
-    <servlet-name>aniMathsServlet</servlet-name>
-    <servlet-class>fr.upmf.animaths.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>aniMathsServlet</servlet-name>
-    <url-pattern>/animaths/aniMaths</url-pattern>
-  </servlet-mapping>
- -->    
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>AniMaths.html</welcome-file>
@@ -24,7 +12,7 @@
 
   <servlet>
     <servlet-name>service</servlet-name>
-    <servlet-class>fr.upmf.animaths.server.ServiceImpl</servlet-class>
+    <servlet-class>fr.upmf.animaths.server.AniMathsServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
