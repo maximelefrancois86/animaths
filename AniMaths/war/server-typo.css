@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* TAGS */
+abbr, label[title] {
+  cursor: help;
+}
+body {
+  font-family:'DejaVu Sans',Arial,sans-serif;
+  font-size:9pt;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  line-height: 1.5em;
+  color: #333;
+}
+
+a, :link {
+  color: #006EBA;
+}
+a:hover, a:visited:hover {color: #88BA00;}
+a:active, a:visited:active {color: #ffa500;}
+a:visited {
+  color:#777;
+  font-style: italic;
+}
+abbr {
+  font-family: 'DejaVu Serif', 'Times New Roman', georgia, serif;
+  text-decoration: none;
+  border-bottom: thin dotted;
+}
+abbr:hover { cursor: help; }
+
+/* the abbreviation description */
+/* from http://camendesign.com/code/uth7_floaty-abbrs */
+abbr:nth-child(n)[title]:hover::before {
+	/* write out the abbreviation description */
+  font-family:'DejaVu Sans',Arial,sans-serif;
+	content: attr(title);
+	padding: .1em .2em;
+	/* because of `right` above, the width is technically 0px, therefore `nowrap` is required! */
+	color: #333; white-space: nowrap; text-indent: 0; border: thin solid #B8B88A;
+  font-size: x-small;
+  background-color: #FFC;
+  line-height: 1.5em;
+}
+
+#srv-header { border-bottom:thin dotted #DDD;}
+#srv-header, #srv-header * {
+  font-size: small;
+  font-style: normal;
+  font-family:'DejaVu Sans',Arial,sans-serif;
+}
+#breadcrumb li.step:before {
+  content: ' › ';
+  color: #aaa;
+}
+#breadcrumb li {
+  list-style-type: none;
+  margin-right:0.5em;
+}
+#breadcrumb li:last-child {
+  font-weight: bold;
+/*  color: */
+}
+#search-engine{
+  border: none;
+}
+#search-engine input[type=text] {
+  border: thin inset #ccc;
+  color: #666;
+  content: 'keywords';
+}
+#search-engine input[type=submit] {
+  border: thin outset #ccc;
+  color: #666;
+}
+#skip a[href], #skip a[href] {
+  font-size: 14pt;
+  color: yellow;
+  background-color: blue;
+  font-style: normal;
+  font-weight: bold;
+  white-space:pre;
+}
+
+
+div,p,span {color: inherit;}
+
+/* display the bookmark anchor after a heading */
+h2 {
+  padding-bottom: .1em;
+}
+h2[id]:hover:after,		/* due to a 10-year-old bug (!) in Gecko, you can’t select this text */
+ h3[id]:hover:after		{
+  display: inline;
+  content: " #" attr(id);
+  color: #ddd;
+  font-variant: normal;
+}
+
+hr { border: none; border-top: thin solid #ccc;}
+img {
+/*  background-color: #fff;*/
+  border: none;
+}
+p { margin: .25em;}
+strong {
+  font-weight: bold;
+}
+sup {
+  font-size:x-small;
+  vertical-align:baseline;
+}
+
+
+table {
+  color:#727255; /*autoindex*/
+}
+tr:hover { background-color: #f2f2da;}
+table+address, pre+address {
+  text-align: center;
+  font-size: 8pt;
+  color: #B8B88A;
+}
+table+address:before, table+address:after, pre+address:before, pre+address:after {
+  font-style: normal;
+  font-family: 'DejaVu Serif', 'Times New Roman', georgia, serif;
+  font-size: x-large;
+  vertical-align: middle;
+}
+table+address:before, pre+address:before { content: '{'; }
+table+address:after, pre+address:after { content: '}'; }
+
+/* IDs & CLASSES */
+#srv-footer { text-align: center; }
+#srv-footer ul {
+  list-style-type: none;
+}
+#srv-footer ul li {
+
+}
+
+.it { font-style: italic;}
+
+.tip {
+  background-color: #FFC;
+  color: #333;
+  border: thin solid #ccc;
+  font-size: small;
+  font-style: normal;
+  font-weight: normal;
+  font-family:'DejaVu Sans',Arial,sans-serif;
+  padding:0.25em;
+/*   opacity: .5; */
+}
+.tip.left:after, .tip.right:before {
+  color: #ccc;
+}
+.tip.left:after { content: "› "; }
+.tip.right:before { content: " ‹"; }
+
+

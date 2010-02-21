@@ -1,0 +1,122 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: 'DejaVu Sans', Arial, sans-serif;
+	font-size: 9pt;
+}
+
+math {
+	padding: 0.15em 0.25em;
+}
+
+/* RootLayoutPanel */
+.gwt-HTML {
+	background-color: #f5f5f5;
+}
+
+.gwt-SplitLayoutPanel-VDragger,.gwt-SplitLayoutPanel-HDragger {
+	background-color: #E3E9FF;
+}
+
+#exerciseWording {
+	font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
+	font-size: larger;
+	background-color:#F5F5F5;
+}
+
+#exerciseWording,#help,#view {
+	font-family: 'DejaVu Sans', Arial, sans-serif;
+	padding: 0 1em;
+}
+
+#help,#view {
+	border: thin solid #aaa;
+	padding: 1em;
+}
+
+#exerciseWording>div {
+	font-size: large;
+}
+
+#exerciseWording math {
+	background-color: #F5F5F5;
+	color: darkblue;
+}
+
+#help {
+	cursor: help;
+}
+
+h1 {
+	font-size: larger;
+	font-weight: bold;
+	color: #777777;
+}
+
+/* View */
+#view math * {
+	cursor: pointer;
+}
+
+/*L'objet s�lectionnable*/
+#view math .selectable {
+	background-color: #DDDDFF;
+}
+
+/*L'objet slectionn�*/
+#view math .selected {
+	background-color: #AAAAFF;
+	cursor: -moz-grab;
+}
+
+/*L'objet d�plac�*/
+#view math .dragged {
+	background-color: #EEEEEE;
+	color: #888888;
+	cursor: -moz-grabbing;
+}
+
+/*Quand il est possible de s�lectionner un deuxieme objet*/
+#view math .okAdd {
+	cursor: copy;
+}
+
+/*Quand il est possible de l�cher l'objet ici*/
+#view math .okDrop {
+	cursor: alias;
+}
+
+/*Quand il n'est pas permi de l�cher l'objet ici*/
+#view math .noDrop {
+	cursor: no-drop;
+}
+
+/**
+/*DRAGGED OBJECT 
+*/
+#drag {
+	position: absolute;
+}
+
+/*Tout va bien*/
+#drag math .ok {
+	background-color: #DDFFDD;
+	color: #33FF33;
+}
+
+/*Attention � quelquechose*/
+#drag math .caution {
+	background-color: #FFFFDD;
+	color: #FFFF33;
+}
+
+/*Impossible de l�cher*/
+#drag math .no {
+	background-color: #FFDDDD;
+	color: #FF333;
+}
+
+#focus {
+	font-size: 14pt;
+	color: red;
+}

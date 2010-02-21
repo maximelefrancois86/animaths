@@ -1,0 +1,48 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
+	xmlns:animaths='urn:import:fr.upmf.animaths.client'
+>
+	<ui:style src="AniMaths.css" />
+	<g:SplitLayoutPanel>
+		<g:north size='100'>
+			<g:HTMLPanel>
+				<h1 class='h'>Exercice</h1>
+				<div id='srv-header'>
+					<h2 class='h'>Breadcrumb</h2>
+					<ol class="hd" id="breadcrumb">
+						<li>
+							⌘
+							<a href="/">AniMaths</a>
+						</li>
+						<li class='step'>Exercice</li>
+					</ol>
+				</div>
+				<g:Button ui:field="saveButton"></g:Button>
+				<h2>Exercise Wording</h2>
+				<g:HTMLPanel ui:field="exerciseWording">
+<!--				<div id="exerciseWording"></div>-->
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:north>
+		<g:center>
+			<g:HTMLPanel>
+				<g:Label>equations</g:Label>
+				<h2 class='h'>Interactive Area</h2>
+				<g:HTMLPanel ui:field="view"  class="main-content"></g:HTMLPanel>
+<!--				<div id="view" class='main-content' style="user-select: none"></div>-->				
+				<div id="drag">
+				</div>
+			</g:HTMLPanel>
+		</g:center>
+		<g:east size='200'>
+			<g:HTMLPanel>
+				<h2 class='h'>Help</h2>
+				<div id="help">
+				</div>
+			</g:HTMLPanel>
+		</g:east>
+	</g:SplitLayoutPanel>
+
+</ui:UiBinder> 
