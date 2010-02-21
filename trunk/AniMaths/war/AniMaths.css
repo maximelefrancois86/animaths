@@ -13,12 +13,31 @@ h1 {
 	margin: 0;
 	margin-left: .5em;
 }
+
+#exerciseWording {
+	font-size: 10pt;
+	color:red;
+  position:relative;
+  padding-bottom: 0.5em;
+  border-bottom-style:solid;
+  border-bottom-color:red;
+  width: *;
+
 #srv-header { margin-bottom: 0;}
 #srv-header .gwt-Button{
 	padding:0 .25em;
 	margin:0.05em 0.25em;
 	float: right;
 }
+
+.gwt-DialogBox {
+  width: 400px;
+}
+
+.dialogVPanel {
+  margin: 5px;
+}
+
 math {
 	-moz-user-select: none;
 	font-size: 11pt;
@@ -36,11 +55,16 @@ math {
 	width:auto;
 }
 #view {
+  position:relative;
+  width: *;
 	float: left;
 }
 
 #view math {
-	
+	border-style:solid;
+	border-color:black;
+	width:75%;
+	left:0em;
 }
 
 
@@ -73,5 +97,11 @@ math {
 	top: 20%;
 	left: 75%;
 	width: 25%;
-	*/
+}
+
+
+.table-center
+{
+    margin-left            :    auto;
+    margin-right           :    auto;
 }

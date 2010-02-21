@@ -1,5 +1,6 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
+import fr.upmf.animaths.client.interaction.events.QuestionEvent;
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
@@ -46,9 +47,17 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 	}
 
 	@Override
+	protected short getTagOfProcess() {
+		return PROCESS_CAUTION;
+	}
+
+	@Override
 	protected void executeProcess() {
 		assert whereElement instanceof MOSignedElement;
 		assert selectedElement instanceof MOSignedElement;
+		
+		eventBus.fireEvent(new QuestionEvent());
+		
 		MOSignedElement where = (MOSignedElement) whereElement;
 		MOSignedElement selected = (MOSignedElement) selectedElement;
 		if(where.getChild()==selectedElement) {

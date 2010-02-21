@@ -1,6 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -134,13 +136,26 @@ public class MOEquation extends MOElement<MOEquation.Display> {
 		return getZone(y,top,centerEq,bottom,dIn,dOut);
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		return leftHandSide.getFirstDOMElement();
+//	@Override
+//	public Element getFirstDOMElement() {
+//		return leftHandSide.getFirstDOMElement();
+//	}
+//
+//	@Override
+//	public Element getLastDOMElement() {
+//		return rightHandSide.getLastDOMElement();
+//	}
+		
+	public static MOEquation parse(Element element) {
+		assert element.getTagName().equals("moe");
+		MOEquation moe = new MOEquation();
+		NodeList children = element.getChildNodes();
+		assert children.getLength()==2;
+		assert children.item(0).getNodeType() == Node.ELEMENT_NODE;
+		moe.setLeftHandSide(MOElement.parse((Element) children.item(0)));
+		assert children.item(1).getNodeType() == Node.ELEMENT_NODE;
+		moe.setRightHandSide(MOElement.parse((Element) children.item(1)));
+		return moe;
 	}
 
-	@Override
-	public Element getLastDOMElement() {
-		return rightHandSide.getLastDOMElement();
-	}
 }

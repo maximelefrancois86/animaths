@@ -18,10 +18,13 @@ import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.FlyOverHandler;
 import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.GrabHandler;
+import fr.upmf.animaths.client.interaction.events.QuestionEvent;
+import fr.upmf.animaths.client.interaction.events.QuestionHandler;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeHandler;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionHandler;
+import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_E_ChangeHandSide;
@@ -36,9 +39,11 @@ import fr.upmf.animaths.client.mvp.MathObject.IMOHasStyleClass;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler {
+public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler, QuestionHandler {
 	
 	private static MOCoreInteraction instance = new MOCoreInteraction();
 	private static MODynamicPresenter presenter;
@@ -49,19 +54,22 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private MOStaticPresenter copiedPresenter = new MOStaticPresenter();
 	private boolean processFound = false;
 	private int greatestPriorityFound = 0;
+	private short processTag = MOAbstractProcess.PROCESS_NO;
 	private boolean processDone = false;
-
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
+	private static QuestionPresenter question = new QuestionPresenter();
 
 	private MOCoreInteraction() { }
 	
 	public static void setPresenterAndRun(MODynamicPresenter presenter) {
 		MOCoreInteraction.presenter = presenter;
 		instance.setHandler(FlyOverEvent.getType());
+		instance.setHandler(QuestionEvent.getType());
 		SEs_AC_Commutation.setEnabled();
 		MEs_MC_Commutation.setEnabled();
 		SEs_SEs_ChangeSign.setEnabled();
 		SEs_AC_E_ChangeHandSide.setEnabled();
+//		MEs_MC_E_ChangeHandSide.setEnabled();
 	}
 
 	@Override
@@ -160,6 +168,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			return;
 		}
 		greatestPriorityFound = 0;
+		processTag = MOAbstractProcess.PROCESS_NO;
 		boolean firstLevel = true;
 		while(true) {
 			eventBus.fireEvent(new DragSelectedEvent(whereElement,whereElement.getZoneH(event.getClientX()),whereElement.getZoneV(event.getClientY()), firstLevel));
@@ -168,13 +177,19 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			whereElement = whereElement.getMathObjectParent();
 			firstLevel = false;
 		}
-		if(greatestPriorityFound==0) {
+		switch(processTag) {
+		case MOAbstractProcess.PROCESS_NO:
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_NO_DROP);
 			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
-		}
-		else {
+			break;
+		case MOAbstractProcess.PROCESS_CAUTION:
+			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
+			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
+			break;
+		case MOAbstractProcess.PROCESS_OK:
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
+			break;
 		}
 	}
 
@@ -216,8 +231,11 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		return greatestPriorityFound;
 	}
 
-	public void setPriorityOfProcess(int priority) {
-		greatestPriorityFound = Math.max(greatestPriorityFound,priority);
+	public void setPriorityAndTag(int priority, short tag) {
+		if(priority>greatestPriorityFound) {
+			greatestPriorityFound = priority;
+			processTag = tag;
+		}
 	}
 
 	public void setProcessFound() {
@@ -269,6 +287,24 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		else if (element instanceof MOAddContainer)
 			for(int i=0;i<((MOAddContainer)element).size();i++)
 				((MOAddContainer)element).get(i).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
+	}
+
+	public void inverseSign() {
+		MOElement<?> element = copiedPresenter.getElement();
+		if(element instanceof MOMultiplyElement) {
+			((MOMultiplyElement) element).setDivided(!((MOMultiplyElement) element).isDivided());
+			element = new MOMultiplyContainer((MOMultiplyElement) element);
+		}
+		else if(element instanceof MOMultiplyContainer)
+			((MOMultiplyContainer)element).inverseSign();
+		else
+			element = new MOMultiplyElement(element,true);
+		copiedPresenter.setElement(element);
+	}
+
+	@Override
+	public void onQuestion(QuestionEvent event) {
+		question.getDisplay().initializeAndCenter();
 	}
 
 }

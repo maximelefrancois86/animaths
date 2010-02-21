@@ -9,10 +9,9 @@ import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 
-import fr.upmf.animaths.client.Service;
-import fr.upmf.animaths.client.mvp.MathObject.Equation;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
@@ -31,12 +30,10 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 
 	public static EventBus eventBus;
 
-	private static Service service;
-	
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOStaticPresenter> mOStaticPresenters;
 	public List<StaticManipulationWordingPresenter> staticManipulationWordingPresenters;
-	
+	PopupPanel popup ;	
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
 	}
@@ -44,10 +41,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public static final Place PLACE = new Place("a");
 
 	@Inject
-	public AniMathsPresenter(final Display display, final EventBus eventBus, final Service service) {
+	public AniMathsPresenter(final Display display, final EventBus eventBus) {
 		super(display, eventBus);
 		AniMathsPresenter.eventBus = eventBus;
-		AniMathsPresenter.service = service;
 		bind();
 	}
 	
@@ -55,50 +51,55 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	protected void onBind() {
 		
 		MOIdentifier x = new MOIdentifier("x");
-//		MOEquation eq = new MOEquation();
-//		eq.setLeftHandSide(
-//			new MOAddContainer(
-//					new MOSignedElement(new MOIdentifier("x"),true),
-//					new MOSignedElement(new MONumber(10)),
-//					new MOSignedElement(
-//							new MOMultiplyContainer(
-//									new MOMultiplyElement(new MONumber(2)),
-//									new MOMultiplyElement(
-//											new MOAddContainer(
-//													new MOSignedElement(new MOIdentifier("x"),false),
-//													new MOSignedElement(new MONumber(1),true)
-//											)
-//									)
-//							)
-//					)
-//			)
-//		);
-//		eq.setRightHandSide(
-//			new MOMultiplyContainer(
-//					new MOMultiplyElement(
-//							new MOSignedElement(
-//									new MOSignedElement(
-//											new MOSignedElement(
-//													new MONumber(3),
-//											true),
-//									false),
-//							true)
-//					),
-//					new MOMultiplyElement(
-//							new MOAddContainer(
-//									new MOSignedElement(
-//											new MOMultiplyContainer(
-//													new MOMultiplyElement(new MONumber(2)),
-//													new MOMultiplyElement(new MOIdentifier("x"))
-//											)
-//									),
-//									new MOSignedElement(new MONumber(1))
-//							)
-//					)
-//			)
-//		);
-		
-		MOEquation eq =new Equation().generateEquation(); 
+
+		MOEquation eq = new MOEquation();
+		eq.setLeftHandSide(
+			new MOAddContainer(
+					new MOSignedElement(new MOIdentifier("x"),true),
+					new MOSignedElement(new MONumber(10)),
+					new MOSignedElement(
+							new MOMultiplyContainer(
+									new MOMultiplyElement(new MONumber(2)),
+									new MOMultiplyElement(
+											new MOAddContainer(
+													new MOSignedElement(new MOIdentifier("x"),false),
+													new MOSignedElement(new MONumber(1),true)
+											)
+									)
+							)
+					)
+			)
+		);
+		eq.setRightHandSide(
+			new MOMultiplyContainer(
+					new MOMultiplyElement(
+							new MOSignedElement(
+									new MOSignedElement(
+											new MOSignedElement(
+													new MONumber(3),
+											true),
+									false),
+							true)
+					),
+					new MOMultiplyElement(
+							new MOAddContainer(
+									new MOSignedElement(
+											new MOMultiplyContainer(
+													new MOMultiplyElement(new MONumber(2)),
+													new MOMultiplyElement(new MOIdentifier("x"))
+											)
+									),
+									new MOSignedElement(new MONumber(1))
+							)
+					),
+					new MOMultiplyElement(new MONumber(5),true),
+					new MOMultiplyElement(new MONumber(8),true),
+					new MOMultiplyElement(new MONumber(2),true)
+			)
+		);
+
+//		MOEquation eq =new Equation().generateEquation(); 
+
 		display.getExerciseWordingWidget().pack("Isoler ", x," dans l'équation ", eq);
 
 		mODynamicPresenter = new MODynamicPresenter();

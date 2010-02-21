@@ -3,7 +3,9 @@ package fr.upmf.animaths.client.mvp.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -169,19 +171,19 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		children.remove(child);
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		if(display.getLFence()!=null)
-			return display.getLFence().getElement();
-		return children.get(0).getFirstDOMElement();
-	}
-
-	@Override
-	public Element getLastDOMElement() {
-		if(display.getRFence()!=null)
-			return display.getRFence().getElement();
-		return children.get(children.size()-1).getLastDOMElement();
-	}
+//	@Override
+//	public Element getFirstDOMElement() {
+//		if(display.getLFence()!=null)
+//			return display.getLFence().getElement();
+//		return children.get(0).getFirstDOMElement();
+//	}
+//
+//	@Override
+//	public Element getLastDOMElement() {
+//		if(display.getRFence()!=null)
+//			return display.getRFence().getElement();
+//		return children.get(children.size()-1).getLastDOMElement();
+//	}
 
 	public void changeSign() {
 		for(MOSignedElement child: children)
@@ -194,5 +196,16 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 			children.get(i).setNeedsSign(true);
 	}
 
+	public static MOAddContainer parse(Element element){
+		assert element.getTagName().equals("moac");
+		MOAddContainer moac = new MOAddContainer();
+		NodeList children = element.getChildNodes();
+		for(int i=0;i<children.getLength();i++) {
+			assert children.item(i).getNodeType() == Node.ELEMENT_NODE;
+			moac.add((MOSignedElement) MOSignedElement.parse((Element) children.item(i)));
+		}
+		return moac;
+	}
+	
 }	
 

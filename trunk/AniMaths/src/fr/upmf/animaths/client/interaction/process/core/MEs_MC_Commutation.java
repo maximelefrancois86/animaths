@@ -34,10 +34,18 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	@Override
 	protected int getPriorityOfProcess() {
 		if(parentOfSelected == whereElement.getMathObjectParent()
-			&&(atNum ^ ((MOMultiplyElement)whereElement).isDivided())
+//			&&(atNum ^ ((MOMultiplyElement)whereElement).isDivided())
 			&&(zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE))
 			return 1;
 		return 0;
+	}
+
+	@Override
+	protected short getTagOfProcess() {
+		if(atNum^((MOMultiplyElement)whereElement).isDivided())
+			return PROCESS_OK;
+		else
+			return PROCESS_CAUTION;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.xml.client.Element;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -91,13 +91,17 @@ public class MOIdentifier extends MOElement<MOIdentifier.Display> implements IMO
 		return value;
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		return display.getElement().getElement();
-	}
-
-	@Override
-	public Element getLastDOMElement() {
-		return display.getElement().getElement();
+//	@Override
+//	public Element getFirstDOMElement() {
+//		return display.getElement().getElement();
+//	}
+//
+//	@Override
+//	public Element getLastDOMElement() {
+//		return display.getElement().getElement();
+//	}
+//	
+	public static MOElement<?> parse(Element element) {
+		return new MOIdentifier(element.getFirstChild().getNodeValue());
 	}
 }

@@ -22,7 +22,11 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler {
 	
-	private final EventBus eventBus = AniMathsPresenter.eventBus;
+	public static final short PROCESS_NO = 0;
+	public static final short PROCESS_CAUTION = 1;
+	public static final short PROCESS_OK = 2;
+	
+	protected final EventBus eventBus = AniMathsPresenter.eventBus;
 
 	protected static final void setEnabled(MOAbstractProcess process) {
 		process.setHandler(GrabSelectedEvent.getType());
@@ -43,6 +47,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	protected short choosenZoneV;
 	
 	private int priorityOfProcess = 0;
+	private short tag = PROCESS_NO;
 
 	@Override
 	public final void onGrabSelected(GrabSelectedEvent event) {
@@ -60,6 +65,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		if(event.isFirstLevel()) {
 			removeHandler(DropSelectedEvent.getType());
 			priorityOfProcess = 0;
+			tag = PROCESS_NO;
 		}
 		zoneH = event.getZoneH();
 		zoneV = event.getZoneV();
@@ -67,13 +73,14 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		if(whereElement==selectedElement)
 			return;
 		int priorityOfProcess = getPriorityOfProcess();
+		tag = (short)Math.max(tag,getTagOfProcess());
 		if(priorityOfProcess>this.priorityOfProcess) {
 			this.priorityOfProcess = priorityOfProcess;
 			choosenWhereElement = whereElement;
 			choosenZoneH = zoneH;
 			choosenZoneV = zoneV;
 			setHandler(DropSelectedEvent.getType());
-			coreInteraction.setPriorityOfProcess(priorityOfProcess);
+			coreInteraction.setPriorityAndTag(priorityOfProcess, tag);
 		}
 	}
 	
@@ -92,6 +99,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	}
 	
 	protected abstract boolean isProcessInvolved();
+	protected abstract short getTagOfProcess();
 	protected abstract int getPriorityOfProcess();
 	protected abstract void executeProcess();
 

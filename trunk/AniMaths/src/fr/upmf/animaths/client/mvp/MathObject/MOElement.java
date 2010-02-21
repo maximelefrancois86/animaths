@@ -5,8 +5,8 @@ import net.customware.gwt.presenter.client.place.Place;
 import net.customware.gwt.presenter.client.place.PlaceRequest;
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.xml.client.Element;
 
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
@@ -186,7 +186,26 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 			return ZONE_SSS;
 	}
 
-	abstract public Element getFirstDOMElement();
-	abstract public Element getLastDOMElement();
+//	abstract public com.google.gwt.dom.client.Element getFirstDOMElement();
+//	abstract public com.google.gwt.dom.client.Element getLastDOMElement();
+
+	public static MOElement<?> parse(Element element) {
+		String tagName = element.getTagName();
+		if(tagName.equals("moe"))
+			return MOEquation.parse(element);
+		if(tagName.equals("moi"))
+			return MOIdentifier.parse(element);
+		if(tagName.equals("mon"))
+			return MONumber.parse(element);
+		if(tagName.equals("mose"))
+			return MOSignedElement.parse(element);
+		if(tagName.equals("moac"))
+			return MOAddContainer.parse(element);
+		if(tagName.equals("momc"))
+			return MOMultiplyContainer.parse(element);
+		if(tagName.equals("mome"))
+			return MOMultiplyElement.parse(element);
+		return null;
+	}
 
 }
