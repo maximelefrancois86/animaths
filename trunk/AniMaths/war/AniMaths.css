@@ -1,101 +1,56 @@
+@CHARSET "UTF-8";
+@import "./server-typo.css";
+@import "./server-layout.css";
+@import "./AniMaths-typo.css";
+
+body {
+	margin: 0;
+	padding: 0;
+}
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin-left: 2em;
+	top: 0;
+	left: 0;
+	margin: 0;
+	margin-left: .5em;
 }
-
-#exerciseWording {
-	font-size: 10pt;
-	color:red;
-  position:relative;
-  padding-bottom: 0.5em;
-  border-bottom-style:solid;
-  border-bottom-color:red;
-  width: 75%;
+#srv-header { margin-bottom: 0;}
+#srv-header .gwt-Button{
+	padding:0 .25em;
+	margin:0.05em 0.25em;
+	float: right;
 }
-
-
 math {
-  -moz-user-select: none;	
-  font-size: 11pt;
-  cursor: default;
+	-moz-user-select: none;
+	font-size: 11pt;
+	cursor: default;
 }
 
 /**
 /* EQUATIONS LIST 
 */
-
+#exerciseWording, #view {
+	width: 70%;
+}
+#exerciseWording {
+	padding:1em;
+	width:auto;
+}
 #view {
-  position:relative;
-  width: 75%;
+	float: left;
 }
 
 #view math {
-	border-style:solid;
-	border-color:black;
-	width:50%;
-	left:0em;
+	
 }
 
-#view math * {
-	cursor: pointer;
-}
 
-/*L'objet sélectionnable*/
-#view math .selectable {
-	background-color: #DDDDFF;
-}
-
-/*L'objet slectionné*/
-#view math .selected {
-	background-color: #AAAAFF;
-	cursor: -moz-grab;
-}
-
-/*L'objet déplacé*/
-#view math .dragged {
-	background-color: #EEEEEE;
-	color: #888888;
-	cursor:-moz-grabbing;
-}
-
-/*Quand il est possible de sélectionner un deuxieme objet*/
-#view math .okAdd {
-	cursor:copy;
-}
-
-/*Quand il est possible de lâcher l'objet ici*/
-#view math .okDrop {
-	cursor:alias;
-}
-
-/*Quand il n'est pas permi de lâcher l'objet ici*/
-#view math .noDrop {
-	cursor:no-drop;
-}
-
-/**
-/*DRAGGED OBJECT 
-*/
-
-#drag {
-	position:absolute;
-}
-
-/*Tout va bien*/
-#drag math .ok {
-	background-color: #DDFFDD;
-	color: #33FF33;
-}
-
-/*Attention à quelquechose*/
+/*Attention ï¿½ quelquechose*/
 #drag math .caution {
 	background-color: #FFFFDD;
 	color: #FFFF33;
 }
 
-/*Impossible de lâcher*/
+/*Impossible de lï¿½cher*/
 #drag math .no {
 	background-color: #FFDDDD;
 	color: #FF333;
@@ -109,14 +64,14 @@ math {
 /**
 /*HELP
 */
-
 #help {
-	border-style:solid;
-	border-color:black;
-	position:absolute;
+	float: right;
+	/*height: 100%;*/
+	height:auto;
+	width: 22%;
+	/*	position:absolute;
 	top: 20%;
 	left: 75%;
-	height: 80%;
 	width: 25%;
+	*/
 }
-

@@ -22,4 +22,15 @@
     <welcome-file>AniMaths.html</welcome-file>
   </welcome-file-list>
 
+  <servlet>
+    <servlet-name>service</servlet-name>
+    <servlet-class>fr.upmf.animaths.server.ServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>service</servlet-name>
+    <url-pattern>/AniMaths/exercice</url-pattern>
+  </servlet-mapping>
+
+
 </web-app>
