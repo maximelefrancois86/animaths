@@ -5,7 +5,6 @@ import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler.ServiceAsync;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,7 +22,7 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 	private MathWordingWidget exerciseWordingWidget;
 	
-	private Button loadButton = new Button("Load");
+	private Button loadButton = new Button("Commencer l'exercice");
 
 	@Inject
 	public AniMathsDisplay() {
@@ -31,19 +30,21 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 		initWidget(panel);
 
+		panel.add(loadButton);
+
+		RootPanel.get().add(loadButton);
+		
 		exerciseWordingWidget = new MathWordingWidget();
 		panel.add(exerciseWordingWidget);
-		
-
-		
-//		// create and attach Save/Load button 
-//		ActionButton ab = new ActionButton(service);
-//	    RootPanel.get("srv-header").add(ab.getSaveButton());
-//	    RootPanel.get("srv-header").add(ab.getLoadButton());
 
 		// Use RootPanel.get() to get the entire body element
 		// Add the widgets to the RootPanel
 		RootPanel.get("exerciseWording").add(exerciseWordingWidget);
+
+//		// create and attach Save/Load button 
+//		ActionButton ab = new ActionButton(service);
+//	    RootPanel.get("srv-header").add(ab.getSaveButton());
+//	    RootPanel.get("srv-header").add(ab.getLoadButton());
 	}
 
 	/**
@@ -65,6 +66,11 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 	@Override
 	public MathWordingWidget getExerciseWordingWidget() {
 		return exerciseWordingWidget;
+	}
+
+	@Override
+	public Button getLoadButton() {
+		return loadButton;
 	}
 
 	@Override
