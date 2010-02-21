@@ -3,7 +3,9 @@ package fr.upmf.animaths.client.mvp.MathObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -99,16 +101,25 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	}
 
 	private void checkChildrenPlaces() {
-		for(MOMultiplyElement child : numerator)
-			if(child.isDivided()) {
+		MOMultiplyElement child;
+		for(int i=0;i<numerator.size();) {
+			child = numerator.get(i);
+			if(!child.isDivided())
+				i++;
+			else {
 				numerator.remove(child);
 				denominator.add(child);
 			}
-		for(MOMultiplyElement child : denominator)
-			if(!child.isDivided()) {
+		}
+		for(int i=0;i<denominator.size();) {
+			child = denominator.get(i);
+			if(child.isDivided())
+				i++;
+			else {
 				denominator.remove(child);
 				numerator.add(child);
 			}
+		}
 	}
 
 	@Override
@@ -227,23 +238,23 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 		}
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		if(display.getLFence()!=null)
-			return display.getLFence().getElement();
-		if(display.getFrac()!=null)
-			return display.getFrac().getElement();
-		return numerator.get(0).getFirstDOMElement();
-	}
-
-	@Override
-	public Element getLastDOMElement() {
-		if(display.getRFence()!=null)
-			return display.getRFence().getElement();
-		if(display.getFrac()!=null)
-			return display.getFrac().getElement();
-		return numerator.get(numerator.size()-1).getLastDOMElement();
-	}
+//	@Override
+//	public Element getFirstDOMElement() {
+//		if(display.getLFence()!=null)
+//			return display.getLFence().getElement();
+//		if(display.getFrac()!=null)
+//			return display.getFrac().getElement();
+//		return numerator.get(0).getFirstDOMElement();
+//	}
+//
+//	@Override
+//	public Element getLastDOMElement() {
+//		if(display.getRFence()!=null)
+//			return display.getRFence().getElement();
+//		if(display.getFrac()!=null)
+//			return display.getFrac().getElement();
+//		return numerator.get(numerator.size()-1).getLastDOMElement();
+//	}
 
 	private void setNeedsSigns() {
 		if(numerator.size()!=0) {
@@ -301,6 +312,45 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	public int sizeOfDenominator() {
 		return denominator.size();
 	}
+	
+	public void inverseSign() {
+		for(MOMultiplyElement child:numerator)
+			child.setDivided(true);
+		for(MOMultiplyElement child:denominator)
+			child.setDivided(false);
+		checkChildrenPlaces();
+		if(denominator.size()==1) {
+			MOElement<?> element = denominator.get(0).getChild();
+			if(element instanceof MONumber && ((MONumber)element).getValue()==(Number)1)
+				denominator.remove(0);
+		}
+	}
 
+	@Override
+	public short getZoneV(int y) {
+		int px = 10;
+		int pc = 5;
+		int top = getBoundingClientTop();
+		int bottom = getBoundingClientBottom();
+		int dOut = Math.min(px,(int)((bottom-top)/pc));
+		int barPos;
+		if(display.getFrac()!=null) {
+			barPos = (int)(0.5*(display.getNumeratorRow().getBoundingClientTop()+display.getNumeratorRow().getBoundingClientWidth()+display.getDenominatorRow().getBoundingClientTop()));
+			return getZone(y,top,barPos,bottom,px,dOut);
+		}
+		return getZoneV(y);
+	}
+
+	public static MOMultiplyContainer parse(Element element){
+		assert element.getTagName().equals("momc");
+		MOMultiplyContainer momc = new MOMultiplyContainer();
+		NodeList children = element.getChildNodes();
+		for(int i=0;i<children.getLength();i++) {
+			assert children.item(i).getNodeType() == Node.ELEMENT_NODE;
+			momc.add((MOMultiplyElement) MOMultiplyElement.parse((Element) children.item(i)));
+		}
+		return momc;
+	}
+	
 }	
 

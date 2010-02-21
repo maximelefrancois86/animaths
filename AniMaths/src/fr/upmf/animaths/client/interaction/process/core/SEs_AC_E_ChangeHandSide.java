@@ -49,7 +49,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			boolean b = zoneHOldEq<=MOElement.ZONE_CENTER && zoneHEq>=MOElement.ZONE_E;
 			boolean c = zoneHOldEq>=MOElement.ZONE_CENTER && zoneHEq<=MOElement.ZONE_O;
 			if(a&&b || !a&&c) {
-				coreInteraction.changeSign();
+//				coreInteraction.changeSign();
 				okForDropping = !okForDropping;
 			}
 
@@ -79,6 +79,11 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected short getTagOfProcess() {
+		return PROCESS_CAUTION;
 	}
 
 	@Override

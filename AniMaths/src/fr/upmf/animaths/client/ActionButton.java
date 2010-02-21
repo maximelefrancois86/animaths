@@ -5,13 +5,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler.ServiceAsync;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
-//import fr.upmf.animaths.client.Service.Exercice;
-import fr.upmf.animaths.client.mvp.MathObject.Equation;
 
 public class ActionButton implements ClickHandler {
 

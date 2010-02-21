@@ -36,6 +36,11 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 			return 1;
 		return 0;
 	}
+	
+	@Override
+	protected short getTagOfProcess() {
+		return PROCESS_OK;
+	}
 
 	@Override
 	protected void executeProcess() {

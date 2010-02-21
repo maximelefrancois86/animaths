@@ -1,6 +1,7 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -130,16 +131,26 @@ public class MOMultiplyElement extends MOElement<MOMultiplyElement.Display> impl
 		this.isDivided = isDivided;
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		if(display.getSign()!=null)
-			return display.getSign().getElement();
-		return child.getFirstDOMElement();
+//	@Override
+//	public Element getFirstDOMElement() {
+//		if(display.getSign()!=null)
+//			return display.getSign().getElement();
+//		return child.getFirstDOMElement();
+//	}
+//
+//	@Override
+//	public Element getLastDOMElement() {
+//		return child.getLastDOMElement();
+//	}		
+	
+	public static MOMultiplyElement parse(Element element){
+		assert element.getTagName().equals("mome");		
+		assert element.getFirstChild().getNodeType() == Node.ELEMENT_NODE;
+		if(element.hasAttribute("isDivided")) {
+			return new MOMultiplyElement(MOElement.parse((Element) element.getFirstChild()), Boolean.parseBoolean(element.getAttribute("isDivided")));
+		}
+		else
+			return new MOMultiplyElement(MOElement.parse((Element) element.getFirstChild()));
 	}
-
-	@Override
-	public Element getLastDOMElement() {
-		return child.getLastDOMElement();
-	}		
 
 }

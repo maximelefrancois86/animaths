@@ -1,6 +1,8 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
-import com.google.gwt.dom.client.Element;
+
+import com.google.gwt.dom.client.Node;
+import com.google.gwt.xml.client.Element;
 
 import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
@@ -161,20 +163,30 @@ public class MOSignedElement extends MOElement<MOSignedElement.Display> implemen
 		this.needsSign = needsSign;
 	}
 
-	@Override
-	public Element getFirstDOMElement() {
-		if(display.getLFence()!=null)
-			return display.getLFence().getElement();
-		if(display.getSign()!=null)
-			return display.getSign().getElement();
-		return child.getFirstDOMElement();
-	}
+//	@Override
+//	public com.google.gwt.dom.client.Element getFirstDOMElement() {
+//			return display.getLFence().getElement();
+//		if(display.getSign()!=null)
+//			return display.getSign().getElement();
+//		return child.getFirstDOMElement();
+//	}
+//
+//	@Override
+//	public com.google.gwt.dom.client.Element getLastDOMElement() {
+//		if(display.getRFence()!=null)
+//			return display.getRFence().getElement();
+//		return child.getLastDOMElement();
+//	}		
 
-	@Override
-	public Element getLastDOMElement() {
-		if(display.getRFence()!=null)
-			return display.getRFence().getElement();
-		return child.getLastDOMElement();
-	}		
+	
+	public static MOSignedElement parse(Element element){
+		assert element.getTagName().equals("mose");		
+		assert element.getFirstChild().getNodeType() == Node.ELEMENT_NODE;
+		if(element.hasAttribute("isMinus")) {
+			return new MOSignedElement(MOElement.parse((Element) element.getFirstChild()), Boolean.parseBoolean(element.getAttribute("isMinus")));
+		}
+		else
+			return new MOSignedElement(MOElement.parse((Element) element.getFirstChild()));
+	}
 
 }
