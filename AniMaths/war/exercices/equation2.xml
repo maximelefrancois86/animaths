@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
+<moe>
+  <moac>
+    <mose>
+      <moi>x</moi>
+    </mose>
+    <mose>
+      <mon>12</mon>
+    </mose>
+    <mose>
+      <momc>
+        <mome>
+          <mon>1</mon>
+        </mome>
+        <mome>
+          <moac>
+            <mose>
+              <moi>50</moi>
+            </mose>
+            <mose isMinus='true'>
+              <moi>x</moi>
+            </mose>
+          </moac>
+        </mome>
+      </momc>
+    </mose>
+  </moac>
+    <momc>
+    <mome>
+      <mose isMinus='true'>
+        <mose>
+          <mose isMinus='true'>
+	            <mon>3</mon>
+          </mose>
+        </mose>
+      </mose>
+    </mome>
+    <mome>
+      <moac>
+        <mose>
+          <momc>
+            <mome>
+              <mon>2</mon>
+            </mome>
+            <mome>
+              <moi>x</moi>
+            </mome>
+          </momc>
+        </mose>
+        <mose>
+          <mon>1</mon>
+        </mose>
+      </moac>
+    </mome>
+  </momc>
+</moe>

@@ -33,9 +33,9 @@ public class MOBasicDisplay extends Composite implements MOAbstractPresenter.Dis
 	}
 
 	@Override
-	public void remove() {
-		wrapper.removeFromParent();
-		wrapper.getElement().removeFromParent();
+	public void clear() {
+		while(wrapper.getElement().hasChildNodes())
+			wrapper.getElement().getFirstChild().removeFromParent();
 	}
 
 }

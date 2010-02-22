@@ -1,8 +1,5 @@
 package fr.upmf.animaths.client.mvp;
 
-import net.customware.gwt.presenter.client.place.Place;
-import net.customware.gwt.presenter.client.place.PlaceRequest;
-
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.HasMouseDownHandlers;
@@ -15,6 +12,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.interaction.MOCoreInteraction;
 import fr.upmf.animaths.client.interaction.events.DragEvent;
@@ -27,21 +25,24 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.Display> {
 
-	private static final String id = "dynamic";
+	static final String id = "dynamic";
 	int clientX = 0;
 	int clientY = 0;	
-	HandlerRegistration hrMouseDown;
-	HandlerRegistration hrNativePreview;
-
-	@Override
-	public Place getPlace() {
-		return PLACE;
-	}
 
 	public MODynamicPresenter() {
 		super(id, new Display());
 	}
 
+	@Override
+	public void init(MOElement<?> element) {
+		unbind();
+		this.element = element.clone();
+		this.element.pack(display.asWrapper(),this);
+		display.asWrapper().getElement().setId(id);
+		RootPanel.get("view").add(display.asWidget());
+		bind();
+	}
+	
 	@Override
 	protected void onBind() {
 		registerHandler(display.addMouseDownHandler(new MouseDownHandler(){
@@ -79,34 +80,7 @@ public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.D
 		}));
 		MOCoreInteraction.setPresenterAndRun(this);
 	}
-
 	
-	@Override
-	protected void onUnbind() {
-	}
-
-	public void refreshDisplay() {
-		// This is called when the presenter should pull the latest data
-		// from the server, etc. In this case, there is nothing to do.
-	}
-
-	public void revealDisplay() {
-		// Nothing to do. This is more useful in UI which may be buried
-		// in a tab bar, tree, etc.
-	}
-
-	@Override
-	protected void onPlaceRequest(final PlaceRequest request) {
-//		// Grab the 'name' from the request and put it into the 'name' field.
-//		// This allows a tag of '#Greeting;name=Foo' to populate the name
-//		// field.
-//		final String name = request.getParameter("name", null);
-//		
-//		if (name != null) {
-//			display.getName().setValue(name);
-//		}
-	}
-
 	static class Display extends MOBasicDisplay implements HasMouseDownHandlers, HasMouseUpHandlers  {
 		public Display() {
 			super();
@@ -123,5 +97,5 @@ public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.D
 		}
 
 	}
-	
+
 }
