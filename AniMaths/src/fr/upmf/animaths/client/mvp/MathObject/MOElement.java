@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 
 /**
@@ -74,7 +74,7 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 
 	abstract public MOElement<D> clone();
 
-	abstract public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter);
+	abstract public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter);
 	    	
 	@Override
 	protected void onBind() {
@@ -159,18 +159,18 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 	}
 
 	/**
-	 * Permet de déterminer la zone où le curseur est, suivant un axe.
-	 * Bien qu'elle soit écrite pour l'axe vertical, cette fonction se comporte bien pour l'axe horizontal
+	 * Permet de dï¿½terminer la zone oï¿½ le curseur est, suivant un axe.
+	 * Bien qu'elle soit ï¿½crite pour l'axe vertical, cette fonction se comporte bien pour l'axe horizontal
 	 * @param y emplacement du pointer
 	 * @param top centre de la zone limite
 	 * @param center centre de la zone centrale
 	 * @param bottom centre de la zone limite
-	 * @param dIn tolérence autour du centre de la zone centrale
-	 * @param dOut tolérence autour du centre de la zone limite
-	 * @return une des 7 zones où on est
+	 * @param dIn tolï¿½rence autour du centre de la zone centrale
+	 * @param dOut tolï¿½rence autour du centre de la zone limite
+	 * @return une des 7 zones oï¿½ on est
 	 */
 	protected short getZone(int y, int top, int center, int bottom, int dIn, int dOut) {
-		if(y<top-dOut) // en dehors à gauche
+		if(y<top-dOut) // en dehors ï¿½ gauche
 			return ZONE_NNN;
 		else if(y<top+dOut)
 			return ZONE_NN;

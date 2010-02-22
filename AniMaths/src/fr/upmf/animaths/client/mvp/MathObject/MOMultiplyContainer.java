@@ -7,7 +7,7 @@ import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLFrac;
 import fr.upmf.animaths.client.mvp.MathML.MMLOperator;
@@ -45,7 +45,7 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 	}
 
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		checkChildrenPlaces();
 		MMLElement mmlp = mathMLParent;
 		boolean needsFence = needsFence();
@@ -338,7 +338,7 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 			barPos = (int)(0.5*(display.getNumeratorRow().getBoundingClientTop()+display.getNumeratorRow().getBoundingClientWidth()+display.getDenominatorRow().getBoundingClientTop()));
 			return getZone(y,top,barPos,bottom,px,dOut);
 		}
-		return getZoneV(y);
+		return super.getZoneV(y);
 	}
 
 	public static MOMultiplyContainer parse(Element element){
@@ -346,8 +346,9 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 		MOMultiplyContainer momc = new MOMultiplyContainer();
 		NodeList children = element.getChildNodes();
 		for(int i=0;i<children.getLength();i++) {
-			assert children.item(i).getNodeType() == Node.ELEMENT_NODE;
-			momc.add((MOMultiplyElement) MOMultiplyElement.parse((Element) children.item(i)));
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE)
+				momc.add((MOMultiplyElement) MOMultiplyElement.parse((Element) n));
 		}
 		return momc;
 	}

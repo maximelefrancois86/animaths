@@ -1,10 +1,11 @@
 package fr.upmf.animaths.client.mvp.MathObject;
 
 
-import com.google.gwt.dom.client.Node;
+import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLOperator;
 
@@ -37,7 +38,7 @@ public class MOSignedElement extends MOElement<MOSignedElement.Display> implemen
 	}
 	
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MMLOperator.lFence());
@@ -181,12 +182,20 @@ public class MOSignedElement extends MOElement<MOSignedElement.Display> implemen
 	
 	public static MOSignedElement parse(Element element){
 		assert element.getTagName().equals("mose");		
-		assert element.getFirstChild().getNodeType() == Node.ELEMENT_NODE;
-		if(element.hasAttribute("isMinus")) {
-			return new MOSignedElement(MOElement.parse((Element) element.getFirstChild()), Boolean.parseBoolean(element.getAttribute("isMinus")));
+		MOSignedElement mose = new MOSignedElement();
+		NodeList children = element.getChildNodes();
+		short k=0;
+		for(int i=0;i<children.getLength();i++) {
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE) {
+				k++;
+				assert k<=1;
+				mose.setChild(MOElement.parse((Element) n));
+			}
 		}
-		else
-			return new MOSignedElement(MOElement.parse((Element) element.getFirstChild()));
+		if(element.hasAttribute("isMinus"))
+			mose.setMinus(Boolean.parseBoolean(element.getAttribute("isMinus")));
+		return mose;
 	}
 
 }

@@ -9,10 +9,12 @@ import com.google.gwt.event.dom.client.HasMouseDownHandlers;
 import com.google.gwt.event.dom.client.HasMouseUpHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.interaction.MOCoreInteraction;
 import fr.upmf.animaths.client.interaction.events.DragEvent;
@@ -23,23 +25,26 @@ import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
-public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Display> {
+public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.Display> {
 
+	private static final String id = "dynamic";
 	int clientX = 0;
 	int clientY = 0;	
+	HandlerRegistration hrMouseDown;
+	HandlerRegistration hrNativePreview;
 
-	public interface Display extends MOStaticPresenter.Display, HasMouseDownHandlers, HasMouseUpHandlers {
+	@Override
+	public Place getPlace() {
+		return PLACE;
 	}
-	
+
 	public MODynamicPresenter() {
-		super(new MODynamicDisplay());
-		bind();
+		super(id, new Display());
 	}
 
 	@Override
 	protected void onBind() {
-		RootPanel.get("view").add(display.asWidget());
-		display.addMouseDownHandler(new MouseDownHandler(){
+		registerHandler(display.addMouseDownHandler(new MouseDownHandler(){
 			public void onMouseDown(MouseDownEvent event) {	
 				MOElement<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));
 				if(element!=null) {
@@ -48,9 +53,9 @@ public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Di
 					eventBus.fireEvent(new GrabEvent(element.getStyleClass(), event));
 				}
 			}
-		});
+		}));
 		
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
+		registerHandler(Event.addNativePreviewHandler(new NativePreviewHandler() {
 		 	public void onPreviewNativeEvent(NativePreviewEvent event) {
 		 		EventTarget target = event.getNativeEvent().getEventTarget();
 		 		if(!Element.is(target))
@@ -71,15 +76,13 @@ public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Di
 					break;
 		 		}
 		 	}
-		});
-		
+		}));
 		MOCoreInteraction.setPresenterAndRun(this);
 	}
 
 	
 	@Override
 	protected void onUnbind() {
-		RootPanel.get("view").clear();
 	}
 
 	public void refreshDisplay() {
@@ -90,15 +93,6 @@ public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Di
 	public void revealDisplay() {
 		// Nothing to do. This is more useful in UI which may be buried
 		// in a tab bar, tree, etc.
-	}
-
-	/**
-	 * Returning a place will allow this presenter to automatically trigger when
-	 * '#Greeting' is passed into the browser URL.
-	 */
-	@Override
-	public Place getPlace() {
-		return PLACE;
 	}
 
 	@Override
@@ -113,4 +107,21 @@ public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Di
 //		}
 	}
 
+	static class Display extends MOBasicDisplay implements HasMouseDownHandlers, HasMouseUpHandlers  {
+		public Display() {
+			super();
+		}
+
+		@Override
+		public HandlerRegistration addMouseDownHandler(MouseDownHandler handler) {
+			return addDomHandler(handler,MouseDownEvent.getType());
+		}
+
+		@Override
+		public HandlerRegistration addMouseUpHandler(MouseUpHandler handler) {
+			return addDomHandler(handler,MouseUpEvent.getType());
+		}
+
+	}
+	
 }

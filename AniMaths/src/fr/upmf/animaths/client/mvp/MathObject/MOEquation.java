@@ -4,7 +4,7 @@ import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLOperator;
 
@@ -33,7 +33,7 @@ public class MOEquation extends MOElement<MOEquation.Display> {
 	}
 
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		leftHandSide.pack(mathMLParent, presenter);
 		display.setSign(MMLOperator.equality());
 		mathMLParent.appendChild(display.getSign());
@@ -150,11 +150,18 @@ public class MOEquation extends MOElement<MOEquation.Display> {
 		assert element.getTagName().equals("moe");
 		MOEquation moe = new MOEquation();
 		NodeList children = element.getChildNodes();
-		assert children.getLength()==2;
-		assert children.item(0).getNodeType() == Node.ELEMENT_NODE;
-		moe.setLeftHandSide(MOElement.parse((Element) children.item(0)));
-		assert children.item(1).getNodeType() == Node.ELEMENT_NODE;
-		moe.setRightHandSide(MOElement.parse((Element) children.item(1)));
+		short k=0;
+		for(int i=0;i<children.getLength();i++) {
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE) {
+				k++;
+				assert k<=2;
+				if(k==1)
+					moe.setLeftHandSide(MOElement.parse((Element) n));
+				else
+					moe.setRightHandSide(MOElement.parse((Element) n));
+			}
+		}
 		return moe;
 	}
 

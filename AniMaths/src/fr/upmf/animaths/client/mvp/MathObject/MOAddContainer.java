@@ -7,7 +7,7 @@ import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLOperator;
 
@@ -35,7 +35,7 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 	}
 
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		boolean needsFence = needsFence();
 		if(needsFence) {
 			display.setLFence(MMLOperator.lFence());
@@ -201,8 +201,9 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		MOAddContainer moac = new MOAddContainer();
 		NodeList children = element.getChildNodes();
 		for(int i=0;i<children.getLength();i++) {
-			assert children.item(i).getNodeType() == Node.ELEMENT_NODE;
-			moac.add((MOSignedElement) MOSignedElement.parse((Element) children.item(i)));
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE)
+				moac.add((MOSignedElement) MOSignedElement.parse((Element) n));
 		}
 		return moac;
 	}

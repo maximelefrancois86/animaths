@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.mvp.MathObject;
 
 import com.google.gwt.xml.client.Element;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLIdentifier;
 
@@ -28,7 +28,7 @@ public class MOIdentifier extends MOElement<MOIdentifier.Display> implements IMO
 	}
 	
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		display.setElement(new MMLIdentifier(value));
 		mathMLParent.appendChild(display.getElement());
 		if(presenter!=null)
