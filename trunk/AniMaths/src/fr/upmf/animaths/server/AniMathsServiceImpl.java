@@ -20,7 +20,7 @@ public class AniMathsServiceImpl extends RemoteServiceServlet implements AniMath
 	public String loadEquation(String id) {
 		try {
 	        StringBuffer fileData = new StringBuffer(1000);
-	        BufferedReader reader = new BufferedReader(new FileReader("exercices/"+id+"equation.xml"));
+	        BufferedReader reader = new BufferedReader(new FileReader("exercices/"+id+".xml"));
 	        char[] buf = new char[1024];
 	        int numRead=0;
 	        while((numRead=reader.read(buf)) != -1){

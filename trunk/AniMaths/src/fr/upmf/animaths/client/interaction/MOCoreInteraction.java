@@ -8,7 +8,6 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.interaction.events.DragEvent;
 import fr.upmf.animaths.client.interaction.events.DragHandler;
@@ -35,7 +34,7 @@ import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODragPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
-import fr.upmf.animaths.client.mvp.MOStaticPresenter;
+import fr.upmf.animaths.client.mvp.MOBasicPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.IMOHasStyleClass;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -251,7 +250,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		processDone = true;
 	}
 
-	public MOStaticPresenter getDragPresenter() {
+	public MOBasicPresenter getDragPresenter() {
 		return dragPresenter;
 	}
 	
@@ -263,7 +262,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			((MOAddContainer)element).changeSign();
 		else
 			element = new MOSignedElement(element,true);
-		dragPresenter.setElement(element);
+		dragPresenter.init(element);
 		if(element instanceof MOSignedElement)
 			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
 		else if (element instanceof MOAddContainer)
@@ -281,7 +280,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			((MOMultiplyContainer)element).inverseSign();
 		else
 			element = new MOMultiplyElement(element,true);
-		dragPresenter.setElement(element);
+		dragPresenter.init(element);
 	}
 
 	@Override

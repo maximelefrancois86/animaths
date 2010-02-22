@@ -36,9 +36,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public static EventBus eventBus;
 	private static final AniMathsServiceAsync aniMathsService = GWT.create(AniMathsService.class);
 
-	private MODynamicPresenter mODynamicPresenter = new MODynamicPresenter();
-	public Map<String,MOStaticPresenter> mOStaticPresenters = new HashMap<String,MOStaticPresenter>();
-	public Map<String,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
+	private MODynamicPresenter mODynamicPresenter;
+	public Map<String,MOBasicPresenter> mOBasicPresenters;
+//	public Map<String,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
 
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
@@ -60,6 +60,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public AniMathsPresenter(final Display display, final EventBus eventBus) {
 		super(display, eventBus);
 		AniMathsPresenter.eventBus = eventBus;
+		mODynamicPresenter = new MODynamicPresenter();
+		mOBasicPresenters = new HashMap<String,MOBasicPresenter>();
 		bind();
 	}
 	
@@ -68,7 +70,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		loadProblem("equation3");
 		display.getLoadButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				loadProblem("equation3");
+				loadProblem("equation");
 			}
 		});
 	}
@@ -77,7 +79,6 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	protected void onPlaceRequest(final PlaceRequest request) {
 		// Grab the 'id' from the request and load the 'id' equation.
 		final String id = request.getParameter("id", null);
-		
 		if(id != null) {
 			loadProblem(id);
 		}
@@ -115,7 +116,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				Element element = XMLParser.parse(result).getDocumentElement();
 				MOElement<?> eq = MOElement.parse(element);
 				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
-				mODynamicPresenter.setElement(eq);
+				mODynamicPresenter.init(eq);
 			}
 	    };
 

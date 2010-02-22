@@ -94,7 +94,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		zoneV = choosenZoneV;
 		whereElement = choosenWhereElement;
 		executeProcess();
-		presenter.setElement(presenter.getElement());
+		presenter.init(presenter.getElement());
 		coreInteraction.setProcessDone();
 	}
 	
