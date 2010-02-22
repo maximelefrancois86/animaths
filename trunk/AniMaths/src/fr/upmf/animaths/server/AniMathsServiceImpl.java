@@ -1,13 +1,10 @@
 package fr.upmf.animaths.server;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import fr.upmf.animaths.client.AniMathsService;
@@ -22,17 +19,22 @@ public class AniMathsServiceImpl extends RemoteServiceServlet implements AniMath
 	@Override
 	public String loadEquation(String id) {
 		try {
-			File file = new File("/equation.xml");
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db;
-			Document doc;
-			db = dbf.newDocumentBuilder();
-			doc = db.parse(file);
-			doc.getDocumentElement().normalize();
-			System.out.println(doc.getDocumentElement().toString());
-			Window.alert("Server side");
-			return doc.getDocumentElement().toString();
-		} catch (Exception e) {
+	        StringBuffer fileData = new StringBuffer(1000);
+	        BufferedReader reader = new BufferedReader(new FileReader("exercices/"+id+"equation.xml"));
+	        char[] buf = new char[1024];
+	        int numRead=0;
+	        while((numRead=reader.read(buf)) != -1){
+	            String readData = String.valueOf(buf, 0, numRead);
+	            fileData.append(readData);
+	            buf = new char[1024];
+	        }
+	        reader.close();
+	        String string = fileData.toString();
+	        string = string.trim();
+	        return string;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;

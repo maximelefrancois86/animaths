@@ -2,8 +2,9 @@ package fr.upmf.animaths.client.mvp.MathObject;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
 
-import fr.upmf.animaths.client.mvp.MOAbtractPresenter;
+import fr.upmf.animaths.client.mvp.MOAbstractPresenter;
 import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLOperator;
 
@@ -37,7 +38,7 @@ public class MOMultiplyElement extends MOElement<MOMultiplyElement.Display> impl
 	}
 	
 	@Override
-	public void pack(MMLElement mathMLParent, MOAbtractPresenter<?> presenter) {
+	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		if(needsSign) {
 			display.setSign(MMLOperator.times());
 			mathMLParent.appendChild(display.getSign());
@@ -145,12 +146,20 @@ public class MOMultiplyElement extends MOElement<MOMultiplyElement.Display> impl
 	
 	public static MOMultiplyElement parse(Element element){
 		assert element.getTagName().equals("mome");		
-		assert element.getFirstChild().getNodeType() == Node.ELEMENT_NODE;
-		if(element.hasAttribute("isDivided")) {
-			return new MOMultiplyElement(MOElement.parse((Element) element.getFirstChild()), Boolean.parseBoolean(element.getAttribute("isDivided")));
+		MOMultiplyElement mome = new MOMultiplyElement();
+		NodeList children = element.getChildNodes();
+		short k=0;
+		for(int i=0;i<children.getLength();i++) {
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE) {
+				k++;
+				assert k<=1;
+				mome.setChild(MOElement.parse((Element) n));
+			}
 		}
-		else
-			return new MOMultiplyElement(MOElement.parse((Element) element.getFirstChild()));
+		if(element.hasAttribute("isDivided"))
+			mome.setDivided(Boolean.parseBoolean(element.getAttribute("isDivided")));
+		return mome;
 	}
 
 }

@@ -123,7 +123,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 
 	private void executeProcessInCase1() {
-		MOSignedElement newElement = (MOSignedElement) coreInteraction.getCopiedPresenter().getElement();
+		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
 		MOElement<?> handSide = (atLeft) ? equation.getRightHandSide() : equation.getLeftHandSide();
 		if(handSide instanceof MOAddContainer) {
 			if(zoneH==MOElement.ZONE_OO || (atLeft && zoneH==MOElement.ZONE_CENTER))
@@ -145,7 +145,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 	
 	private void executeProcessInCase2() {
-		MOSignedElement newElement = (MOSignedElement) coreInteraction.getCopiedPresenter().getElement();
+		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
 //		List<MOSignedElement> children;
 		if(whereElement instanceof MOAddContainer) {
 			if(zoneH==MOElement.ZONE_EE)
@@ -171,7 +171,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 	
 	private void executeProcessInCase3(MOAddContainer addContainer) {
-		MOSignedElement newElement = (MOSignedElement) coreInteraction.getCopiedPresenter().getElement();
+		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
 		addContainer.add(newElement,(MOSignedElement) whereElement,zoneH==MOElement.ZONE_EE);
 	}
 }

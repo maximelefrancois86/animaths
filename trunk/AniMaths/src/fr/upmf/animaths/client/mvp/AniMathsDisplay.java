@@ -5,7 +5,6 @@ import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -22,27 +21,16 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 	private MathWordingWidget exerciseWordingWidget;
 	
-	private Button loadButton = new Button("Commencer l'exercice");
+	private Button loadButton = new Button("recommencer");
 
 	@Inject
 	public AniMathsDisplay() {
-		final AbsolutePanel panel = new AbsolutePanel();
+		initWidget(RootPanel.get("view"));
 
-		initWidget(panel);
-
-		panel.add(loadButton);
 		loadButton.getElement().setId("load");
-		
-		exerciseWordingWidget = new MathWordingWidget();
-		panel.add(exerciseWordingWidget);
-
-		// Use RootPanel.get() to get the entire body element
-		// Add the widgets to the RootPanel
-		RootPanel.get("exerciseWording").add(exerciseWordingWidget);
-
-//		// create and attach Save/Load button 
-//	    RootPanel.get("srv-header").add(ab.getSaveButton());
 	    RootPanel.get("srv-header").add(loadButton);
+		
+		exerciseWordingWidget = new MathWordingWidget(RootPanel.get("exerciseWording"));
 	}
 
 	/**

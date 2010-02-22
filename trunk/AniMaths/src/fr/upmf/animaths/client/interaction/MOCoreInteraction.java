@@ -33,6 +33,7 @@ import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
+import fr.upmf.animaths.client.mvp.MODragPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
 import fr.upmf.animaths.client.mvp.MOStaticPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.IMOHasStyleClass;
@@ -51,7 +52,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private EventBus eventBus = AniMathsPresenter.eventBus;	
 
 	private MOElement<?> selectedElement = null;
-	private MOStaticPresenter copiedPresenter = new MOStaticPresenter();
+	private MODragPresenter dragPresenter = new MODragPresenter();
 	private boolean processFound = false;
 	private int greatestPriorityFound = 0;
 	private short processTag = MOAbstractProcess.PROCESS_NO;
@@ -141,7 +142,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			if(processFound) {
 				removeHandler(SelectionChangeEvent.getType());
 				removeHandler(GrabEvent.getType());
-				initCopiedPresenter(selectedElement);
+				dragPresenter.init(selectedElement);
 				selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
 				setHandler(DragEvent.getType());
 				setHandler(DropEvent.getType());
@@ -158,13 +159,13 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	@Override
 	public void onDrag(DragEvent event) {
-		moveCopiedPresenter(event.getClientX(), event.getClientY());
+		dragPresenter.move(event.getClientX(), event.getClientY());
 		MOElement<?> whereElement = event.getElement();
 		if(whereElement==null)
 			whereElement = presenter.getElement();
 		if(whereElement==selectedElement) {
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
-			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
+			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
 			return;
 		}
 		greatestPriorityFound = 0;
@@ -180,15 +181,15 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		switch(processTag) {
 		case MOAbstractProcess.PROCESS_NO:
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_NO_DROP);
-			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
+			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
 			break;
 		case MOAbstractProcess.PROCESS_CAUTION:
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
-			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
+			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
 			break;
 		case MOAbstractProcess.PROCESS_OK:
 			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
-			copiedPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
+			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
 			break;
 		}
 	}
@@ -203,7 +204,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		selectedElement = null;
 		setHandler(SelectionEvent.getType());
 		setHandler(FlyOverEvent.getType());
-		clearCopiedPresenter();
+		dragPresenter.unbind();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -250,38 +251,19 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		processDone = true;
 	}
 
-	public MOStaticPresenter getCopiedPresenter() {
-		return copiedPresenter;
-	}
-	
-	private void initCopiedPresenter(MOElement<?> element) {
-		clearCopiedPresenter();
-		copiedPresenter.setElement(element.clone());
-		RootPanel.get("drag").add(copiedPresenter.getDisplay().asWidget());
-		RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
-	}
-	
-	private void clearCopiedPresenter() {
-		copiedPresenter = new MOStaticPresenter();
-		RootPanel.get("drag").getElement().setAttribute("style","left:0;top:0;");
-		RootPanel.get("drag").clear();
-		if(RootPanel.get("drag").getElement().hasChildNodes())
-			RootPanel.get("drag").getElement().getFirstChild().removeFromParent();
-	}
-	
-	private void moveCopiedPresenter(int x, int y) {
-		RootPanel.get("drag").getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
+	public MOStaticPresenter getDragPresenter() {
+		return dragPresenter;
 	}
 	
 	public void changeSign() {
-		MOElement<?> element = copiedPresenter.getElement();
+		MOElement<?> element = dragPresenter.getElement();
 		if(element instanceof MOSignedElement)
 			((MOSignedElement) element).setMinus(!((MOSignedElement) element).isMinus());
 		else if(element instanceof MOAddContainer)
 			((MOAddContainer)element).changeSign();
 		else
 			element = new MOSignedElement(element,true);
-		copiedPresenter.setElement(element);
+		dragPresenter.setElement(element);
 		if(element instanceof MOSignedElement)
 			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
 		else if (element instanceof MOAddContainer)
@@ -290,7 +272,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	}
 
 	public void inverseSign() {
-		MOElement<?> element = copiedPresenter.getElement();
+		MOElement<?> element = dragPresenter.getElement();
 		if(element instanceof MOMultiplyElement) {
 			((MOMultiplyElement) element).setDivided(!((MOMultiplyElement) element).isDivided());
 			element = new MOMultiplyContainer((MOMultiplyElement) element);
@@ -299,7 +281,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			((MOMultiplyContainer)element).inverseSign();
 		else
 			element = new MOMultiplyElement(element,true);
-		copiedPresenter.setElement(element);
+		dragPresenter.setElement(element);
 	}
 
 	@Override

@@ -5,11 +5,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.MathML.MMLMath;
 
-public class MOStaticDisplay extends Composite implements MOStaticPresenter.Display {
+public class MOBasicDisplay extends Composite implements MOAbstractPresenter.Display {
 
 	protected MMLMath wrapper;
 
-	public MOStaticDisplay() {
+	public MOBasicDisplay() {
 		wrapper = new MMLMath(true);
 		initWidget(wrapper);
 	}
@@ -28,14 +28,14 @@ public class MOStaticDisplay extends Composite implements MOStaticPresenter.Disp
 	}
 	
 	@Override
-	public MMLMath getWrapper() {
+	public MMLMath asWrapper() {
 		return wrapper;
 	}
 
 	@Override
-	public void clearWrapper() {
-		while(getElement().hasChildNodes())
-			getElement().removeChild(getElement().getFirstChildElement());
+	public void remove() {
+		wrapper.removeFromParent();
+		wrapper.getElement().removeFromParent();
 	}
 
 }

@@ -1,6 +1,7 @@
 package fr.upmf.animaths.client.mvp;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.place.Place;
@@ -15,10 +16,14 @@ import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.XMLParser;
 import com.google.inject.Inject;
 
 import fr.upmf.animaths.client.AniMathsService;
 import fr.upmf.animaths.client.AniMathsServiceAsync;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
 
 /**
  * The business logic for AniMaths.
@@ -31,9 +36,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public static EventBus eventBus;
 	private static final AniMathsServiceAsync aniMathsService = GWT.create(AniMathsService.class);
 
-	private MODynamicPresenter mODynamicPresenter;
-	public List<MOStaticPresenter> mOStaticPresenters;
-	public List<StaticManipulationWordingPresenter> staticManipulationWordingPresenters;
+	private MODynamicPresenter mODynamicPresenter = new MODynamicPresenter();
+	public Map<String,MOStaticPresenter> mOStaticPresenters = new HashMap<String,MOStaticPresenter>();
+	public Map<String,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
 
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
@@ -41,6 +46,15 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	}
 
 	public static final Place PLACE = new Place("a");
+
+	/**
+	 * Returning a place will allow this presenter to automatically trigger when
+	 * '#exercice' is passed into the browser URL.
+	 */
+	@Override
+	public Place getPlace() {
+		return PLACE;
+	}
 
 	@Inject
 	public AniMathsPresenter(final Display display, final EventBus eventBus) {
@@ -50,138 +64,62 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	}
 	
 	@Override
-	protected void onBind() {
-		
+	protected void onBind() {	
+		loadProblem("equation3");
 		display.getLoadButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				loadProblem();
+				loadProblem("equation3");
 			}
 		});
-		
-		loadProblem();
-
-//		MOIdentifier x = new MOIdentifier("x");
-//
-//		MOEquation eq = new MOEquation();
-//		eq.setLeftHandSide(
-//			new MOAddContainer(
-//					new MOSignedElement(new MOIdentifier("x"),true),
-//					new MOSignedElement(new MONumber(10)),
-//					new MOSignedElement(
-//							new MOMultiplyContainer(
-//									new MOMultiplyElement(new MONumber(2)),
-//									new MOMultiplyElement(
-//											new MOAddContainer(
-//													new MOSignedElement(new MOIdentifier("x"),false),
-//													new MOSignedElement(new MONumber(1),true)
-//											)
-//									)
-//							)
-//					)
-//			)
-//		);
-//		eq.setRightHandSide(
-//			new MOMultiplyContainer(
-//					new MOMultiplyElement(
-//							new MOSignedElement(
-//									new MOSignedElement(
-//											new MOSignedElement(
-//													new MONumber(3),
-//											true),
-//									false),
-//							true)
-//					),
-//					new MOMultiplyElement(
-//							new MOAddContainer(
-//									new MOSignedElement(
-//											new MOMultiplyContainer(
-//													new MOMultiplyElement(new MONumber(2)),
-//													new MOMultiplyElement(new MOIdentifier("x"))
-//											)
-//									),
-//									new MOSignedElement(new MONumber(1))
-//							)
-//					),
-//					new MOMultiplyElement(new MONumber(5),true),
-//					new MOMultiplyElement(new MONumber(8),true),
-//					new MOMultiplyElement(new MONumber(2),true)
-//			)
-//		);
-//
-////		MOEquation eq =new Equation().generateEquation(); 
-//
-//		display.getExerciseWordingWidget().pack("Isoler ", x," dans l'équation ", eq);
-//
-//		mODynamicPresenter = new MODynamicPresenter();
-//		mODynamicPresenter.setElement(eq);
-		
 	}
 
+	@Override
+	protected void onPlaceRequest(final PlaceRequest request) {
+		// Grab the 'id' from the request and load the 'id' equation.
+		final String id = request.getParameter("id", null);
+		
+		if(id != null) {
+			loadProblem(id);
+		}
+	}
+	
 	@Override
 	protected void onUnbind() {
 		// Add unbind functionality here for more complex presenters.
 	}
 
+	@Override
 	public void refreshDisplay() {
 		// This is called when the presenter should pull the latest data
 		// from the server, etc. In this case, there is nothing to do.
 	}
 
+	@Override
 	public void revealDisplay() {
 		// Nothing to do. This is more useful in UI which may be buried
 		// in a tab bar, tree, etc.
 	}
 
 	/**
-	 * Returning a place will allow this presenter to automatically trigger when
-	 * '#Greeting' is passed into the browser URL.
-	 */
-	@Override
-	public Place getPlace() {
-		return PLACE;
-	}
-
-	@Override
-	protected void onPlaceRequest(final PlaceRequest request) {
-//		// Grab the 'name' from the request and put it into the 'name' field.
-//		// This allows a tag of '#Greeting;name=Foo' to populate the name
-//		// field.
-//		final String name = request.getParameter("name", null);
-//		
-//		if (name != null) {
-//			display.getName().setValue(name);
-//		}
-	}
-	
-	/**
 	 * @return
 	 */
-	private void loadProblem() {
+	private void loadProblem(String id) {
 	    // Set up the callback object.
 	    AsyncCallback<String> callback = new AsyncCallback<String>() {
-	      public void onFailure(Throwable caught) {
-	    	  Window.alert("échec chargement");
-	      }
+			public void onFailure(Throwable caught) {
+				Window.alert("échec du chargement de l'équation...");
+			}
 
-		public void onSuccess(String result) {
-			Window.alert("succès chargement");
-		}
+			public void onSuccess(String result) {
+				System.out.println(result);
+				Element element = XMLParser.parse(result).getDocumentElement();
+				MOElement<?> eq = MOElement.parse(element);
+				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
+				mODynamicPresenter.setElement(eq);
+			}
 	    };
 
-	    // Make the call to the stock price service.
-	    aniMathsService.loadEquation("tototo", callback);
-
-		
-//		aniMathsService.loadEquation("",
-//				new AsyncCallback<String>() {
-//					public void onFailure(Throwable caught) {
-//						// Show the RPC error message to the user
-//						Window.alert("échec chargement");
-//					}
-//
-//					public void onSuccess(String result) {
-//						Window.alert("succès chargement");
-//					}
-//				});
+	    // Make the call.
+	    aniMathsService.loadEquation(id, callback);
 	}
 }
