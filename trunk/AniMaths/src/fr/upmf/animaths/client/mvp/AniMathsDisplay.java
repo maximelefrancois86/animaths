@@ -15,7 +15,7 @@ import com.google.inject.Inject;
 /**
  * The GUI components for AniMath view.
  * 
- * @author Maxime Lefran�ois
+ * @author Maxime Lefran&#65533;ois
  *
  */
 public class AniMathsDisplay extends Composite implements AniMathsPresenter.Display {
@@ -31,8 +31,7 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 		initWidget(panel);
 
 		panel.add(loadButton);
-
-		RootPanel.get().add(loadButton);
+		loadButton.getElement().setId("load");
 		
 		exerciseWordingWidget = new MathWordingWidget();
 		panel.add(exerciseWordingWidget);
@@ -42,9 +41,8 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 		RootPanel.get("exerciseWording").add(exerciseWordingWidget);
 
 //		// create and attach Save/Load button 
-//		ActionButton ab = new ActionButton(service);
 //	    RootPanel.get("srv-header").add(ab.getSaveButton());
-//	    RootPanel.get("srv-header").add(ab.getLoadButton());
+	    RootPanel.get("srv-header").add(loadButton);
 	}
 
 	/**

@@ -3,7 +3,9 @@ package fr.upmf.animaths.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler.ServiceAsync;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.gin.AniMathsGinjector;
@@ -18,8 +20,13 @@ public class AniMaths implements EntryPoint {
 		
 	    Window.enableScrolling(false);
 	    Window.setMargin("0px");
-	    Window.setTitle("exercices AniMaths");
+	    Window.setTitle("AniMaths > exercices");
 	}
 	
+//	mODynamicPresenter = new MODynamicPresenter();
+//	 mODynamicPresenter.setElement(eq);
+//	dans AniMathsPresenter
+//	avoir un un MODynamicPresenter
+//	unBind()
 	
 }

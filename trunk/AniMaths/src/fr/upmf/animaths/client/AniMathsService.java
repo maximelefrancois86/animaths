@@ -12,6 +12,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("service")
 public interface AniMathsService extends RemoteService {
 	
-	  String loadEquation(String id);	  
+	  String loadEquation(String id);
 
 }

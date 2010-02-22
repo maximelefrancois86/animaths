@@ -79,7 +79,7 @@ public class MODynamicPresenter extends MOAbtractPresenter<MODynamicPresenter.Di
 	
 	@Override
 	protected void onUnbind() {
-		// Add unbind functionality here for more complex presenters.
+		RootPanel.get("view").clear();
 	}
 
 	public void refreshDisplay() {

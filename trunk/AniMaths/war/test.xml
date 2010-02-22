@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE agency SYSTEM "AniMaths.dtd">
+<moe>
+  <moac>
+    <mose isMinus='true'>
+      <moi>x</moi>
+    </mose>
+    <mose>
+      <mon>10</mon>
+    </mose>
+    <mose>
+      <momc>
+        <mome>
+          <mon>2</mon>
+          <mome>
+            <moac>
+              <mose>
+                <moi>x</moi>
+              </mose>
+              <mose isMinus='true'>
+                <mon>1</mon>
+              </mose>
+            </moac>
+          </mome>
+        </mome>
+      </momc>
+    </mose>
+  </moac>
+    <momc>
+    <mome>
+      <mose isMinus='true'>
+        <mose>
+          <mose isMinus='true'>
+            <mon>3</mon>
+          </mose>
+        </mose>
+      </mose>
+    </mome>
+    <mome>
+      <moac>
+        <mose>
+          <momc>
+            <mome>
+              <mon>2</mon>
+            </mome>
+            <mome>
+              <moi>x</moi>
+            </mome>
+          </momc>
+        </mose>
+        <mose>
+          <mon>1</mon>
+        </mose>
+      </moac>
+    </mome>
+  </momc>
+</moe>
+<!--
+//		MOEquation eq = new MOEquation();
+//		eq.setLeftHandSide(
+//			new MOAddContainer(
+//					new MOSignedElement(new MOIdentifier("x"),true),
+//					new MOSignedElement(new MONumber(10)),
+//					new MOSignedElement(
+//							new MOMultiplyContainer(
+//									new MOMultiplyElement(new MONumber(2)),
+//									new MOMultiplyElement(
+//											new MOAddContainer(
+//													new MOSignedElement(new MOIdentifier("x"),false),
+//													new MOSignedElement(new MONumber(1),true)
+//											)
+//									)
+//							)
+//					)
+//			)
+//		);
+
+
+//		eq.setRightHandSide(
+//			new MOMultiplyContainer(
+//					new MOMultiplyElement(
+//							new MOSignedElement(
+//									new MOSignedElement(
+//											new MOSignedElement(
+//													new MONumber(3),
+//											true),
+//									false),
+//							true)
+//					),
+//					new MOMultiplyElement(
+//							new MOAddContainer(
+//									new MOSignedElement(
+//											new MOMultiplyContainer(
+//													new MOMultiplyElement(new MONumber(2)),
+//													new MOMultiplyElement(new MOIdentifier("x"))
+//											)
+//									),
+//									new MOSignedElement(new MONumber(1))
+//							)
+//					)
+//			)
+//		);
+-->
