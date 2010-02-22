@@ -153,16 +153,35 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 //		}
 	}
 	
+	/**
+	 * @return
+	 */
 	private void loadProblem() {
-		aniMathsService.loadEquation("",
-				new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						// Show the RPC error message to the user
-						Window.alert("échec chargement");
-					}
-					public void onSuccess(String result) {
-						Window.alert("succès chargement");
-					}
-				});
+	    // Set up the callback object.
+	    AsyncCallback<String> callback = new AsyncCallback<String>() {
+	      public void onFailure(Throwable caught) {
+	    	  Window.alert("échec chargement");
+	      }
+
+		public void onSuccess(String result) {
+			Window.alert("succès chargement");
+		}
+	    };
+
+	    // Make the call to the stock price service.
+	    aniMathsService.loadEquation("tototo", callback);
+
+		
+//		aniMathsService.loadEquation("",
+//				new AsyncCallback<String>() {
+//					public void onFailure(Throwable caught) {
+//						// Show the RPC error message to the user
+//						Window.alert("échec chargement");
+//					}
+//
+//					public void onSuccess(String result) {
+//						Window.alert("succès chargement");
+//					}
+//				});
 	}
 }
