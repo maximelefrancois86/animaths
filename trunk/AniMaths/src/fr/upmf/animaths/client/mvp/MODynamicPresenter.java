@@ -25,22 +25,17 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.Display> {
 
-	static final String id = "dynamic";
 	int clientX = 0;
 	int clientY = 0;	
 
 	public MODynamicPresenter() {
-		super(id, new Display());
+		super(new Display());
+		display.asWrapper().getElement().setAttribute("id","dynamic");
 	}
 
 	@Override
-	public void init(MOElement<?> element) {
-		unbind();
-		this.element = element.clone();
-		this.element.pack(display.asWrapper(),this);
-		display.asWrapper().getElement().setId(id);
+	protected void onInit() {
 		RootPanel.get("view").add(display.asWidget());
-		bind();
 	}
 	
 	@Override

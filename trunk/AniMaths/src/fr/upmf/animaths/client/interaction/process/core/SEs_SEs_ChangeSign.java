@@ -52,7 +52,7 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 	}
 
 	@Override
-	protected void executeProcess() {
+	protected void onExecuteProcess() {
 		assert whereElement instanceof MOSignedElement;
 		assert selectedElement instanceof MOSignedElement;
 		

@@ -10,6 +10,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
 
 import fr.upmf.animaths.client.interaction.MOCoreInteraction;
+import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedHandler;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
@@ -101,7 +102,14 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	protected abstract boolean isProcessInvolved();
 	protected abstract short getTagOfProcess();
 	protected abstract int getPriorityOfProcess();
-	protected abstract void executeProcess();
+	
+	public final void executeProcess() {
+		eventBus.fireEvent(new NewLineEvent());
+		onExecuteProcess();
+	}
+
+	protected abstract void onExecuteProcess();
+	
 
 	@SuppressWarnings("unchecked")
 	protected final <T extends EventHandler> void setHandler(Type<T> type) {

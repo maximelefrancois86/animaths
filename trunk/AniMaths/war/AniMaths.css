@@ -59,51 +59,46 @@ math {
 	padding:1em;
 	width:auto;
 }
+
 #view {
-  position:relative;
-  width: *;
+	position:relative;
+	width: *;
 	float: left;
-}
-
-#view math {
-	border-style:solid;
-	border-color:black;
-	width:75%;
 	left:0em;
+	width:75%;
 }
 
+#dynamic {
+	border-style:solid;
+	border-color:red;
+}
+
+#drag {
+  position:absolute;
+}
+
+/*OK pour lacher*/
+#drag .ok {
+	background-color: #DDFFDD;
+	color: #33FF33;
+}
 
 /*Attention � quelquechose*/
-#drag math .caution {
-	background-color: #FFFFDD;
-	color: #FFFF33;
+#drag .caution {
+	background-color: #FFFFBB;
+	color: #CCCC00;
 }
 
 /*Impossible de l�cher*/
-#drag math .no {
+#drag .no {
 	background-color: #FFDDDD;
-	color: #FF333;
+	color: #FF3333;
 }
 
-#drag math .focus {
+#drag .focus {
   	font-size: 14pt;
 	color:red;
 }
-
-/**
-/*HELP
-*/
-#help {
-	float: right;
-	/*height: 100%;*/
-	height:auto;
-	width: 22%;
-	/*	position:absolute;
-	top: 20%;
-	left: 75%;
-	width: 25%;
-}
-
 
 .table-center
 {
