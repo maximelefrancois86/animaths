@@ -21,7 +21,7 @@ math {
 #exerciseWording {
 	font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
 	font-size: larger;
-	background-color:#F5F5F5;
+	background-color: #F5F5F5;
 }
 
 #exerciseWording,#help,#view {
@@ -41,6 +41,7 @@ math {
 #exerciseWording math {
 	background-color: #F5F5F5;
 	color: darkblue;
+	border-bottom: thick solid #888;
 }
 
 #help {
@@ -56,6 +57,19 @@ h1 {
 /* View */
 #view math * {
 	cursor: pointer;
+}
+
+#view math {
+	background-color: #F5F5F5;
+	color: #CCCCCC;
+	/*opacity: .7;*/
+}
+
+#view #dynamic {
+	background-color: #fff;
+	color: #333;
+	opacity: 1;
+	border: thick solid #C3D9FF;
 }
 
 /*L'objet s�lectionnable*/

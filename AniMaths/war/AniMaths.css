@@ -1,6 +1,9 @@
 @CHARSET "UTF-8";
+
 @import "./server-typo.css";
+
 @import "./server-layout.css";
+
 @import "./AniMaths-typo.css";
 
 body {
@@ -17,30 +20,27 @@ h1 {
 
 #exerciseWording {
 	font-size: 10pt;
-	color:red;
-  position:relative;
-  padding-bottom: 0.5em;
-  border-bottom-style:solid;
-  border-bottom-color:red;
-  width: *;
-}
-  
-#srv-header {
-  	margin-bottom: 0;
+	position: relative;
+	padding-bottom: 0.5em;
+	width: *;
 }
 
-#srv-header .gwt-Button{
-	padding:0 .25em;
-	margin:0.05em 0.25em;
+#srv-header {
+	margin-bottom: 0;
+}
+
+#srv-header .gwt-Button {
+	padding: 0 .25em;
+	margin: 0.05em 0.25em;
 	float: right;
 }
 
 .gwt-DialogBox {
-  width: 400px;
+	width: 400px;
 }
 
 .dialogVPanel {
-  margin: 5px;
+	margin: 5px;
 }
 
 math {
@@ -52,29 +52,27 @@ math {
 /**
 /* EQUATIONS LIST 
 */
-#exerciseWording, #view {
+#exerciseWording,#view {
 	width: 70%;
 }
+
 #exerciseWording {
-	padding:1em;
-	width:auto;
+	padding: 1em;
+	width: auto;
 }
 
 #view {
-	position:relative;
+	position: relative;
 	width: *;
 	float: left;
-	left:0em;
-	width:75%;
-}
-
-#dynamic {
-	border-style:solid;
-	border-color:red;
+	left: 0em;
+	width: 75%;
+	margin-top:1em;
 }
 
 #drag {
-  position:absolute;
+	position: absolute;
+	z-index:10000;
 }
 
 /*OK pour lacher*/
@@ -96,12 +94,11 @@ math {
 }
 
 #drag .focus {
-  	font-size: 14pt;
-	color:red;
+	font-size: 14pt;
+	color: red;
 }
 
-.table-center
-{
-    margin-left            :    auto;
-    margin-right           :    auto;
+.table-center {
+	margin-left: auto;
+	margin-right: auto;
 }
