@@ -22,20 +22,17 @@ public abstract class MOAbstractPresenter<D extends MOAbstractPresenter.Display>
 	
 	public interface Display extends WidgetDisplay {
 		public MMLMath asWrapper();
-		public void clear();
 	}
 
 	protected MOElement<?> element;
-	protected String id;
+	protected boolean isBound = false;
 
-	public MOAbstractPresenter(String id, D display) {
+	public MOAbstractPresenter(D display) {
 		super(display, AniMathsPresenter.eventBus);
-		this.id = id;
-		display.asWrapper().getElement().setId(id);
 	}
 
-	public MOAbstractPresenter(String id,MOElement<?> element,D display) {
-		this(id, display);
+	public MOAbstractPresenter(MOElement<?> element,D display) {
+		this(display);
 		init(element);
 	}
 
@@ -43,16 +40,23 @@ public abstract class MOAbstractPresenter<D extends MOAbstractPresenter.Display>
 		return element;
 	}
 	
-	public void init(MOElement<?> element) {
-		unbind();
-		element.pack(display.asWrapper(),this);
-		this.element = element;
+	public final void init(MOElement<?> element) {
+		if(isBound)
+			unbind();
+		this.element = element.clone();
+		this.element.pack(display.asWrapper(),this);
+		onInit();
 		bind();
+		isBound = true;
 	}
+	
+	protected abstract void onInit();
 	
 	@Override
 	protected void onUnbind() {
-		display.clear();
+		while(display.asWrapper().getElement().hasChildNodes())
+			display.asWrapper().getElement().getFirstChild().removeFromParent();
+		isBound = false;
 	}
 
 	public static final Place PLACE = new Place("s");

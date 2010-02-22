@@ -47,11 +47,11 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	
 	private static MOCoreInteraction instance = new MOCoreInteraction();
 	private static MODynamicPresenter presenter;
+	private static final MODragPresenter dragPresenter = new MODragPresenter();
 	
 	private EventBus eventBus = AniMathsPresenter.eventBus;	
 
 	private MOElement<?> selectedElement = null;
-	private MODragPresenter dragPresenter = new MODragPresenter();
 	private boolean processFound = false;
 	private int greatestPriorityFound = 0;
 	private short processTag = MOAbstractProcess.PROCESS_NO;
@@ -66,9 +66,9 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		instance.setHandler(FlyOverEvent.getType());
 		instance.setHandler(QuestionEvent.getType());
 		SEs_AC_Commutation.setEnabled();
-		MEs_MC_Commutation.setEnabled();
-		SEs_SEs_ChangeSign.setEnabled();
-		SEs_AC_E_ChangeHandSide.setEnabled();
+//		MEs_MC_Commutation.setEnabled();
+//		SEs_SEs_ChangeSign.setEnabled();
+//		SEs_AC_E_ChangeHandSide.setEnabled();
 //		MEs_MC_E_ChangeHandSide.setEnabled();
 	}
 
@@ -199,11 +199,11 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		eventBus.fireEvent(new DropSelectedEvent(greatestPriorityFound));
 		removeHandler(DragEvent.getType());
 		removeHandler(DropEvent.getType());
+		dragPresenter.unbind();
 		selectedElement.setStyleClass(MOElement.STYLE_CLASS_NONE);
 		selectedElement = null;
 		setHandler(SelectionEvent.getType());
 		setHandler(FlyOverEvent.getType());
-		dragPresenter.unbind();
 	}
 	
 	@SuppressWarnings("unchecked")

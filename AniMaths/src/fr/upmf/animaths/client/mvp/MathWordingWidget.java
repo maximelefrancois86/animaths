@@ -41,7 +41,7 @@ public class MathWordingWidget extends Composite {
 	public void clear() {
 		rootPanel.clear();
 		while(rootPanel.getElement().hasChildNodes())
-			rootPanel.getElement().removeChild(rootPanel.getElement().getFirstChild());
+			rootPanel.getElement().getFirstChild().removeFromParent();
 	}
 
 }

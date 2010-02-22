@@ -49,7 +49,7 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	protected void executeProcess() {
+	protected void onExecuteProcess() {
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
 	}

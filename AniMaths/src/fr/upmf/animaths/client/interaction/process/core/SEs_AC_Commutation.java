@@ -43,7 +43,7 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	protected void executeProcess() {
+	protected void onExecuteProcess() {
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOSignedElement)whereElement,zoneH==MOElement.ZONE_EE);
 	}

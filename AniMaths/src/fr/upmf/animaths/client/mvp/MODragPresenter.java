@@ -6,25 +6,29 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class MODragPresenter extends MOBasicPresenter {
 
-	static final String id = "drag";
-
 	public MODragPresenter() {
-		super(id);
+		super();
 	}
 
 	public MODragPresenter(MOElement<?> element) {
-		super(id, element);
+		super(element);
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
-		RootPanel.get("view").add(display.asWrapper());
-		RootPanel.get(id).getElement().setAttribute("style","visibility:hidden;");
-	}
-
-	public void move(int x, int y) {
-		RootPanel.get(id).getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
+	protected void onInit() {
+		RootPanel.get("drag").add(display.asWidget());
+		RootPanel.get("drag").getElement().setAttribute("style","visible:hidden;");
 	}
 	
+	public void move(int x, int y) {
+		RootPanel.get("drag").getElement().setAttribute("style","left:"+(x+5)+";top:"+(y+10)+";");
+	}
+
+	@Override
+	protected final void onUnbind() {
+		super.onUnbind();
+		RootPanel.get("drag").getElement().removeAttribute("style");
+	}
+
+
 }

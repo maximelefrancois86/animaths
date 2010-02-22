@@ -1,7 +1,7 @@
 package fr.upmf.animaths.client.mvp;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.place.Place;
@@ -16,12 +16,15 @@ import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
 import com.google.inject.Inject;
 
 import fr.upmf.animaths.client.AniMathsService;
 import fr.upmf.animaths.client.AniMathsServiceAsync;
+import fr.upmf.animaths.client.interaction.events.NewLineEvent;
+import fr.upmf.animaths.client.interaction.events.NewLineHandler;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
 
@@ -37,8 +40,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private static final AniMathsServiceAsync aniMathsService = GWT.create(AniMathsService.class);
 
 	private MODynamicPresenter mODynamicPresenter;
-	public Map<String,MOBasicPresenter> mOBasicPresenters;
-//	public Map<String,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
+	public List<MOBasicPresenter> mOBasicPresenters;
+//	public Map<Integer,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
 
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
@@ -61,7 +64,12 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		super(display, eventBus);
 		AniMathsPresenter.eventBus = eventBus;
 		mODynamicPresenter = new MODynamicPresenter();
-		mOBasicPresenters = new HashMap<String,MOBasicPresenter>();
+		mOBasicPresenters = new ArrayList<MOBasicPresenter>();
+		eventBus.addHandler(NewLineEvent.getType(),new NewLineHandler() {
+			public void onNewLine(NewLineEvent event) {
+				mOBasicPresenters.add(new MOBasicPresenter(mODynamicPresenter.getElement()));
+			}
+		});
 		bind();
 	}
 	
@@ -105,6 +113,11 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 * @return
 	 */
 	private void loadProblem(String id) {
+		for(MOBasicPresenter basicPresenter : mOBasicPresenters)
+			basicPresenter.unbind();
+		mOBasicPresenters.clear();
+		while(RootPanel.get("view").getElement().getChildCount()>1)
+			RootPanel.get("view").getElement().getFirstChild().removeFromParent();
 	    // Set up the callback object.
 	    AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
@@ -123,4 +136,5 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	    // Make the call.
 	    aniMathsService.loadEquation(id, callback);
 	}
+	
 }

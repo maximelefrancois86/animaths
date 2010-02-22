@@ -87,7 +87,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 
 	@Override
-	protected void executeProcess() {
+	protected void onExecuteProcess() {
 		addContainer.remove((MOSignedElement) selectedElement);
 		assert addContainer.size()>0;
 		// simplification...
