@@ -37,8 +37,8 @@ public class MMLNumber extends MMLGenericAtom {
         super(elementName, n);
 	}
 
-	public MMLNumber(Number n) {
-        super(elementName, n.toString());
+	public MMLNumber(Float n) {
+	        super(elementName, Math.round(n)==n?Integer.toString(Math.round(n)):n.toString());
 	}
 
 	@Override

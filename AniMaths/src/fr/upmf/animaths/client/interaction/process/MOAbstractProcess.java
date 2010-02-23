@@ -69,6 +69,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		presenter = event.getPresenter();
 		selectedElement = event.getSelectedElement();
 		if(isProcessInvolved()) {
+			System.out.println("10");
 			setHandler(DragSelectedEvent.getType());
 			setHandler(DropSelectedEvent.getType());
 			eventBus.fireEvent(new ProcessInterestedEvent());
@@ -79,12 +80,8 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	@Override
 	public final void onDragSelected(DragSelectedEvent event) {
-		if(event.isFirstLevel()) {
-			System.out.println("level 0");
+		if(event.isFirstLevel())
 			tag = -1;
-		}
-		else
-			System.out.println("level");
 		zoneH = event.getZoneH();
 		zoneV = event.getZoneV();
 		whereElement = event.getWhereElement();

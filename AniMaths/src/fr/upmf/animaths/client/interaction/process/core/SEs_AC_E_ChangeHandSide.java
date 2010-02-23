@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.interaction.process.core;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.interaction.process.Question;
+import fr.upmf.animaths.client.interaction.process.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -66,7 +66,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
-		Question question = new Question(this, wording);
+		QuestionButton questionButton = new QuestionButton(this, wording);
 		
 		int index = parentOfWhere.indexOf(where);
 		assert index!=-1;
@@ -77,14 +77,14 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 		good.setMinus(!good.isMinus());
 		MOAddContainer goodAnswer = parentOfWhere.clone();
 		goodAnswer.add(index,good);
-		question.addAnswer(goodAnswer, true);
+		questionButton.addAnswer(goodAnswer, true);
 
 		MOSignedElement bad = selected.clone();
 		MOAddContainer badAnswer = parentOfWhere.clone();
 		badAnswer.add(index,bad);
-		question.addAnswer(badAnswer, false);	
+		questionButton.addAnswer(badAnswer, false);	
 		
-		question.center();
+		questionButton.center();
 		good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 		bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 	}
