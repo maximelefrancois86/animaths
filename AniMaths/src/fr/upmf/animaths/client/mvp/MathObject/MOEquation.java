@@ -98,6 +98,10 @@ public class MOEquation extends MOElement<MOEquation.Display> {
 		return rightHandSide;
 	}
 
+	public MOElement<?> getHandSide(boolean atLeft) {
+		return (atLeft)?leftHandSide:rightHandSide;
+	}
+
 	public void setLeftHandSide(MOElement<?> leftHandSide) {
 		leftHandSide.setMathObjectParent(this);
 		this.leftHandSide = leftHandSide;
@@ -106,6 +110,14 @@ public class MOEquation extends MOElement<MOEquation.Display> {
 	public void setRightHandSide(MOElement<?> rightHandSide) {
 		rightHandSide.setMathObjectParent(this);
 		this.rightHandSide = rightHandSide;
+	}
+
+	public void setHandSide(MOElement<?> handSide, boolean atLeft) {
+		handSide.setMathObjectParent(this);
+		if(atLeft)
+			this.leftHandSide = handSide;
+		else
+			this.rightHandSide = handSide;
 	}
 
 	@Override

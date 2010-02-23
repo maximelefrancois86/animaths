@@ -32,12 +32,9 @@ public class QuestionButton extends DialogBox {
 		dialogVPanel.add(wording);
 	}
 
-	public void addAnswer(MOElement<?> element, boolean goodAnswer) {
+	public void addAnswer(MOElement<?> element, int answer) {
 		MOFocusWidget button = new MOFocusWidget(new MOBasicPresenter(element));
-		if(goodAnswer)
-			button.addClickHandler(new CorrectAnswerClickHandler());
-		else
-			button.addClickHandler(new WrongAnswerClickHandler());
+		button.addClickHandler(new AnswerClickHandler(answer));
 		answers.add(button);
 	}
 	
@@ -54,15 +51,14 @@ public class QuestionButton extends DialogBox {
 		super.center();
 	}
 	
-	private class WrongAnswerClickHandler implements ClickHandler {
+	private class AnswerClickHandler implements ClickHandler {
+		private int answer;
+		public AnswerClickHandler(int answer) {
+			this.answer = answer;
+		}
 		public void onClick(ClickEvent event) {
 			hide();
-		}
-	}
-
-	private class CorrectAnswerClickHandler implements ClickHandler {
-		public void onClick(ClickEvent event) {			hide();
-			process.executeProcess();
+			process.executeProcess(answer);
 		}
 	}
 

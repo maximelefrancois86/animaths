@@ -115,13 +115,15 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		askQuestion();
 	}
 	
-	public abstract void askQuestion();	
+	public abstract void askQuestion();		
 
-	public final void executeProcess() {
-		eventBus.fireEvent(new ProcessDoneEvent());
-		onExecuteProcess();
-		presenter.init(presenter.getElement());
+	public final void executeProcess(int answer) {
+		if(answer>0) {
+			eventBus.fireEvent(new ProcessDoneEvent());
+			onExecuteProcess(answer);
+			presenter.init(presenter.getElement());
+		}
 	}
 
-	public abstract void onExecuteProcess();
+	public abstract void onExecuteProcess(int answer);
 }

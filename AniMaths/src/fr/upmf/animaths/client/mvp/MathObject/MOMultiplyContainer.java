@@ -324,6 +324,13 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 			return null;
 	}
 
+	public void remove(int index) {
+		if(index<numerator.size())
+			numerator.remove(index);
+		else if(index-numerator.size()<denominator.size())
+			denominator.remove(index-numerator.size());
+	}
+
 	@Override
 	public void remove(MOMultiplyElement child) {
 		if(numerator.contains(child))

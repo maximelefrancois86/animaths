@@ -86,13 +86,13 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
 		wording.setWording("Quand on multiplie ",new MOSignedElement(new MONumber(1),parent.isMinus())," par ",child.clone(),", quel est le résultat ?");
 		QuestionButton questionButton = new QuestionButton(this, wording);
-		questionButton.addAnswer(goodAnswer, true);
-		questionButton.addAnswer(badAnswer, false);	
+		questionButton.addAnswer(goodAnswer, 1);
+		questionButton.addAnswer(badAnswer, 0);	
 		questionButton.center();
 	}
 
 	@Override
-	public void onExecuteProcess() {
+	public void onExecuteProcess(int answer) {
 		System.out.println("SEs_SEs_Commutation : ExecuteProcess");
 		parent.setMinus(isMinus);
 		parent.setChild(child.getChild());

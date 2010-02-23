@@ -97,7 +97,7 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 	}
 
 	@Override
-	public void onExecuteProcess() {
+	public void onExecuteProcess(int answer) {
 		System.out.println("MEs_N_Multiply : ExecuteProcess");
 		multiplyContainer.remove(selected);
 		if(floatMult<0)

@@ -8,6 +8,8 @@ import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
+import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
 public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
@@ -24,6 +26,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	private boolean atLeft;	
 	private MOAddContainer parentOfWhere;
 	private MOSignedElement where;
+	private MOEquation moeAZ;
 	
 	
 	
@@ -58,6 +61,10 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			where = (MOSignedElement) whereElement;
 			return PROCESS_CAUTION;
 		}
+		if(whereElement==equation.getHandSide(!atLeft)
+				&& (zoneH==MOElement.ZONE_EE || zoneH==MOElement.ZONE_OO)) {
+				return PROCESS_CAUTION;
+			}
 		return PROCESS_NO;
 	}
 
@@ -68,47 +75,99 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
 		QuestionButton questionButton = new QuestionButton(this, wording);
 		
-		int index = parentOfWhere.indexOf(where);
-		assert index!=-1;
-		if(zoneH==MOElement.ZONE_EE)
-			index++;
-		
-		MOSignedElement good = selected.clone();
-		good.setMinus(!good.isMinus());
-		MOAddContainer goodAnswer = parentOfWhere.clone();
-		goodAnswer.add(index,good);
-		questionButton.addAnswer(goodAnswer, true);
+		if(whereElement.getMathObjectParent() instanceof MOAddContainer) {
+			int index = parentOfWhere.indexOf(where);
+			assert index!=-1;
+			if(zoneH==MOElement.ZONE_EE)
+				index++;
+			
+			MOSignedElement good = selected.clone();
+			good.setMinus(!good.isMinus());
+			MOAddContainer goodAnswer = parentOfWhere.clone();
+			goodAnswer.add(index,good);
+			questionButton.addAnswer(goodAnswer, 1);
+	
+			MOSignedElement bad = selected.clone();
+			MOAddContainer badAnswer = parentOfWhere.clone();
+			badAnswer.add(index,bad);
+			questionButton.addAnswer(badAnswer, 0);	
+			
+			questionButton.center();
+			good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+			bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+		}
+		else if(whereElement==equation.getHandSide(!atLeft)) {
+			MOSignedElement mose = selected.clone(); 
+			MOSignedElement moseZ; (moseZ=mose.clone()).setMinus(!mose.isMinus());
+			MOMultiplyElement mome = new MOMultiplyElement(selected.isMinus()?selected.clone():selected.getChild().clone());
+			MOMultiplyElement momeZ; (momeZ=mome.clone()).setDivided(!mome.isDivided());
+			
+			int index = addContainer.indexOf(selected);
 
-		MOSignedElement bad = selected.clone();
-		MOAddContainer badAnswer = parentOfWhere.clone();
-		badAnswer.add(index,bad);
-		questionButton.addAnswer(badAnswer, false);	
-		
-		questionButton.center();
-		good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
-		bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+			MOEquation moeA = equation.clone();
+			moeAZ = equation.clone();  // correct
+			MOElement<?> handSide = this.addContainer.clone();
+			((MOAddContainer)handSide).remove(index);
+			// simplification...
+			if(((MOAddContainer)handSide).size()==1)
+				handSide = ((MOAddContainer)handSide).get(0).isMinus()? ((MOAddContainer)handSide).get(0):((MOAddContainer)handSide).get(0).getChild();
+			moeA.setHandSide(handSide.clone(),atLeft);
+			moeAZ.setHandSide(handSide,atLeft);
+			if(zoneH==MOElement.ZONE_OO) {
+				moeA.setHandSide(new MOAddContainer( mose, new MOSignedElement(moeA.getHandSide(!atLeft)) ),!atLeft);
+				moeAZ.setHandSide(new MOAddContainer( moseZ, new MOSignedElement(moeAZ.getHandSide(!atLeft)) ),!atLeft);
+			}
+			else {
+				moeA.setHandSide(new MOAddContainer( new MOSignedElement(moeA.getHandSide(!atLeft)), mose ), !atLeft);
+				moeAZ.setHandSide(new MOAddContainer( new MOSignedElement(moeAZ.getHandSide(!atLeft)), moseZ ), !atLeft);
+			}
+
+			MOEquation moeM = equation.clone();
+			MOEquation moeMZ = equation.clone();
+			moeM.setHandSide(handSide.clone(),atLeft);
+			moeMZ.setHandSide(handSide.clone(),atLeft);
+			if(whereElement instanceof MOMultiplyContainer) {
+				index = (zoneH==MOElement.ZONE_OO)? 0 : ((MOMultiplyContainer)whereElement).size();
+				((MOMultiplyContainer)moeM.getHandSide(!atLeft)).add(index, mome);
+				((MOMultiplyContainer)moeMZ.getHandSide(!atLeft)).add(index, momeZ);
+			}
+			else if(zoneH==MOElement.ZONE_OO) {
+				moeM.setHandSide(new MOMultiplyContainer( mome, new MOMultiplyElement(moeM.getHandSide(!atLeft)) ),!atLeft);
+				moeMZ.setHandSide(new MOMultiplyContainer( momeZ, new MOMultiplyElement(moeMZ.getHandSide(!atLeft)) ),!atLeft);
+			}
+			else {
+				moeM.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moeM.getHandSide(!atLeft)), mome ), !atLeft);
+				moeMZ.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moeMZ.getHandSide(!atLeft)), momeZ ), !atLeft);
+			}
+
+			questionButton.addAnswer(moeA, 0);
+			questionButton.addAnswer(moeAZ, 1);
+			questionButton.addAnswer(moeM, 0);
+			questionButton.addAnswer(moeMZ, 0);
+			
+			questionButton.center();
+			mose.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+			moseZ.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+			mome.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+			momeZ.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+		}
 	}
 	
 	@Override
-	public void onExecuteProcess() {
-		addContainer.remove(selected);
-		assert addContainer.size()>0;
-		// simplification...
-		if(addContainer.size()==1)
-			if(atLeft) {
-				equation.setLeftHandSide(addContainer.get(0));
-				if(equation.getLeftHandSide() instanceof MOSignedElement
-						&& !((MOSignedElement) equation.getLeftHandSide()).isMinus())
-					equation.setLeftHandSide(((MOSignedElement) equation.getLeftHandSide()).getChild());
-			}
-			else {
-				equation.setRightHandSide(addContainer.get(0));
-				if(equation.getRightHandSide() instanceof MOSignedElement
-						&& !((MOSignedElement) equation.getRightHandSide()).isMinus())
-					equation.setRightHandSide(((MOSignedElement) equation.getRightHandSide()).getChild());
-			}
-		selected.setMinus(!selected.isMinus());
-		parentOfWhere.add(selected,where,zoneH==MOElement.ZONE_EE);
+	public void onExecuteProcess(int answer) {
+		if(whereElement.getMathObjectParent() instanceof MOAddContainer) {
+			addContainer.remove(selected);
+			assert addContainer.size()>0;
+			// simplification...
+			if(addContainer.size()==1)
+				equation.setHandSide(addContainer.get(0).isMinus()?addContainer.get(0):addContainer.get(0).getChild(),atLeft);
+			selected.setMinus(!selected.isMinus());
+			parentOfWhere.add(selected,where,zoneH==MOElement.ZONE_EE);
+		}
+		else if(whereElement==equation.getHandSide(!atLeft)) {
+			equation.setLeftHandSide(moeAZ.getLeftHandSide());
+			equation.setRightHandSide(moeAZ.getRightHandSide());
+		}
 	}
 
 }

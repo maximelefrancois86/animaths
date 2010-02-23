@@ -39,7 +39,7 @@ public class QuestionTextBox extends DialogBox {
 			public void onClick(ClickEvent event) {
 				hide();
 				if(answerField.getText().equals(answer))				
-					process.executeProcess();
+					process.executeProcess(1);
 			}
 		});
 		answerField.addKeyUpHandler(new KeyUpHandler() {
@@ -47,7 +47,7 @@ public class QuestionTextBox extends DialogBox {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					hide();
 					if(answerField.getText().equals(answer))				
-						process.executeProcess();
+						process.executeProcess(1);
 				}
 			}
 		});

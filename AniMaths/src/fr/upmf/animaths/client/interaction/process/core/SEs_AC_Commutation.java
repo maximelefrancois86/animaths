@@ -45,11 +45,11 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 		assert parentOfSelected == whereElement.getMathObjectParent()
 		&& (zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE);
 		System.out.println("SEs_AC_Commutation : askQuestion");
-		executeProcess();
+		executeProcess(1);
 	}
 	
 	@Override
-	public void onExecuteProcess() {
+	public void onExecuteProcess(int answer) {
 		System.out.println("SEs_AC_Commutation : ExecuteProcess");
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOSignedElement)whereElement,zoneH==MOElement.ZONE_EE);
