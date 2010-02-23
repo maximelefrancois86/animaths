@@ -38,6 +38,7 @@
 
 	  <!-- <servlet path="/exerciceService" class="fr.upmf.animaths.rpc.server.ExerciceServiceImpl"/> -->
 	<inherits name="com.google.gwt.xml.XML" />
+	<inherits name='com.google.gwt.user.User'/>
 	<source path="client" />
 
 </module>

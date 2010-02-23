@@ -22,6 +22,8 @@ math {
 	font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
 	font-size: larger;
 	background-color: #F5F5F5;
+	color: #333;
+	border-bottom: thick solid #888;
 }
 
 #exerciseWording,#help,#view {
@@ -38,10 +40,8 @@ math {
 	font-size: large;
 }
 
-#exerciseWording {
-	background-color: #F5F5F5;
+#exerciseWording math {
 	color: darkblue;
-	border-bottom: thick solid #888;
 }
 
 #help {
@@ -133,4 +133,8 @@ h1 {
 #focus {
 	font-size: 14pt;
 	color: red;
+}
+
+#message div {
+	font-size:larger;
 }
