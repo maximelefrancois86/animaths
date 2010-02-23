@@ -1,182 +1,114 @@
-//package fr.upmf.animaths.client.interaction.process.core;
-//
-//import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-//import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
-//import fr.upmf.animaths.client.mvp.MathObject.MOElement;
-//import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
-//import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
-//
-//public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
-//
-//	private static final SEs_AC_E_ChangeHandSide instance = new SEs_AC_E_ChangeHandSide();
-//	protected SEs_AC_E_ChangeHandSide() {}
-//	public static void setEnabled() {
-//		MOAbstractProcess.setEnabled(instance);
-//	}
-//
-//	private boolean atLeft;
-//	private short zoneHOldEq = 100;
-//	private short zoneHEq = 100;
-//	private boolean okForDropping = false;
-//	
-//	private MOEquation equation;
-//	private MOAddContainer addContainer;
-//	
-//	@Override
-//	protected boolean isProcessInvolved() {
-//		if(selectedElement instanceof MOSignedElement) {
-//			MOElement<?> parentOfSelectedElement = selectedElement.getMathObjectParent();
-//			if(parentOfSelectedElement instanceof MOAddContainer) {
-//				addContainer = (MOAddContainer) parentOfSelectedElement;
-//				MOElement<?> greatParentOfSelectedElement = parentOfSelectedElement.getMathObjectParent();
-//				if(greatParentOfSelectedElement instanceof MOEquation) {
-//					equation = (MOEquation) greatParentOfSelectedElement;
-//					atLeft = parentOfSelectedElement == ((MOEquation)greatParentOfSelectedElement).getLeftHandSide();
-//					okForDropping = false;
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
-//
-//	@Override
-//	protected short getTagOfProcess() {
-//		if(whereElement==equation) {
-//			zoneHOldEq = zoneHEq;
-//			zoneHEq = zoneH;
-//			boolean a = atLeft^okForDropping;
-//			boolean b = zoneHOldEq<=MOElement.ZONE_CENTER && zoneHEq>=MOElement.ZONE_E;
-//			boolean c = zoneHOldEq>=MOElement.ZONE_CENTER && zoneHEq<=MOElement.ZONE_O;
-//			if(a&&b || !a&&c) {
-////				coreInteraction.changeSign();
-//				okForDropping = !okForDropping;
-//			}
-//
-//		}
-//		if(okForDropping) {
-//			if(whereElement==equation) {
-//				//cas 1;
-//				if(zoneV!=MOElement.ZONE_NNN && zoneV!=MOElement.ZONE_SSS 
-//						&&( (atLeft && (zoneH==MOElement.ZONE_CENTER ||zoneH==MOElement.ZONE_EE))
-//						 || (!atLeft && (zoneH==MOElement.ZONE_CENTER ||zoneH==MOElement.ZONE_OO)) ))
-//					return PROCESS_CAUTION;
-//			}
-//			else {
-//				//cas 2;
-//				MOElement<?> parentOfWhereElement = whereElement.getMathObjectParent();
-//				if(parentOfWhereElement==equation && whereElement != addContainer && (zoneH==MOElement.ZONE_EE || zoneH==MOElement.ZONE_OO))
-//					return PROCESS_CAUTION;
-//				else {
-//					//cas 3;
-//					MOElement<?> greatParentOfWhereElement = parentOfWhereElement.getMathObjectParent();
-//					if(greatParentOfWhereElement==equation
-//						&& parentOfWhereElement instanceof MOAddContainer
-//						&& parentOfWhereElement != addContainer
-//						&& (zoneH==MOElement.ZONE_EE || zoneH==MOElement.ZONE_OO))
-//						return PROCESS_CAUTION;
-//				}
-//			}
-//		}
-//		return PROCESS_NO;
-//	}
-//
-//	@Override
-//	protected void onExecuteProcess() {
-//		addContainer.remove((MOSignedElement) selectedElement);
-//		assert addContainer.size()>0;
-//		// simplification...
-//		if(addContainer.size()==1)
-//			if(atLeft) {
-//				equation.setLeftHandSide(addContainer.get(0));
-//				if(equation.getLeftHandSide() instanceof MOSignedElement
-//						&& !((MOSignedElement) equation.getLeftHandSide()).isMinus())
-//					equation.setLeftHandSide(((MOSignedElement) equation.getLeftHandSide()).getChild());
-//			}
-//			else {
-//				equation.setRightHandSide(addContainer.get(0));
-//				if(equation.getRightHandSide() instanceof MOSignedElement
-//						&& !((MOSignedElement) equation.getRightHandSide()).isMinus())
-//					equation.setRightHandSide(((MOSignedElement) equation.getRightHandSide()).getChild());
-//			}
-//		//cas 1;
-//		if(whereElement==equation)
-//			executeProcessInCase1();
-//		else {
-//			//cas 2;
-//			MOElement<?> parentOfWhereElement = whereElement.getMathObjectParent();
-//			if(parentOfWhereElement==equation)
-//				executeProcessInCase2();
-//			else {
-//				MOElement<?> greatParentOfWhereElement = parentOfWhereElement.getMathObjectParent();
-//				if(greatParentOfWhereElement==equation) {
-//					assert parentOfWhereElement instanceof MOAddContainer;
-//					executeProcessInCase3(((MOAddContainer) parentOfWhereElement));
-//				}
-//			}
-//		}
-//	}
-//
-//	private void executeProcessInCase1() {
-//		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
-//		MOElement<?> handSide = (atLeft) ? equation.getRightHandSide() : equation.getLeftHandSide();
-//		if(handSide instanceof MOAddContainer) {
-//			if(zoneH==MOElement.ZONE_OO || (atLeft && zoneH==MOElement.ZONE_CENTER))
-//				((MOAddContainer) handSide).add(0,newElement);
-//			else if(zoneH==MOElement.ZONE_EE || (!atLeft && zoneH==MOElement.ZONE_CENTER))
-//				((MOAddContainer) handSide).add(newElement);
-//		}
-//		else {
-//			handSide = (handSide instanceof MOSignedElement)? handSide : new MOSignedElement(handSide);
-//			if(zoneH==MOElement.ZONE_OO || (atLeft && zoneH==MOElement.ZONE_CENTER))
-//				handSide = new MOAddContainer(newElement, (MOSignedElement)handSide);
-//			else if(zoneH==MOElement.ZONE_EE ||(!atLeft && zoneH==MOElement.ZONE_CENTER))
-//				handSide = new MOAddContainer((MOSignedElement)handSide,newElement);
-//			if(atLeft)
-//				equation.setRightHandSide(handSide);
-//			else
-//				equation.setLeftHandSide(handSide);
-//		}
-//	}
-//	
-//	private void executeProcessInCase2() {
-//		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
-////		List<MOSignedElement> children;
-//		if(whereElement instanceof MOAddContainer) {
-//			if(zoneH==MOElement.ZONE_EE)
-//				((MOAddContainer) whereElement).add(newElement);
-//			else if(zoneH==MOElement.ZONE_OO)
-//				((MOAddContainer) whereElement).add(0,newElement);
-//			else
-//				System.out.println("erreur");
-//		}
-//		else {
-//			MOAddContainer handSide = new MOAddContainer((whereElement instanceof MOSignedElement)? (MOSignedElement)whereElement : new MOSignedElement(whereElement));
-//			if(zoneH==MOElement.ZONE_EE)
-//				handSide.add(newElement);
-//			else if(zoneH==MOElement.ZONE_OO)
-//				handSide.add(0,newElement);
-//			else
-//				System.out.println("erreur");
-//			if(atLeft)
-//				equation.setRightHandSide(handSide);
-//			else
-//				equation.setLeftHandSide(handSide);
-//		}
-//	}
-//	
-//	private void executeProcessInCase3(MOAddContainer addContainer) {
-//		MOSignedElement newElement = (MOSignedElement) coreInteraction.getDragPresenter().getElement();
-//		addContainer.add(newElement,(MOSignedElement) whereElement,zoneH==MOElement.ZONE_EE);
-//	}
-//	@Override
-//	public void askQuestion() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void executeProcess() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//}
+package fr.upmf.animaths.client.interaction.process.core;
+
+import com.google.gwt.user.client.ui.FlowPanel;
+
+import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.interaction.process.Question;
+import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
+import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
+
+public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
+
+	private static final SEs_AC_E_ChangeHandSide instance = new SEs_AC_E_ChangeHandSide();
+	protected SEs_AC_E_ChangeHandSide() {}
+	public static void setEnabled() {
+		MOAbstractProcess.setEnabled(instance);
+	}
+	
+	private MOEquation equation;
+	private MOAddContainer addContainer;
+	private MOSignedElement selected;
+	private boolean atLeft;	
+	private MOAddContainer parentOfWhere;
+	private MOSignedElement where;
+	
+	
+	
+	@Override
+	protected boolean isProcessInvolved() {
+		if(selectedElement instanceof MOSignedElement) {
+			selected = (MOSignedElement) selectedElement;
+			MOElement<?> parentOfSelectedElement = selectedElement.getMathObjectParent();
+			if(parentOfSelectedElement instanceof MOAddContainer) {
+				addContainer = (MOAddContainer) parentOfSelectedElement;
+				MOElement<?> greatParentOfSelectedElement = parentOfSelectedElement.getMathObjectParent();
+				if(greatParentOfSelectedElement instanceof MOEquation) {
+					equation = (MOEquation) greatParentOfSelectedElement;
+					atLeft = parentOfSelectedElement == ((MOEquation)greatParentOfSelectedElement).getLeftHandSide();
+					System.out.println("SEs_AC_E_ChangeHandside: Interested");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	protected short getTagOfProcess() {
+		MOElement<?> parentOfWhereElement = whereElement.getMathObjectParent();
+		MOElement<?> greatParentOfWhereElement = parentOfWhereElement.getMathObjectParent();
+		if(greatParentOfWhereElement==equation
+			&& parentOfWhereElement instanceof MOAddContainer
+			&& parentOfWhereElement != addContainer
+			&& (zoneH==MOElement.ZONE_EE || zoneH==MOElement.ZONE_OO)) {
+			parentOfWhere = (MOAddContainer) parentOfWhereElement;
+			where = (MOSignedElement) whereElement;
+			return PROCESS_CAUTION;
+		}
+		return PROCESS_NO;
+	}
+
+	@Override
+	public void askQuestion() {
+		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
+		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
+		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
+		Question question = new Question(this, wording);
+		
+		int index = parentOfWhere.indexOf(where);
+		assert index!=-1;
+		if(zoneH==MOElement.ZONE_EE)
+			index++;
+		
+		MOSignedElement good = selected.clone();
+		good.setMinus(!good.isMinus());
+		MOAddContainer goodAnswer = parentOfWhere.clone();
+		goodAnswer.add(index,good);
+		question.addAnswer(goodAnswer, true);
+
+		MOSignedElement bad = selected.clone();
+		MOAddContainer badAnswer = parentOfWhere.clone();
+		badAnswer.add(index,bad);
+		question.addAnswer(badAnswer, false);	
+		
+		question.center();
+		good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+		bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
+	}
+	
+	@Override
+	public void onExecuteProcess() {
+		addContainer.remove(selected);
+		assert addContainer.size()>0;
+		// simplification...
+		if(addContainer.size()==1)
+			if(atLeft) {
+				equation.setLeftHandSide(addContainer.get(0));
+				if(equation.getLeftHandSide() instanceof MOSignedElement
+						&& !((MOSignedElement) equation.getLeftHandSide()).isMinus())
+					equation.setLeftHandSide(((MOSignedElement) equation.getLeftHandSide()).getChild());
+			}
+			else {
+				equation.setRightHandSide(addContainer.get(0));
+				if(equation.getRightHandSide() instanceof MOSignedElement
+						&& !((MOSignedElement) equation.getRightHandSide()).isMinus())
+					equation.setRightHandSide(((MOSignedElement) equation.getRightHandSide()).getChild());
+			}
+		selected.setMinus(!selected.isMinus());
+		parentOfWhere.add(selected,where,zoneH==MOElement.ZONE_EE);
+	}
+
+}

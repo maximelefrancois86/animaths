@@ -295,6 +295,35 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 		}
 	}
 
+	public void add(int index, MOMultiplyElement child) {
+		child.setMathObjectParent(this);
+		if(index<numerator.size())
+			numerator.add(index, child);
+		else
+			denominator.add(index-numerator.size(),child);
+	}
+
+	public int indexOf(MOMultiplyElement child) {
+		int index = numerator.indexOf(child);
+		if(index!=-1)
+			return index;
+		else
+			return numerator.size()+denominator.indexOf(child);
+	}
+
+	public int size() {
+		return numerator.size()+denominator.size();
+	}
+
+	public MOMultiplyElement get(int index) {
+		if(index<numerator.size())
+			return numerator.get(index);
+		else if(index-numerator.size()<denominator.size())
+			return denominator.get(index-numerator.size());
+		else
+			return null;
+	}
+
 	@Override
 	public void remove(MOMultiplyElement child) {
 		if(numerator.contains(child))

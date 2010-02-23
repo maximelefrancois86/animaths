@@ -15,6 +15,7 @@ import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedHandler;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedHandler;
+import fr.upmf.animaths.client.interaction.process.event.ProcessDoneEvent;
 import fr.upmf.animaths.client.interaction.process.event.ProcessInterestedEvent;
 import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchEvent;
 import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchHandler;
@@ -78,8 +79,12 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	@Override
 	public final void onDragSelected(DragSelectedEvent event) {
-		if(event.isFirstLevel())
+		if(event.isFirstLevel()) {
+			System.out.println("level 0");
 			tag = -1;
+		}
+		else
+			System.out.println("level");
 		zoneH = event.getZoneH();
 		zoneV = event.getZoneV();
 		whereElement = event.getWhereElement();
@@ -87,6 +92,8 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 			return;
 		short tag = getTagOfProcess();
 		if(tag>this.tag) {
+			if(tag>0)
+				System.out.println("MOAbstractProcess : tag 1 ou 2");
 			this.tag = tag;
 			choosenWhereElement = whereElement;
 			choosenZoneH = zoneH;
@@ -113,6 +120,11 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	
 	public abstract void askQuestion();	
 
-	public abstract void executeProcess();	
+	public final void executeProcess() {
+		eventBus.fireEvent(new ProcessDoneEvent());
+		onExecuteProcess();
+		presenter.init(presenter.getElement());
+	}
 
+	public abstract void onExecuteProcess();
 }

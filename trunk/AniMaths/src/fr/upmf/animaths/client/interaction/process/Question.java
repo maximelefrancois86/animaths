@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import fr.upmf.animaths.client.mvp.MOBasicPresenter;
 import fr.upmf.animaths.client.mvp.MOFocusWidget;
+import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class Question extends DialogBox {
@@ -20,14 +21,15 @@ public class Question extends DialogBox {
 	VerticalPanel dialogVPanel = new VerticalPanel();
 	MOAbstractProcess process;
 	
-	public Question(MOAbstractProcess process) {
+	public Question(MOAbstractProcess process, MathWordingWidget wording) {
 		super(false);
 		this.process = process;
-		setText("Quelle sera le résultat de cette manipulation ?");
+		setText("Question...");
 		setAnimationEnabled(true);
 		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		setWidget(dialogVPanel);
+		dialogVPanel.add(wording);
 	}
 
 	public void addAnswer(MOElement<?> element, boolean goodAnswer) {

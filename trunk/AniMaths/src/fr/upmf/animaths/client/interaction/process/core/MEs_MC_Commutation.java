@@ -25,6 +25,7 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 				selected = (MOMultiplyElement) selectedElement;
 				parentOfSelected = (MOMultiplyContainer) parentOfSelectedElement;
 				atNum = !selected.isDivided();
+				System.out.println("MEs_MC_Commutation : Interested");
 				return true;
 			}
 		}
@@ -35,40 +36,43 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	protected short getTagOfProcess() {
 		if(parentOfSelected == whereElement.getMathObjectParent()
 			&&(zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE)) {
-			if(atNum^((MOMultiplyElement)whereElement).isDivided())
+			if(atNum^((MOMultiplyElement)whereElement).isDivided()) {
+				System.out.println("SEs_AC_Commutation : PROCESS_OK");
 				return PROCESS_OK;
-			else
-				return PROCESS_CAUTION;
+			}
+//			else {
+//				System.out.println("SEs_AC_Commutation : PROCESS_CAUTION");
+//				return PROCESS_CAUTION;
+//			}
 		}
 		return PROCESS_NO;
 	}
 
-//	protected void onExecuteProcess() {
-//		parentOfSelected.remove(selected);
-//		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
-//	}
 	@Override
 	public void askQuestion() {
-		// TODO Auto-generated method stub
-		
+//		if(atNum^((MOMultiplyElement)whereElement).isDivided())
+			executeProcess();
+//		else {
+//			System.out.println("MEs_MC_Commutation : askQuestion");
+//
+//			boolean isMinus = parent.isMinus()^child.isMinus();		
+//	
+//			MOSignedElement goodAnswer = new MOSignedElement(child.getChild().clone(),isMinus);
+//			goodAnswer.setNeedsSign(true);
+//			MOSignedElement badAnswer = new MOSignedElement(child.getChild().clone(),!isMinus);
+//			badAnswer.setNeedsSign(true);
+//	
+//			MathWordingWidget wording = new MathWordingWidget("Quel est le résultat de");
+//			Question question = new Question(this, "Quell");
+//			question.addAnswer(goodAnswer, true);
+//			question.addAnswer(badAnswer, false);	
+//			question.center();
+//		}
 	}
+
 	@Override
-	public void executeProcess() {
-		// TODO Auto-generated method stub
-		
+	public void onExecuteProcess() {
+		parentOfSelected.remove(selected);
+		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
 	}
 }
-//public class QuestionDisplay extends DialogBox implements QuestionPresenter.Display {
-//	
-//	public QuestionDisplay() {
-//		super(false);
-//		this.setText("Quelle sera le r�sultat de cette manipulation ?");
-//		this.setAnimationEnabled(true);
-//		VerticalPanel dialogVPanel = new VerticalPanel();
-//		dialogVPanel.addStyleName("dialogVPanel");
-//		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-//		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-//		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-//		this.setWidget(dialogVPanel);
-//	}
-//}
