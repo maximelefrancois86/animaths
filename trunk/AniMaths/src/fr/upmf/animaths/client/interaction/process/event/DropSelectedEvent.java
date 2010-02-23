@@ -9,11 +9,8 @@ public class DropSelectedEvent extends GwtEvent<DropSelectedHandler>{
     public static Type<DropSelectedHandler> getType() {
         return TYPE;
     }
-
-    private int greatestPriorityFound;
     
-    public DropSelectedEvent(int greatestPriorityFound) {
-    	this.greatestPriorityFound = greatestPriorityFound;
+    public DropSelectedEvent() {
     }
     
 	@Override
@@ -26,7 +23,4 @@ public class DropSelectedEvent extends GwtEvent<DropSelectedHandler>{
 		return getType();
 	}
 	
-	public int getGreatestPriorityFound() {
-		return greatestPriorityFound;
-	}
 }

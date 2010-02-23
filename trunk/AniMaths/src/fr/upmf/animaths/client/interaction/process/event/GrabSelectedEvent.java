@@ -2,7 +2,8 @@ package fr.upmf.animaths.client.interaction.process.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.interaction.MOCoreInteraction;
+import fr.upmf.animaths.client.mvp.MODynamicPresenter;
+import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
 
@@ -12,10 +13,12 @@ public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
         return TYPE;
     }
 
-    private MOCoreInteraction mOCoreInteraction;
+    private MODynamicPresenter presenter;
+    private MOElement<?> selectedElement;
 
-    public GrabSelectedEvent(MOCoreInteraction mOCoreInteraction) {
-		this.mOCoreInteraction = mOCoreInteraction;
+    public GrabSelectedEvent(MODynamicPresenter presenter, MOElement<?> selectedElement) {
+		this.presenter = presenter;
+		this.selectedElement = selectedElement;
     }
     
 	@Override
@@ -28,8 +31,12 @@ public class GrabSelectedEvent extends GwtEvent<GrabSelectedHandler> {
 		return getType();
 	}
 	
-	public MOCoreInteraction getSelectionElement() {
-		return mOCoreInteraction;
+	public MOElement<?> getSelectedElement() {
+		return selectedElement;
+	}
+	
+	public MODynamicPresenter getPresenter() {
+		return presenter;
 	}
 
 }

@@ -9,19 +9,21 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
 
-import fr.upmf.animaths.client.interaction.MOCoreInteraction;
-import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedHandler;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedHandler;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedHandler;
+import fr.upmf.animaths.client.interaction.process.event.ProcessInterestedEvent;
+import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchEvent;
+import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchHandler;
+import fr.upmf.animaths.client.interaction.process.event.TagDeclarationEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
-public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler {
+public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler, ProcessLaunchHandler {
 	
 	public static final short PROCESS_NO = 0;
 	public static final short PROCESS_CAUTION = 1;
@@ -35,7 +37,19 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 	
-	protected MOCoreInteraction coreInteraction;
+	@SuppressWarnings("unchecked")
+	public final <T extends EventHandler> void setHandler(Type<T> type) {
+		if(hr.get(type)==null)
+			hr.put(type, eventBus.addHandler(type,(T) this));
+	}
+	
+	public final <T extends EventHandler> void removeHandler(Type<T> type) {
+		if(hr.get(type)!=null) {
+			hr.get(type).removeHandler();
+			hr.put(type,null);
+		}
+	}
+	
 	protected MODynamicPresenter presenter;
 	protected MOElement<?> selectedElement;
 
@@ -47,81 +61,58 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	protected short choosenZoneH;
 	protected short choosenZoneV;
 	
-	private int priorityOfProcess = 0;
-	private short tag = PROCESS_NO;
+	private short tag = -1;
 
 	@Override
 	public final void onGrabSelected(GrabSelectedEvent event) {
-		coreInteraction = event.getSelectionElement();
-		presenter = coreInteraction.getPresenter();
-		selectedElement = coreInteraction.getSelectedElement();
+		presenter = event.getPresenter();
+		selectedElement = event.getSelectedElement();
 		if(isProcessInvolved()) {
 			setHandler(DragSelectedEvent.getType());
-			coreInteraction.setProcessFound();
+			setHandler(DropSelectedEvent.getType());
+			eventBus.fireEvent(new ProcessInterestedEvent());
 		}
 	}
 	
+	protected abstract boolean isProcessInvolved();
+
 	@Override
 	public final void onDragSelected(DragSelectedEvent event) {
-		if(event.isFirstLevel()) {
-			removeHandler(DropSelectedEvent.getType());
-			priorityOfProcess = 0;
-			tag = PROCESS_NO;
-		}
+		if(event.isFirstLevel())
+			tag = -1;
 		zoneH = event.getZoneH();
 		zoneV = event.getZoneV();
 		whereElement = event.getWhereElement();
 		if(whereElement==selectedElement)
 			return;
-		int priorityOfProcess = getPriorityOfProcess();
-		tag = (short)Math.max(tag,getTagOfProcess());
-		if(priorityOfProcess>this.priorityOfProcess) {
-			this.priorityOfProcess = priorityOfProcess;
+		short tag = getTagOfProcess();
+		if(tag>this.tag) {
+			this.tag = tag;
 			choosenWhereElement = whereElement;
 			choosenZoneH = zoneH;
 			choosenZoneV = zoneV;
-			setHandler(DropSelectedEvent.getType());
-			coreInteraction.setPriorityAndTag(priorityOfProcess, tag);
+			eventBus.fireEvent(new TagDeclarationEvent(tag,this));
 		}
 	}
 	
+	protected abstract short getTagOfProcess();
+
 	@Override
 	public final void onDropSelected(DropSelectedEvent event) {
 		removeHandler(DragSelectedEvent.getType());
 		removeHandler(DropSelectedEvent.getType());
-		if(coreInteraction.isProcessDone() || coreInteraction.getGreatestPriorityFound()!=priorityOfProcess)
-			return;
+	}
+	
+	@Override 
+	public final void onProcessLaunch(ProcessLaunchEvent event) {
 		zoneH = choosenZoneH;
 		zoneV = choosenZoneV;
 		whereElement = choosenWhereElement;
-		executeProcess();
-		presenter.init(presenter.getElement());
-		coreInteraction.setProcessDone();
+		askQuestion();
 	}
 	
-	protected abstract boolean isProcessInvolved();
-	protected abstract short getTagOfProcess();
-	protected abstract int getPriorityOfProcess();
-	
-	public final void executeProcess() {
-		eventBus.fireEvent(new NewLineEvent());
-		onExecuteProcess();
-	}
+	public abstract void askQuestion();	
 
-	protected abstract void onExecuteProcess();
-	
+	public abstract void executeProcess();	
 
-	@SuppressWarnings("unchecked")
-	protected final <T extends EventHandler> void setHandler(Type<T> type) {
-		if(hr.get(type)==null)
-			hr.put(type, eventBus.addHandler(type,(T) this));
-	}
-	
-	protected final <T extends EventHandler> void removeHandler(Type<T> type) {
-		if(hr.get(type)!=null) {
-			hr.get(type).removeHandler();
-			hr.put(type,null);
-		}
-	}
-	
 }

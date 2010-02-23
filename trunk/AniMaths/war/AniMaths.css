@@ -36,7 +36,7 @@ h1 {
 }
 
 .gwt-DialogBox {
-	width: 400px;
+  width: 90%;
 }
 
 .dialogVPanel {
@@ -68,6 +68,11 @@ math {
 	left: 0em;
 	width: 75%;
 	margin-top:1em;
+}
+
+#dynamic {
+	border-style:solid;
+	border-color:blue;
 }
 
 #drag {

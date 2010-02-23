@@ -38,7 +38,7 @@ math {
 	font-size: large;
 }
 
-#exerciseWording math {
+#exerciseWording {
 	background-color: #F5F5F5;
 	color: darkblue;
 	border-bottom: thick solid #888;

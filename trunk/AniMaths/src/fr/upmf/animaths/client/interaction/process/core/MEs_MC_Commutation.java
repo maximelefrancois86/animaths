@@ -32,25 +32,43 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	protected int getPriorityOfProcess() {
-		if(parentOfSelected == whereElement.getMathObjectParent()
-//			&&(atNum ^ ((MOMultiplyElement)whereElement).isDivided())
-			&&(zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE))
-			return 1;
-		return 0;
-	}
-
-	@Override
 	protected short getTagOfProcess() {
-		if(atNum^((MOMultiplyElement)whereElement).isDivided())
-			return PROCESS_OK;
-		else
-			return PROCESS_CAUTION;
+		if(parentOfSelected == whereElement.getMathObjectParent()
+			&&(zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE)) {
+			if(atNum^((MOMultiplyElement)whereElement).isDivided())
+				return PROCESS_OK;
+			else
+				return PROCESS_CAUTION;
+		}
+		return PROCESS_NO;
 	}
 
+//	protected void onExecuteProcess() {
+//		parentOfSelected.remove(selected);
+//		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
+//	}
 	@Override
-	protected void onExecuteProcess() {
-		parentOfSelected.remove(selected);
-		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
+	public void askQuestion() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void executeProcess() {
+		// TODO Auto-generated method stub
+		
 	}
 }
+//public class QuestionDisplay extends DialogBox implements QuestionPresenter.Display {
+//	
+//	public QuestionDisplay() {
+//		super(false);
+//		this.setText("Quelle sera le r�sultat de cette manipulation ?");
+//		this.setAnimationEnabled(true);
+//		VerticalPanel dialogVPanel = new VerticalPanel();
+//		dialogVPanel.addStyleName("dialogVPanel");
+//		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+//		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+//		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+//		this.setWidget(dialogVPanel);
+//	}
+//}

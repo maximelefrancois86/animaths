@@ -17,33 +17,31 @@ import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
 import fr.upmf.animaths.client.interaction.events.FlyOverHandler;
 import fr.upmf.animaths.client.interaction.events.GrabEvent;
 import fr.upmf.animaths.client.interaction.events.GrabHandler;
-import fr.upmf.animaths.client.interaction.events.QuestionEvent;
-import fr.upmf.animaths.client.interaction.events.QuestionHandler;
+import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionChangeHandler;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionHandler;
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
-import fr.upmf.animaths.client.interaction.process.core.SEs_AC_E_ChangeHandSide;
-import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
+import fr.upmf.animaths.client.interaction.process.event.ProcessDoneEvent;
+import fr.upmf.animaths.client.interaction.process.event.ProcessDoneHandler;
+import fr.upmf.animaths.client.interaction.process.event.ProcessInterestedEvent;
+import fr.upmf.animaths.client.interaction.process.event.ProcessInterestedHandler;
+import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchEvent;
+import fr.upmf.animaths.client.interaction.process.event.TagDeclarationEvent;
+import fr.upmf.animaths.client.interaction.process.event.TagDeclarationHandler;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODragPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
-import fr.upmf.animaths.client.mvp.MOBasicPresenter;
-import fr.upmf.animaths.client.mvp.MathObject.IMOHasStyleClass;
-import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
-import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
-import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
-import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler, QuestionHandler {
+public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler,
+											ProcessInterestedHandler, TagDeclarationHandler, ProcessDoneHandler {
 	
 	private static MOCoreInteraction instance = new MOCoreInteraction();
 	private static MODynamicPresenter presenter;
@@ -52,19 +50,30 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private EventBus eventBus = AniMathsPresenter.eventBus;	
 
 	private MOElement<?> selectedElement = null;
-	private boolean processFound = false;
-	private int greatestPriorityFound = 0;
-	private short processTag = MOAbstractProcess.PROCESS_NO;
-	private boolean processDone = false;
+	MOElement<?> whereElement;
+	private short tag = -1;
+	private MOAbstractProcess process;
+	//	private boolean processDone = false;
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
-	private static QuestionPresenter question = new QuestionPresenter();
 
+	@SuppressWarnings("unchecked")
+	private <T extends EventHandler> void setHandler(Type<T> type) {
+		if(hr.get(type)==null)
+			hr.put(type, eventBus.addHandler(type,(T) this));
+	}
+	
+	private <T extends EventHandler> void removeHandler(Type<T> type) {
+		if(hr.get(type)!=null) {
+			hr.get(type).removeHandler();
+			hr.put(type,null);
+		}
+	}
+	
 	private MOCoreInteraction() { }
 	
 	public static void setPresenterAndRun(MODynamicPresenter presenter) {
 		MOCoreInteraction.presenter = presenter;
 		instance.setHandler(FlyOverEvent.getType());
-		instance.setHandler(QuestionEvent.getType());
 		SEs_AC_Commutation.setEnabled();
 //		MEs_MC_Commutation.setEnabled();
 //		SEs_SEs_ChangeSign.setEnabled();
@@ -98,6 +107,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			selectedElement.setStyleClass(MOElement.STYLE_CLASS_SELECTED);
 			setHandler(SelectionChangeEvent.getType());
 			setHandler(GrabEvent.getType());
+			setHandler(ProcessInterestedEvent.getType());
 		}
 	}
 
@@ -136,39 +146,39 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	@Override
 	public void onGrab(GrabEvent event) {
 		if(event.getStyleClass()==MOElement.STYLE_CLASS_SELECTED) {
-			processFound = false;
-			eventBus.fireEvent(new GrabSelectedEvent(this));
-			if(processFound) {
-				removeHandler(SelectionChangeEvent.getType());
-				removeHandler(GrabEvent.getType());
-				dragPresenter.init(selectedElement);
-				selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
-				setHandler(DragEvent.getType());
-				setHandler(DropEvent.getType());
-			}
-			else {
-				removeHandler(SelectionChangeEvent.getType());
-				removeHandler(GrabEvent.getType());
-				selectedElement.setStyleClass(MOElement.STYLE_CLASS_NONE);
-				setHandler(FlyOverEvent.getType());
-				setHandler(SelectionEvent.getType());
-			}
+			removeHandler(SelectionChangeEvent.getType());
+			removeHandler(GrabEvent.getType());
+			setHandler(FlyOverEvent.getType());
+			setHandler(SelectionEvent.getType());
+			selectedElement.setStyleClass(MOElement.STYLE_CLASS_NONE);
+			eventBus.fireEvent(new GrabSelectedEvent(presenter, selectedElement));
 		}
+	}
+
+	@Override
+	public void onProcessInterested(ProcessInterestedEvent event) {
+		removeHandler(ProcessInterestedEvent.getType());
+		removeHandler(FlyOverEvent.getType());
+		removeHandler(SelectionEvent.getType());
+		dragPresenter.init(selectedElement.clone());
+		selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
+        setHandler(DragEvent.getType());
+        setHandler(DropEvent.getType());
+        setHandler(TagDeclarationEvent.getType());
+		setHandler(ProcessDoneEvent.getType());
 	}
 
 	@Override
 	public void onDrag(DragEvent event) {
 		dragPresenter.move(event.getClientX(), event.getClientY());
-		MOElement<?> whereElement = event.getElement();
+		whereElement = event.getElement();
 		if(whereElement==null)
 			whereElement = presenter.getElement();
 		if(whereElement==selectedElement) {
-			whereElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
 			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
 			return;
 		}
-		greatestPriorityFound = 0;
-		processTag = MOAbstractProcess.PROCESS_NO;
+		tag = - 1;
 		boolean firstLevel = true;
 		while(true) {
 			eventBus.fireEvent(new DragSelectedEvent(whereElement,whereElement.getZoneH(event.getClientX()),whereElement.getZoneV(event.getClientY()), firstLevel));
@@ -177,115 +187,119 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 			whereElement = whereElement.getMathObjectParent();
 			firstLevel = false;
 		}
-		switch(processTag) {
-		case MOAbstractProcess.PROCESS_NO:
-			whereElement.setStyleClass(MOElement.STYLE_CLASS_NO_DROP);
-			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
-			break;
-		case MOAbstractProcess.PROCESS_CAUTION:
-			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
-			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
-			break;
-		case MOAbstractProcess.PROCESS_OK:
-			whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
-			dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
-			break;
+		selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
+	}
+
+	@Override
+	public void onTagDeclaration(TagDeclarationEvent event) {
+		if(event.getTag()>tag) {
+			tag = event.getTag();
+			if(tag==MOAbstractProcess.PROCESS_NO) {
+				whereElement.setStyleClass(MOElement.STYLE_CLASS_NO_DROP);
+				dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
+			}
+			else {
+				if(process!=null)
+					process.removeHandler(ProcessLaunchEvent.getType());
+				process = event.getProcess();
+				process.setHandler(ProcessLaunchEvent.getType());
+				switch(tag) {
+				case MOAbstractProcess.PROCESS_CAUTION:
+					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
+					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
+					break;
+				case MOAbstractProcess.PROCESS_OK:
+					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
+					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
+					break;
+				}
+			}
 		}
 	}
 
 	@Override
 	public void onDrop(DropEvent event) {
-		processDone = false;
-		eventBus.fireEvent(new DropSelectedEvent(greatestPriorityFound));
 		removeHandler(DragEvent.getType());
 		removeHandler(DropEvent.getType());
+        removeHandler(TagDeclarationEvent.getType());
+		eventBus.fireEvent(new DropSelectedEvent());
+		eventBus.fireEvent(new ProcessLaunchEvent());
 		dragPresenter.unbind();
 		selectedElement.setStyleClass(MOElement.STYLE_CLASS_NONE);
 		selectedElement = null;
 		setHandler(SelectionEvent.getType());
 		setHandler(FlyOverEvent.getType());
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T extends EventHandler> void setHandler(Type<T> type) {
-		if(hr.get(type)==null)
-			hr.put(type, eventBus.addHandler(type,(T) this));
-	}
-	
-	private <T extends EventHandler> void removeHandler(Type<T> type) {
-		if(hr.get(type)!=null) {
-			hr.get(type).removeHandler();
-			hr.put(type,null);
+		if(process!=null) {
+			process.removeHandler(ProcessLaunchEvent.getType());
+			process = null;
 		}
-	}
-	
-	public MODynamicPresenter getPresenter() {
-		return presenter;
-	}
-
-	public MOElement<?> getSelectedElement() {
-		return selectedElement;
-	}
-	
-	public int getGreatestPriorityFound() {
-		return greatestPriorityFound;
-	}
-
-	public void setPriorityAndTag(int priority, short tag) {
-		if(priority>greatestPriorityFound) {
-			greatestPriorityFound = priority;
-			processTag = tag;
-		}
-	}
-
-	public void setProcessFound() {
-		processFound = true;
-	}
-
-	public boolean isProcessDone() {
-		return processDone;
-	}
-
-	public void setProcessDone() {
-		processDone = true;
-	}
-
-	public MOBasicPresenter getDragPresenter() {
-		return dragPresenter;
-	}
-	
-	public void changeSign() {
-		MOElement<?> element = dragPresenter.getElement();
-		if(element instanceof MOSignedElement)
-			((MOSignedElement) element).setMinus(!((MOSignedElement) element).isMinus());
-		else if(element instanceof MOAddContainer)
-			((MOAddContainer)element).changeSign();
-		else
-			element = new MOSignedElement(element,true);
-		dragPresenter.init(element);
-		if(element instanceof MOSignedElement)
-			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
-		else if (element instanceof MOAddContainer)
-			for(int i=0;i<((MOAddContainer)element).size();i++)
-				((MOAddContainer)element).get(i).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
-	}
-
-	public void inverseSign() {
-		MOElement<?> element = dragPresenter.getElement();
-		if(element instanceof MOMultiplyElement) {
-			((MOMultiplyElement) element).setDivided(!((MOMultiplyElement) element).isDivided());
-			element = new MOMultiplyContainer((MOMultiplyElement) element);
-		}
-		else if(element instanceof MOMultiplyContainer)
-			((MOMultiplyContainer)element).inverseSign();
-		else
-			element = new MOMultiplyElement(element,true);
-		dragPresenter.init(element);
 	}
 
 	@Override
-	public void onQuestion(QuestionEvent event) {
-		question.getDisplay().initializeAndCenter();
+	public void onProcessDone(ProcessDoneEvent event) {
+		eventBus.fireEvent(new NewLineEvent());
 	}
+
+//	public MODynamicPresenter getPresenter() {
+//		return presenter;
+//	}
+//
+//	public MOElement<?> getSelectedElement() {
+//		return selectedElement;
+//	}
+//	
+//	public short getGreatestProcessTagFound() {
+//		return greatestProcessTagFound;
+//	}
+//
+//	public void setTag(short tag) {
+//		if(tag>greatestProcessTagFound)
+//			greatestProcessTagFound = tag;
+//	}
+//
+//	public void setProcessFound() {
+//		processFound = true;
+//	}
+//
+//	public boolean isProcessDone() {
+//		return processDone;
+//	}
+//
+//	public void setProcessDone() {
+//		processDone = true;
+//	}
+//
+//	public MOBasicPresenter getDragPresenter() {
+//		return dragPresenter;
+//	}
+//	
+//	public void changeSign() {
+//		MOElement<?> element = dragPresenter.getElement();
+//		if(element instanceof MOSignedElement)
+//			((MOSignedElement) element).setMinus(!((MOSignedElement) element).isMinus());
+//		else if(element instanceof MOAddContainer)
+//			((MOAddContainer)element).changeSign();
+//		else
+//			element = new MOSignedElement(element,true);
+//		dragPresenter.init(element);
+//		if(element instanceof MOSignedElement)
+//			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
+//		else if (element instanceof MOAddContainer)
+//			for(int i=0;i<((MOAddContainer)element).size();i++)
+//				((MOAddContainer)element).get(i).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
+//	}
+//
+//	public void inverseSign() {
+//		MOElement<?> element = dragPresenter.getElement();
+//		if(element instanceof MOMultiplyElement) {
+//			((MOMultiplyElement) element).setDivided(!((MOMultiplyElement) element).isDivided());
+//			element = new MOMultiplyContainer((MOMultiplyElement) element);
+//		}
+//		else if(element instanceof MOMultiplyContainer)
+//			((MOMultiplyContainer)element).inverseSign();
+//		else
+//			element = new MOMultiplyElement(element,true);
+//		dragPresenter.init(element);
+//	}
 
 }
