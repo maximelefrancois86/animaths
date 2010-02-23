@@ -175,6 +175,10 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		children.remove(child);
 	}
 
+	public void remove(int index) {
+		children.remove(index);
+	}
+
 //	@Override
 //	public Element getFirstDOMElement() {
 //		if(display.getLFence()!=null)

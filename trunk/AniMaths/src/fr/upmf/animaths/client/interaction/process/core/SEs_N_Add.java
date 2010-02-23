@@ -71,7 +71,7 @@ public final class SEs_N_Add extends MOAbstractProcess{
 	}
 
 	@Override
-	public void onExecuteProcess() {
+	public void onExecuteProcess(int answer) {
 		System.out.println("SEs_N_Add : ExecuteProcess");
 		addContainer.remove(selected);
 		where.setMinus(floatSum<0);

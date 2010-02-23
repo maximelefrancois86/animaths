@@ -40,38 +40,17 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 				System.out.println("SEs_AC_Commutation : PROCESS_OK");
 				return PROCESS_OK;
 			}
-//			else {
-//				System.out.println("SEs_AC_Commutation : PROCESS_CAUTION");
-//				return PROCESS_CAUTION;
-//			}
 		}
 		return PROCESS_NO;
 	}
 
 	@Override
 	public void askQuestion() {
-//		if(atNum^((MOMultiplyElement)whereElement).isDivided())
-			executeProcess();
-//		else {
-//			System.out.println("MEs_MC_Commutation : askQuestion");
-//
-//			boolean isMinus = parent.isMinus()^child.isMinus();		
-//	
-//			MOSignedElement goodAnswer = new MOSignedElement(child.getChild().clone(),isMinus);
-//			goodAnswer.setNeedsSign(true);
-//			MOSignedElement badAnswer = new MOSignedElement(child.getChild().clone(),!isMinus);
-//			badAnswer.setNeedsSign(true);
-//	
-//			MathWordingWidget wording = new MathWordingWidget("Quel est le résultat de");
-//			Question question = new Question(this, "Quell");
-//			question.addAnswer(goodAnswer, true);
-//			question.addAnswer(badAnswer, false);	
-//			question.center();
-//		}
+		executeProcess(1);
 	}
 
 	@Override
-	public void onExecuteProcess() {
+	public void onExecuteProcess(int answer) {
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
 	}
