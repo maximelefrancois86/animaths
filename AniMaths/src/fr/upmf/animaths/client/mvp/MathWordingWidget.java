@@ -1,8 +1,8 @@
 package fr.upmf.animaths.client.mvp;
 
+import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.mvp.MathML.MMLMath;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -15,22 +15,22 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
  */
 public class MathWordingWidget extends Composite {
 
-	private RootPanel rootPanel;
+	private ComplexPanel panel;
 
-	public MathWordingWidget(RootPanel rootPanel) {
-		initWidget(rootPanel);
-		this.rootPanel = rootPanel;
+	public MathWordingWidget(ComplexPanel panel) {
+		initWidget(panel);
+		this.panel = panel;
 	}
 	
 	public void setWording(Object... args) {
 		clear();
 		for(Object arg : args) {
 			if(arg instanceof String)
-				rootPanel.getElement().appendChild((new Label((String) arg).getElement()).getChildNodes().getItem(0));
+				panel.getElement().appendChild((new Label((String) arg).getElement()).getChildNodes().getItem(0));
 			else if(arg instanceof MOElement<?>) {
 				MMLMath wrapper = new MMLMath(false);
 				((MOElement<?>) arg).clone().pack(wrapper,null);
-				rootPanel.add(wrapper);
+				panel.add(wrapper);
 			}
 			else
 				throw new IllegalArgumentException("Probl�me d'arguments, "+
@@ -39,9 +39,9 @@ public class MathWordingWidget extends Composite {
 	}
 
 	public void clear() {
-		rootPanel.clear();
-		while(rootPanel.getElement().hasChildNodes())
-			rootPanel.getElement().getFirstChild().removeFromParent();
+		panel.clear();
+		while(panel.getElement().hasChildNodes())
+			panel.getElement().getFirstChild().removeFromParent();
 	}
 
 }

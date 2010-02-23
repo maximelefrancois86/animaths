@@ -166,6 +166,10 @@ public class MOAddContainer extends MOElement<MOAddContainer.Display> implements
 		return children.get(index);
 	}
 
+	public int indexOf(MOSignedElement child) {
+		return children.indexOf(child);
+	}
+
 	@Override
 	public void remove(MOSignedElement child) {
 		children.remove(child);

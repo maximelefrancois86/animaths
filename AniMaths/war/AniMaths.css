@@ -36,7 +36,7 @@ h1 {
 }
 
 .gwt-DialogBox {
-  width: 90%;
+	width:90%;
 }
 
 .dialogVPanel {
@@ -89,8 +89,8 @@ math {
 
 /*Attention � quelquechose*/
 #drag .caution {
-	background-color: #FFFFBB;
-	color: #CCCC00;
+	background-color: #FFCC00;
+	color: #FFFFFF;
 }
 
 /*Impossible de l�cher*/
@@ -99,7 +99,7 @@ math {
 	color: #FF3333;
 }
 
-#drag .focus {
+math .focus {
 	font-size: 14pt;
 	color: red;
 }

@@ -77,7 +77,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	
 	@Override
 	protected void onBind() {	
-		loadProblem("equation3");
+
+		loadProblem("equation5");
+
 		display.getLoadButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				loadProblem("equation");

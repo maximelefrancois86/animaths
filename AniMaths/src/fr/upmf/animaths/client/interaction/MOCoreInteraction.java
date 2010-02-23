@@ -26,7 +26,10 @@ import fr.upmf.animaths.client.interaction.events.SelectionChangeHandler;
 import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionHandler;
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.MEs_MC_E_ChangeHandSide;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_AC_E_ChangeHandSide;
 import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
@@ -80,9 +83,9 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		instance.setHandler(FlyOverEvent.getType());
 		SEs_AC_Commutation.setEnabled();
 		SEs_SEs_ChangeSign.setEnabled();
-//		MEs_MC_Commutation.setEnabled();
-//		SEs_AC_E_ChangeHandSide.setEnabled();
-//		MEs_MC_E_ChangeHandSide.setEnabled();
+		MEs_MC_Commutation.setEnabled();
+		SEs_AC_E_ChangeHandSide.setEnabled();
+		MEs_MC_E_ChangeHandSide.setEnabled();
 	}
 
 	@Override
@@ -150,6 +153,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	@Override
 	public void onGrab(GrabEvent event) {
 		if(event.getStyleClass()==MOElement.STYLE_CLASS_SELECTED) {
+			System.out.println("MOCoreInteraction : Grab");
 			removeHandler(SelectionChangeEvent.getType());
 			removeHandler(GrabEvent.getType());
 			setHandler(FlyOverEvent.getType());
@@ -161,6 +165,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	@Override
 	public void onProcessInterested(ProcessInterestedEvent event) {
+		System.out.println("MOCoreInteraction : ProcessInterested");
 		removeHandler(ProcessInterestedEvent.getType());
 		removeHandler(FlyOverEvent.getType());
 		removeHandler(SelectionEvent.getType());
@@ -184,6 +189,10 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		}
 		tag = - 1;
 		boolean firstLevel = true;
+		if(process!=null) {
+			process.removeHandler(ProcessLaunchEvent.getType());
+			process = null;
+		}
 		while(true) {
 			eventBus.fireEvent(new DragSelectedEvent(whereElement,whereElement.getZoneH(event.getClientX()),whereElement.getZoneV(event.getClientY()), firstLevel));
 			if(whereElement instanceof MOEquation)
@@ -209,10 +218,12 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 				process.setHandler(ProcessLaunchEvent.getType());
 				switch(tag) {
 				case MOAbstractProcess.PROCESS_CAUTION:
+					System.out.println("MOCoreInteraction : PROCESS_CAUTION");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
 					break;
 				case MOAbstractProcess.PROCESS_OK:
+					System.out.println("MOCoreInteraction : PROCESS_OK");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
 					break;
@@ -223,6 +234,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	@Override
 	public void onDrop(DropEvent event) {
+		System.out.println("MOCoreInteraction : Drop");
 		removeHandler(DragEvent.getType());
 		removeHandler(DropEvent.getType());
         removeHandler(TagDeclarationEvent.getType());
@@ -241,6 +253,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	@Override
 	public void onProcessDone(ProcessDoneEvent event) {
+		System.out.println("MOCoreInteraction : ProcessDone");
 		eventBus.fireEvent(new NewLineEvent());
 		Element view = RootPanel.get("view").getElement();
 		view.setScrollTop(view.getScrollHeight());
