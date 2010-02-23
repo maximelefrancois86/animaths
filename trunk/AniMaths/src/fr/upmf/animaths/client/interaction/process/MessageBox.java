@@ -6,11 +6,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MessageBox extends DialogBox {
 	
-	HorizontalPanel Panel = new HorizontalPanel();
+	VerticalPanel Panel = new VerticalPanel();
+	HorizontalPanel HPanel = new HorizontalPanel();
 	private HTML textMessage = new HTML("<span>message absent.<span>");
 	private HTML icon = new HTML(""); 
 
@@ -22,22 +24,20 @@ public class MessageBox extends DialogBox {
 //		Panel.setHorizontalAlignment(HorizontalPanel);
 		Panel.getElement().setId("message");
 		setWidget(Panel);
-		Panel.add(textMessage);
-		Panel.add(icon);
+		Panel.add(HPanel);
+		HPanel.add(textMessage);
+		HPanel.add(icon);
 	}
 	
 	public void updateWidget(Widget w, Widget update) {
-		Panel.remove(w);
-		Panel.add(update);
+		HPanel.remove(w);
+		HPanel.add(update);
 	}
 	
 	public void setAsLoading(String msg) {
 		setText("Chargement...");
 		updateWidget(icon, new HTML("<img id='box-icon' src='images/loading.gif' alt='loading' />"));
 		updateWidget(textMessage, new HTML(msg));
-//		Panel.remove(icon);
-//		icon = new HTML("<img id='box-icon' src='images/loading.gif' alt='loading' />");
-//		Panel.add(icon);
 		center();
 	}
 	
@@ -45,23 +45,24 @@ public class MessageBox extends DialogBox {
 		setText("Alerte");
 		updateWidget(icon, new HTML("<img id='box-icon' src='images/warning.png' alt='warning' />"));
 		updateWidget(textMessage, new HTML(msg));
-//		Panel.remove(icon);
-//		icon = new HTML("<img id='box-icon' src='images/warning.png' alt='warning' />");
-//		Panel.add(icon);
 		center();
 	}
 	
 	public void setAsError(String msg) {
 		setText("Erreur !");
-		addCloseButton();
 		updateWidget(icon, new HTML("<img id='box-icon' src='images/error.png' alt='error' />"));
 		updateWidget(textMessage, new HTML(msg));
-//		Panel.remove(icon);
-//		icon = new HTML("<img id='box-icon' src='images/error.png' alt='error' />");
-//		Panel.add(icon);
+		addCloseButton();
 		center();
 	}
-	
+		
+	public void setAsCorrect(String msg) {
+		setText("Correct !");
+		updateWidget(icon, new HTML("<img id='box-icon' src='images/ok.png' alt='warning' />"));
+		updateWidget(textMessage, new HTML(msg));
+		center();
+	}
+
 	public void center() {
 		super.center();
 	}
@@ -89,5 +90,9 @@ public class MessageBox extends DialogBox {
 	public void setAsError() {
 		setAsError("");
 	}
+	public void setAsCorrect() {
+		setAsCorrect("");
+	}
+
 	
 }

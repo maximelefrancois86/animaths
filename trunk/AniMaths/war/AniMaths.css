@@ -105,6 +105,9 @@ math .focus {
 	color: red;
 }
 
+table {
+	margin: 0 auto;
+}
 .table-center {
 	margin-left: auto;
 	margin-right: auto;
@@ -114,4 +117,7 @@ math .focus {
 	width:32px;
 	float: left;
 	margin: 1em;
+}
+#message #gwt-Button {
+	float: right;
 }
