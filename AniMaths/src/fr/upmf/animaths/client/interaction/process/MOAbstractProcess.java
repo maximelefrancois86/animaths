@@ -8,6 +8,7 @@ import net.customware.gwt.presenter.client.EventBus;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.Timer;
 
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedHandler;
@@ -117,11 +118,29 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	
 	public abstract void askQuestion();		
 
-	public final void executeProcess(int answer) {
+	public final void executeProcess(final int answer) {
 		if(answer>0) {
-			eventBus.fireEvent(new ProcessDoneEvent());
-			onExecuteProcess(answer);
-			presenter.init(presenter.getElement());
+			final MessageBox msgOK = new MessageBox();
+			msgOK.setAsCorrect("<div class='large'>Réponse correcte :).</div>");
+			// pour attendre un peu avant d'agir
+			Timer wait = new Timer() {
+			    public void run() {
+					eventBus.fireEvent(new ProcessDoneEvent());
+					onExecuteProcess(answer);
+					presenter.init(presenter.getElement());
+			    }
+			};
+			wait.schedule(1500); 		
+			msgOK.hide();
+		} else {
+			final MessageBox msgFail = new MessageBox();
+			msgFail.setAsError("<div class='large'>Veuillez ré-essayer, la réponse est incorrecte.</div>");
+			// pour attendre un peu avant d'agir
+			Timer wait = new Timer() {
+			    public void run() {}
+			};
+			wait.schedule(1000);
+//			msgFail.hide();
 		}
 	}
 
