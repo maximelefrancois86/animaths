@@ -281,14 +281,14 @@ public class MOMultiplyContainer extends MOElement<MOMultiplyContainer.Display> 
 		child.setMathObjectParent(this);
 		int index = numerator.indexOf(refChild);
 		if(index!=-1) {
-			assert !child.isDivided() && !refChild.isDivided();
+//			assert !child.isDivided() && !refChild.isDivided();
 			if(after)
 				index++;
 			numerator.add(index,child);
 		}
 		else {
 			index = denominator.indexOf(refChild);
-			assert index!=-1 && child.isDivided() && refChild.isDivided();
+			assert index!=-1 ;//&& child.isDivided() && refChild.isDivided();
 			if(after)
 				index++;
 			denominator.add(index,child);

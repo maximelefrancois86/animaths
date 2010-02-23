@@ -25,7 +25,6 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 	private boolean atNum;
 	private MOMultiplyContainer parentOfWhere;
 	private MOMultiplyElement where;
-	private boolean atNumWhere;
 	
 	@Override
 	protected boolean isProcessInvolved() {
@@ -57,7 +56,6 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 			&& (zoneH==MOElement.ZONE_EE || zoneH==MOElement.ZONE_OO)) {
 			parentOfWhere = (MOMultiplyContainer) parentOfWhereElement;
 			where = (MOMultiplyElement) whereElement;
-			atNumWhere = !where.isDivided();
 			return PROCESS_CAUTION;
 		}
 		return PROCESS_NO;
