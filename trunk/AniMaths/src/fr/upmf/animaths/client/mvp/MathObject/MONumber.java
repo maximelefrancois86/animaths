@@ -7,7 +7,7 @@ import fr.upmf.animaths.client.mvp.MathML.MMLElement;
 import fr.upmf.animaths.client.mvp.MathML.MMLNumber;
 
 
-public class MONumber extends MOElement<MONumber.Display> implements IMOHasValue<Number>{
+public class MONumber extends MOElement<MONumber.Display> implements IMOHasValue<Float>{
 
 	public static final short type = MOElement.MATH_OBJECT_NUMBER;
 	@Override
@@ -15,18 +15,23 @@ public class MONumber extends MOElement<MONumber.Display> implements IMOHasValue
 		return type;
 	}
 
-	public Number value;
+	public Float value;
 	
 	public interface Display extends MOElementDisplay {
 		public void setElement(MMLNumber element);
 		public MMLNumber getElement();
 	}
 
-	public MONumber(Number value) {
+	public MONumber(Float value) {
 		super(new MONumberDisplay());
 		this.value = value;
 	}
 	
+	public MONumber(int value) {
+		super(new MONumberDisplay());
+		this.value = (float)value;
+	}
+
 	@Override
 	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		display.setElement(new MMLNumber(value));
@@ -82,12 +87,12 @@ public class MONumber extends MOElement<MONumber.Display> implements IMOHasValue
 	}
 
 	@Override
-	public void setValue(Number value) {
+	public void setValue(Float value) {
 		this.value = value;
 	}
 
 	@Override
-	public Number getValue() {
+	public Float getValue() {
 		return value;
 	}
 
@@ -102,6 +107,6 @@ public class MONumber extends MOElement<MONumber.Display> implements IMOHasValue
 //	}
 
 	public static MOElement<?> parse(Element element) {
-		return new MOIdentifier(element.getFirstChild().getNodeValue());
+		return new MONumber(Float.parseFloat(element.getFirstChild().getNodeValue()));
 	}
 }

@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.interaction.process.core;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.interaction.process.Question;
+import fr.upmf.animaths.client.interaction.process.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
@@ -73,7 +73,7 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 		else {
 			wording.setWording("Après avoir déplacé ",new MOMultiplyContainer(selected.clone())," de l'autre côté du signe égal, quel est le résultat ?");
 		}
-		Question question = new Question(this, wording);
+		QuestionButton questionButton = new QuestionButton(this, wording);
 		
 		int index = parentOfWhere.indexOf(where);
 		assert index!=-1;
@@ -84,14 +84,14 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 		good.setDivided(!good.isDivided());
 		MOMultiplyContainer goodAnswer = parentOfWhere.clone();
 		goodAnswer.add(index,good);
-		question.addAnswer(goodAnswer, true);
+		questionButton.addAnswer(goodAnswer, true);
 
 		MOMultiplyElement bad = selected.clone();
 		MOMultiplyContainer badAnswer = parentOfWhere.clone();
 		badAnswer.add(index,bad);
-		question.addAnswer(badAnswer, false);	
+		questionButton.addAnswer(badAnswer, false);	
 		
-		question.center();
+		questionButton.center();
 		good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 		bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 	}

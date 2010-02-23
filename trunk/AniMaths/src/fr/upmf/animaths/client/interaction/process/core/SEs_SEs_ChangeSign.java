@@ -3,7 +3,7 @@ package fr.upmf.animaths.client.interaction.process.core;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.interaction.process.Question;
+import fr.upmf.animaths.client.interaction.process.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
@@ -85,10 +85,10 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
 		wording.setWording("Quand on multiplie ",new MOSignedElement(new MONumber(1),parent.isMinus())," par ",child.clone(),", quel est le résultat ?");
-		Question question = new Question(this, wording);
-		question.addAnswer(goodAnswer, true);
-		question.addAnswer(badAnswer, false);	
-		question.center();
+		QuestionButton questionButton = new QuestionButton(this, wording);
+		questionButton.addAnswer(goodAnswer, true);
+		questionButton.addAnswer(badAnswer, false);	
+		questionButton.center();
 	}
 
 	@Override

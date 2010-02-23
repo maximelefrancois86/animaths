@@ -28,8 +28,10 @@ import fr.upmf.animaths.client.interaction.events.SelectionHandler;
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.core.MEs_MC_Commutation;
 import fr.upmf.animaths.client.interaction.process.core.MEs_MC_E_ChangeHandSide;
+import fr.upmf.animaths.client.interaction.process.core.MEs_N_Multiply;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_E_ChangeHandSide;
+import fr.upmf.animaths.client.interaction.process.core.SEs_N_Add;
 import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
@@ -86,6 +88,8 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		MEs_MC_Commutation.setEnabled();
 		SEs_AC_E_ChangeHandSide.setEnabled();
 		MEs_MC_E_ChangeHandSide.setEnabled();
+		SEs_N_Add.setEnabled();
+		MEs_N_Multiply.setEnabled();
 	}
 
 	@Override
