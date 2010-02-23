@@ -17,7 +17,7 @@ public class MODragPresenter extends MOBasicPresenter {
 	@Override
 	protected void onInit() {
 		RootPanel.get("drag").add(display.asWidget());
-		RootPanel.get("drag").getElement().setAttribute("style","visible:hidden;");
+		RootPanel.get("drag").getElement().setAttribute("style","visibility:hidden;");
 	}
 	
 	public void move(int x, int y) {

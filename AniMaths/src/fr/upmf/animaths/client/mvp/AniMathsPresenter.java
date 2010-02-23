@@ -67,7 +67,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		mOBasicPresenters = new ArrayList<MOBasicPresenter>();
 		eventBus.addHandler(NewLineEvent.getType(),new NewLineHandler() {
 			public void onNewLine(NewLineEvent event) {
-				mOBasicPresenters.add(new MOBasicPresenter(mODynamicPresenter.getElement()));
+				MOBasicPresenter newLine = new MOBasicPresenter(mODynamicPresenter.getElement().clone());
+				mOBasicPresenters.add(newLine);
+				RootPanel.get("view").insert(newLine.getDisplay().asWidget(), RootPanel.get("view").getWidgetCount()-1);
 			}
 		});
 		bind();

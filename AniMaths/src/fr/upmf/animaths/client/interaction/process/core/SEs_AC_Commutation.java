@@ -1,6 +1,7 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.interaction.process.event.ProcessDoneEvent;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
@@ -30,21 +31,23 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	protected int getPriorityOfProcess() {
+	protected short getTagOfProcess() {
 		if(parentOfSelected == whereElement.getMathObjectParent()
 			&& (zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE))
-			return 1;
-		return 0;
+			return PROCESS_OK;
+		return PROCESS_NO;
 	}
 	
 	@Override
-	protected short getTagOfProcess() {
-		return PROCESS_OK;
+	public void askQuestion() {
+		executeProcess();
 	}
-
+	
 	@Override
-	protected void onExecuteProcess() {
+	public void executeProcess() {
+		eventBus.fireEvent(new ProcessDoneEvent());
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOSignedElement)whereElement,zoneH==MOElement.ZONE_EE);
+		presenter.init(presenter.getElement());
 	}
 }

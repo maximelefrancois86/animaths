@@ -43,7 +43,7 @@ public abstract class MOAbstractPresenter<D extends MOAbstractPresenter.Display>
 	public final void init(MOElement<?> element) {
 		if(isBound)
 			unbind();
-		this.element = element.clone();
+		this.element = element;
 		this.element.pack(display.asWrapper(),this);
 		onInit();
 		bind();
