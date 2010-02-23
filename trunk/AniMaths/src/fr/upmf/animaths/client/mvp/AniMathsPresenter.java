@@ -13,7 +13,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -25,6 +25,7 @@ import fr.upmf.animaths.client.AniMathsService;
 import fr.upmf.animaths.client.AniMathsServiceAsync;
 import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.events.NewLineHandler;
+import fr.upmf.animaths.client.interaction.process.MessageBox;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
 
@@ -42,6 +43,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOBasicPresenter> mOBasicPresenters;
 //	public Map<Integer,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
+	private int exerciceCount = 6;
+	private int exerciceId = 0;
 
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
@@ -74,15 +77,28 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		});
 		bind();
 	}
+
+	private int getExerciceId() {
+//		int id = new Random().nextInt(5)+1;		
+		int id;
+		System.out.println("exerciceId: "+Integer.toString(exerciceId)
+				+" || exerciceCount: "+Integer.toString(exerciceCount));
+		if (exerciceId < exerciceCount)
+			id = exerciceId+1;
+		else
+			id = 1;
+		
+		System.out.println(Integer.toString(id));
+		return id;
+	}
 	
 	@Override
 	protected void onBind() {	
-
-		loadProblem("equation5");
+		loadProblem("equation"+Integer.toString(getExerciceId()));
 
 		display.getLoadButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				loadProblem("equation");
+				loadProblem("equation"+Integer.toString(getExerciceId()));
 			}
 		});
 	}
@@ -116,29 +132,46 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	/**
 	 * @return
 	 */
-	private void loadProblem(String id) {
+	private void loadProblem(final String id) {
+		final MessageBox loadingBox = new MessageBox();
+		loadingBox.setAsLoading("<div>Chargement de l'exercice, veuillez patientez quelques instants.</div>");
+		
 		for(MOBasicPresenter basicPresenter : mOBasicPresenters)
 			basicPresenter.unbind();
 		mOBasicPresenters.clear();
 		while(RootPanel.get("view").getElement().getChildCount()>1)
 			RootPanel.get("view").getElement().getFirstChild().removeFromParent();
 	    // Set up the callback object.
-	    AsyncCallback<String> callback = new AsyncCallback<String>() {
+	    final AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
-				Window.alert("échec du chargement de l'équation...");
+				loadingBox.setAsError("<div>Erreur lors de la récupération de l'exercice. Essayer ultérieurement ou informez l'administrateur.</div>");
 			}
 
 			public void onSuccess(String result) {
-				System.out.println(result);
+//				System.out.println(result);
 				Element element = XMLParser.parse(result).getDocumentElement();
 				MOElement<?> eq = MOElement.parse(element);
 				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
 				mODynamicPresenter.init(eq);
+				loadingBox.hide();
+				setExerciceId();
+			}
+
+			private void setExerciceId() {
+				if (exerciceId < exerciceCount)
+					exerciceId++;
+				else
+					exerciceId = 1;
 			}
 	    };
 
-	    // Make the call.
-	    aniMathsService.loadEquation(id, callback);
+	    // Make the call after a 1second pause.
+		Timer wait = new Timer() {
+		    public void run() {
+		    	aniMathsService.loadEquation(id, callback);
+		    }
+		};
+		wait.schedule(1000); 	   
 	}
 	
 }

@@ -21,6 +21,7 @@ h1 {
 #exerciseWording {
 	font-size: 10pt;
 	position: relative;
+	padding: 1em;
 	padding-bottom: 0.5em;
 	width: *;
 }
@@ -107,4 +108,10 @@ math .focus {
 .table-center {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+#message #box-icon {
+	width:32px;
+	float: left;
+	margin: 1em;
 }
