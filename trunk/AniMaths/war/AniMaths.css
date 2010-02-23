@@ -63,11 +63,12 @@ math {
 
 #view {
 	position: relative;
-	width: *;
 	float: left;
 	left: 0em;
-	width: 75%;
+	width: 60%;
+	height: 60%;
 	margin-top:1em;
+	overflow:auto;
 }
 
 #dynamic {

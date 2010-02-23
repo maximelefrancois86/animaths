@@ -5,9 +5,12 @@ import java.util.Map;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import fr.upmf.animaths.client.interaction.events.DragEvent;
 import fr.upmf.animaths.client.interaction.events.DragHandler;
@@ -24,6 +27,7 @@ import fr.upmf.animaths.client.interaction.events.SelectionEvent;
 import fr.upmf.animaths.client.interaction.events.SelectionHandler;
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.core.SEs_AC_Commutation;
+import fr.upmf.animaths.client.interaction.process.core.SEs_SEs_ChangeSign;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.GrabSelectedEvent;
@@ -75,8 +79,8 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		MOCoreInteraction.presenter = presenter;
 		instance.setHandler(FlyOverEvent.getType());
 		SEs_AC_Commutation.setEnabled();
+		SEs_SEs_ChangeSign.setEnabled();
 //		MEs_MC_Commutation.setEnabled();
-//		SEs_SEs_ChangeSign.setEnabled();
 //		SEs_AC_E_ChangeHandSide.setEnabled();
 //		MEs_MC_E_ChangeHandSide.setEnabled();
 	}
@@ -170,7 +174,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 
 	@Override
 	public void onDrag(DragEvent event) {
-		dragPresenter.move(event.getClientX(), event.getClientY());
+		dragPresenter.move(event.getClientX()+Window.getScrollLeft(), event.getClientY()+Window.getScrollTop());
 		whereElement = event.getElement();
 		if(whereElement==null)
 			whereElement = presenter.getElement();
@@ -238,6 +242,8 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	@Override
 	public void onProcessDone(ProcessDoneEvent event) {
 		eventBus.fireEvent(new NewLineEvent());
+		Element view = RootPanel.get("view").getElement();
+		view.setScrollTop(view.getScrollHeight());
 	}
 
 //	public MODynamicPresenter getPresenter() {
