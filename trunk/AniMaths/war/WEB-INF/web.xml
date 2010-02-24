@@ -10,13 +10,23 @@
 	</icon>
 
 	<servlet>
-		<servlet-name>AniMathsServiceImpl</servlet-name>
-		<servlet-class>fr.upmf.animaths.server.AniMathsServiceImpl</servlet-class>
+		<servlet-name>LoadEquationServiceImpl</servlet-name>
+		<servlet-class>fr.upmf.animaths.server.LoadEquationServiceImpl</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>LoadPathNamesServiceImpl</servlet-name>
+		<servlet-class>fr.upmf.animaths.server.LoadPathNamesServiceImpl</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>AniMathsServiceImpl</servlet-name>
-		<url-pattern>/animaths/service</url-pattern>
+		<servlet-name>LoadEquationServiceImpl</servlet-name>
+		<url-pattern>/animaths/loadEquationService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LoadPathNamesServiceImpl</servlet-name>
+		<url-pattern>/animaths/loadPathNamesService</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>
