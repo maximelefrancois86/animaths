@@ -166,3 +166,7 @@ tr:hover {
 #message div,#question-text div,#question-button div{
 	margin: 0.5em;
 }
+
+table {
+color:#333333;
+}
