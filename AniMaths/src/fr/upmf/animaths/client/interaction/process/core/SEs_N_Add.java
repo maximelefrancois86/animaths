@@ -59,7 +59,7 @@ public final class SEs_N_Add extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		System.out.println("SEs_N_Add : askQuestion");
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());
 		if(addContainer.indexOf(where)>addContainer.indexOf(selected))
@@ -78,4 +78,13 @@ public final class SEs_N_Add extends MOAbstractProcess{
 		where.setChild(new MONumber(Math.abs(floatSum)));
 	}
 
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		if(answer>0)
+			return new MathWordingWidget("Bonne réponse !");
+		else if(answer==0)
+			return new MathWordingWidget("Non, réessaie et attention aux signes !");
+		else
+			return new MathWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
+	}
 }

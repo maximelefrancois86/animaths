@@ -25,7 +25,7 @@ public class QuestionButton extends DialogBox {
 		super(false);
 		this.process = process;
 		setText("Question...");
-		setAnimationEnabled(true);
+		setAnimationEnabled(false);
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		setWidget(dialogVPanel);

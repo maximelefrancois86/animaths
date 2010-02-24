@@ -2,7 +2,8 @@ package fr.upmf.animaths.client.mvp;
 
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 
 import fr.upmf.animaths.client.mvp.MathML.MMLMath;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -22,11 +23,18 @@ public class MathWordingWidget extends Composite {
 		this.panel = panel;
 	}
 	
+	public MathWordingWidget(Object... args) {
+		panel = new FlowPanel();
+		initWidget(panel);
+		setWording(args);
+	}
+	
 	public void setWording(Object... args) {
 		clear();
 		for(Object arg : args) {
 			if(arg instanceof String)
-				panel.getElement().appendChild((new Label((String) arg).getElement()).getChildNodes().getItem(0));
+//				panel.getElement().appendChild((new InlineHTML((String) arg).getElement()).getChildNodes().getItem(0));
+				panel.add(new InlineHTML((String) arg));
 			else if(arg instanceof MOElement<?>) {
 				MMLMath wrapper = new MMLMath(false);
 				((MOElement<?>) arg).clone().pack(wrapper,null);

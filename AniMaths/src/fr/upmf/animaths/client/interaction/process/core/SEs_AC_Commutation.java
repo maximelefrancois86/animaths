@@ -1,6 +1,7 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
@@ -41,7 +42,7 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 	}
 	
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		assert parentOfSelected == whereElement.getMathObjectParent()
 		&& (zoneH==MOElement.ZONE_OO || zoneH==MOElement.ZONE_EE);
 		System.out.println("SEs_AC_Commutation : askQuestion");
@@ -53,5 +54,12 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 		System.out.println("SEs_AC_Commutation : ExecuteProcess");
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOSignedElement)whereElement,zoneH==MOElement.ZONE_EE);
+	}
+
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		return new MathWordingWidget("On peut déplacer ",selected.clone(),(zoneH==MOElement.ZONE_OO?" avant ":" après "),whereElement.clone(),"<br>"+
+				"car on a le droit d'échanger les termes d'une addition ! <br>"+
+				"<em>c'est la commutation dans l'addition !</em>");
 	}
 }

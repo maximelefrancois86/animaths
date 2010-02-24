@@ -24,7 +24,12 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 	
 	private MOEquation equation;
 	private boolean atLeft;	
+	private boolean isMinus;
 	private MOElement<?> otherHandSide;
+	private MOSignedElement mose;
+	private MOSignedElement moseZ;
+	private MOMultiplyElement mome;
+	private MOMultiplyElement momeZ;
 	private MOEquation moe0AZ;
 	private MOEquation moe1MZ;
 	
@@ -72,7 +77,7 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
 
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
@@ -80,10 +85,11 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 		QuestionButton questionButton = new QuestionButton(this, wording);
 		
 		if(whereElement == otherHandSide) {
-			MOSignedElement mose = (selectedElement instanceof MOSignedElement)? ((MOSignedElement)selectedElement).clone() : new MOSignedElement(selectedElement.clone()); 
-			MOSignedElement moseZ; (moseZ=mose.clone()).setMinus(!mose.isMinus());
-			MOMultiplyElement mome = new MOMultiplyElement(selectedElement.clone());
-			MOMultiplyElement momeZ; (momeZ=mome.clone()).setDivided(!mome.isDivided());
+			mose = (selectedElement instanceof MOSignedElement)? ((MOSignedElement)selectedElement).clone() : new MOSignedElement(selectedElement.clone()); 
+			isMinus = mose.isMinus();
+			(moseZ=mose.clone()).setMinus(!mose.isMinus());
+			mome = new MOMultiplyElement(selectedElement.clone());
+			(momeZ=mome.clone()).setDivided(!mome.isDivided());
 
 			MOEquation moe0A = equation.clone();
 			moe0AZ = equation.clone();//correct
@@ -165,6 +171,21 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 			equation.setLeftHandSide(moe1MZ.getLeftHandSide());
 			equation.setRightHandSide(moe1MZ.getRightHandSide());
 		}
+	}
+
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		if(answer==1)
+			return new MathWordingWidget("Oui ! on a ",isMinus?"soustrait":"ajouté", selectedElement.clone()," des deux côtés du signe égal.<br/>"+
+			"il reste donc ",new MOEquation(new MOAddContainer(mose.clone(),moseZ.clone()) , new MONumber(0))," du côté ",atLeft?"gauche":"droit",
+			"<br/><em>c'est une des opérations qu'on sait faire sur une équation.</em>");
+		else if(answer==2)
+			return new MathWordingWidget("Oui ! on a divisé", selectedElement.clone()," des deux côtés du signe égal.<br/>"+
+			"il reste donc ",new MOEquation(new MOMultiplyContainer(mome.clone(),momeZ.clone()) , new MONumber(1))," du côté ",atLeft?"gauche":"droit",
+			"<br/><em>c'est une des opérations qu'on sait faire sur une équation.</em>");
+		else
+			return new MathWordingWidget("Attention ! Ici, on veut déplacer le terme d'une addition !<br/>" +
+					"On a le droit de faire des opérations <u>des deux côtés du signe égal</u>... mais laquelle utiliser ?");
 	}
 
 }

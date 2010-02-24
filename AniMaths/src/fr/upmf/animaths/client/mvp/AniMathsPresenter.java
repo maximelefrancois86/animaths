@@ -134,7 +134,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 */
 	private void loadProblem(final String id) {
 		final MessageBox loadingBox = new MessageBox();
-		loadingBox.setAsLoading("<div>Chargement de l'exercice, veuillez patientez quelques instants.</div>");
+		loadingBox.setAsLoading(new MathWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
 		
 		for(MOBasicPresenter basicPresenter : mOBasicPresenters)
 			basicPresenter.unbind();
@@ -144,7 +144,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	    // Set up the callback object.
 	    final AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
-				loadingBox.setAsError("<div>Erreur lors de la récupération de l'exercice. Essayer ultérieurement ou informez l'administrateur.</div>");
+				loadingBox.setAsError(new MathWordingWidget("Erreur lors de la récupération de l'exercice. Essayer ultérieurement ou informez l'administrateur."));
 			}
 
 			public void onSuccess(String result) {

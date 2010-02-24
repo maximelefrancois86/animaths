@@ -78,7 +78,7 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		System.out.println("MEs_N_Multiply : askQuestion");
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());
 		MOMultiplyElement selectedClone = selected.clone();
@@ -106,4 +106,13 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 			where.setChild(new MONumber(floatMult));
 	}
 
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		if(answer>0)
+			return new MathWordingWidget("Bonne réponse !");
+		else if(answer==0)
+			return new MathWordingWidget("Non, réessaie et attention aux signes !");
+		else
+			return new MathWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
+	}
 }
