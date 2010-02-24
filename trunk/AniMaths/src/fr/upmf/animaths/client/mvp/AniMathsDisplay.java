@@ -21,14 +21,28 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 	private MathWordingWidget exerciseWordingWidget;
 	
-	private Button loadButton = new Button("nouvel exercice");
+	private Button tutorielButton = new Button("Tutoriel");
+	private Button exerciseButton = new Button("Commencer un exercice");
+
+	private Button previousButton = new Button("Précédent");
+	private Button restartButton = new Button("Recommencer");
+	private Button nextButton = new Button("Suivant");
 
 	@Inject
 	public AniMathsDisplay() {
 		initWidget(RootPanel.get("view"));
 
-		loadButton.getElement().setId("load");
-	    RootPanel.get("srv-header").add(loadButton);
+		tutorielButton.getElement().setId("tutoriel");
+		exerciseButton.getElement().setId("exercice");
+	    RootPanel.get("srv-start").add(tutorielButton);
+	    RootPanel.get("srv-start").add(exerciseButton);
+		
+		previousButton.getElement().setId("previous");
+		restartButton.getElement().setId("restart");
+		nextButton.getElement().setId("next");
+	    RootPanel.get("srv-navigation").add(previousButton);
+	    RootPanel.get("srv-navigation").add(restartButton);
+	    RootPanel.get("srv-navigation").add(nextButton);
 		
 		exerciseWordingWidget = new MathWordingWidget(RootPanel.get("exerciseWording"));
 	}
@@ -55,13 +69,32 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 	}
 
 	@Override
-	public Button getLoadButton() {
-		return loadButton;
+	public HandlerRegistration addMouseMoveHandler(MouseMoveHandler handler) {
+		return addDomHandler(handler,MouseMoveEvent.getType());
 	}
 
 	@Override
-	public HandlerRegistration addMouseMoveHandler(MouseMoveHandler handler) {
-		return addDomHandler(handler,MouseMoveEvent.getType());
+	public Button getTutorielButton() {
+		return tutorielButton;
+	}
+	@Override
+	public Button getExerciseButton() {
+		return exerciseButton;
+	}
+
+	@Override
+	public Button getPreviousButton() {
+		return previousButton;
+	}
+
+	@Override
+	public Button getRestartButton() {
+		return restartButton;
+	}
+
+	@Override
+	public Button getNextButton() {
+		return nextButton;
 	}
 
 }
