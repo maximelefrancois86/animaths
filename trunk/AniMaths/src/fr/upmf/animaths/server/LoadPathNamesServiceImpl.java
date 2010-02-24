@@ -17,25 +17,12 @@ public class LoadPathNamesServiceImpl extends RemoteServiceServlet implements Lo
 
 	@Override
 	public List<String> loadPathNames(String path) {
-//		System.out.println("okImplLoadPaths "+path);
-//		String list = "";
-//		File dir = new File(path);
-//		assert dir.isDirectory();
-//		for(String fileName : dir.list())
-//			if(fileName.contains(".xml")) {
-//				System.out.println(path+File.pathSeparator+fileName);
-//				list.concat(";").concat(path+File.pathSeparator+fileName);
-//			}
-//		return list;
-		System.out.println("okImplLoadPaths "+path);
 		List<String> list = new ArrayList<String>();
 		File dir = new File(path);
 		assert dir.isDirectory();
 		for(String fileName : dir.list())
-			if(fileName.contains(".xml")) {
-				System.out.println(path+"/"+fileName);
+			if(fileName.contains(".xml"))
 				list.add(path+"/"+fileName);
-			}
 		return list;
 	}
 
