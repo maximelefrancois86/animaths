@@ -37,7 +37,7 @@ h1 {
 }
 
 .gwt-DialogBox {
-	width:90%;
+	width: 90%;
 }
 
 .dialogVPanel {
@@ -68,18 +68,24 @@ math {
 	left: 0em;
 	width: 60%;
 	height: 60%;
-	margin-top:1em;
-	overflow:auto;
+	margin-top: 1em;
+	overflow: auto;
 }
 
 #dynamic {
-	border-style:solid;
-	border-color:blue;
+	border-style: solid;
+	border-color: blue;
 }
 
 #drag {
 	position: absolute;
-	z-index:10000;
+	z-index: 10000;
+	left: -99em;
+}
+
+#drag math>* {
+	box-shadow: 2px 2px 5px #CCCCCC;
+	-moz-box-shadow: 2px 2px 5px #CCCCCC;
 }
 
 /*OK pour lacher*/
@@ -108,16 +114,23 @@ math .focus {
 table {
 	margin: 0 auto;
 }
+
 .table-center {
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #message #box-icon {
-	width:32px;
+	width: 32px;
 	float: left;
 	margin: 1em;
 }
-#message #gwt-Button {
+
+#message .gwt-Button {
 	float: right;
 }
+
+#message td {
+	vertical-align: middle;
+}
+

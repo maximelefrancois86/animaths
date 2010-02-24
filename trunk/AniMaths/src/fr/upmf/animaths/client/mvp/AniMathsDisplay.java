@@ -21,7 +21,7 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 	private MathWordingWidget exerciseWordingWidget;
 	
-	private Button loadButton = new Button("recommencer");
+	private Button loadButton = new Button("nouvel exercice");
 
 	@Inject
 	public AniMathsDisplay() {

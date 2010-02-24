@@ -136,5 +136,33 @@ h1 {
 }
 
 #message div {
-	font-size:larger;
+	font-size: larger;
+}
+
+tr:hover {
+	background-color: inherit;
+}
+
+#message td .gwt-HTML {
+	background-color: inherit;
+}
+
+#question-text td>math,#question-button td>math {
+	border: 2px outset #D0E4F6;
+	background-color: #f5f5f5;
+	-moz-border-radius: .5em/ .5em;
+	border-radius: .5em/ .5em;
+	display: inline-block;
+}
+
+#question-text td>math:hover,#question-button td>math:hover {
+	border-style: solid;
+}
+
+#question-text td>math:active,#question-button td>math:active {
+	border-style: inset;
+}
+
+#message div,#question-text div,#question-button div{
+	margin: 0.5em;
 }
