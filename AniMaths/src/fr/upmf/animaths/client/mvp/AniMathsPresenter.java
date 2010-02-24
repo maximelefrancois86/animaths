@@ -13,9 +13,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
@@ -43,9 +43,12 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOBasicPresenter> mOBasicPresenters;
 //	public Map<Integer,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
-	private List<String> exercisePaths;
-	private List<String> tutorialPaths;
-
+	private String tutoDirName = "tutorials";
+	private String exoDirName = "exercises";
+	private List<String> tutoPaths;
+	private List<String> exoPaths;
+	private String currentPath;
+	
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
 		public Button getTutorielButton();
@@ -87,14 +90,38 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			}
 		});
 
-		tutorialPaths = loadPaths("tutoriels");
-		exercisePaths = loadPaths("exercices");
+		loadPathss(tutoDirName);
+		loadPathss(exoDirName);
 
-		loadProblem(tutorialPaths.get(0));
+		loadProblem(tutoPaths.get(0));
 
+		display.getTutorielButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				currentPath=tutoPaths.get(0);
+				loadProblem(currentPath);
+			}
+		});
 		display.getExerciseButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				loadProblem("equation"+Integer.toString(getExerciceId()));
+				currentPath=exoPaths.get(0);
+				loadProblem(currentPath);
+			}
+		});
+		display.getPreviousButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				currentPath=getPreviousPath(currentPath);
+				loadProblem(currentPath);
+			}
+		});
+		display.getRestartButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				loadProblem(currentPath);
+			}
+		});
+		display.getNextButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				currentPath=getNextPath(currentPath);
+				loadProblem(currentPath);
 			}
 		});
 	}
@@ -106,20 +133,6 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		if(id != null) {
 			loadProblem(id);
 		}
-	}
-	
-	private int getExerciceId() {
-//		int id = new Random().nextInt(5)+1;		
-		int id;
-		System.out.println("exerciceId: "+Integer.toString(exerciceId)
-				+" || exerciceCount: "+Integer.toString(exerciceCount));
-		if (exerciceId < exerciceCount)
-			id = exerciceId+1;
-		else
-			id = 1;
-		
-		System.out.println(Integer.toString(id));
-		return id;
 	}
 	
 	@Override
@@ -142,7 +155,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	/**
 	 * @return
 	 */
-	private void loadProblem(final String id) {
+	private void loadProblem(final String path) {
 		final MessageBox loadingBox = new MessageBox();
 		loadingBox.setAsLoading(new MathWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
 		
@@ -154,7 +167,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	    // Set up the callback object.
 	    final AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
-				loadingBox.setAsError(new MathWordingWidget("Erreur lors de la récupération de l'exercice. Essayer ultérieurement ou informez l'administrateur."));
+				loadingBox.setAsError(new MathWordingWidget("Erreur lors de la récupération de l'exercice. Essayez ultérieurement ou informez l'administrateur."));
 			}
 
 			public void onSuccess(String result) {
@@ -163,25 +176,62 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				MOElement<?> eq = MOElement.parse(element);
 				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
 				mODynamicPresenter.init(eq);
+				RootPanel.get("currentPath").clear();
+				RootPanel.get("currentPath").add(new InlineLabel(path));
 				loadingBox.hide();
-				setExerciceId();
 			}
 
-			private void setExerciceId() {
-				if (exerciceId < exerciceCount)
-					exerciceId++;
-				else
-					exerciceId = 1;
-			}
 	    };
 
-	    // Make the call after a 1second pause.
-		Timer wait = new Timer() {
-		    public void run() {
-		    	aniMathsService.loadEquation(id, callback);
-		    }
-		};
-		wait.schedule(1000); 	   
+    	aniMathsService.loadEquation(path, callback);
+	}
+
+	/**
+	 * @return
+	 */
+	private void loadPathss(final String path) {
+		final MessageBox loadingBox = new MessageBox();
+		loadingBox.setAsLoading(new MathWordingWidget("Chargement, veuillez patientez quelques instants."));
+
+
+		// Set up the callback object.
+		final AsyncCallback<List<String>> callback = new AsyncCallback<List<String>>() {
+			public void onFailure(Throwable caught) {
+				loadingBox.setAsError(new MathWordingWidget("Erreur de communication avec le serveur. Essayez ultérieurement ou informez l'administrateur."));
+			}
+			public void onSuccess(List<String> result) {
+				setPathNames(path,result);
+			}
+	    };
+    	aniMathsService.loadPaths(path, callback);
+	}
+
+	public void setPathNames(String path, List<String> pathNames) {
+		if(path.equals(tutoDirName))
+			tutoPaths = pathNames;
+		else if(path.equals(exoDirName))
+			exoPaths = pathNames;
 	}
 	
+	public String getPreviousPath(String path) {
+		int index = tutoPaths.indexOf(path);
+		List<String> list = tutoPaths;
+		if(index==-1) {
+			index = exoPaths.indexOf(path);
+			assert index!=-1;
+			list = exoPaths;
+		}
+		return list.get(Math.max(0,index-1));
+	}
+
+	public String getNextPath(String path) {
+		int index = tutoPaths.indexOf(path);
+		List<String> list = tutoPaths;
+		if(index==-1) {
+			index = exoPaths.indexOf(path);
+			assert index!=-1;
+			list = exoPaths;
+		}
+		return list.get(Math.min(list.size()-1,index+1));
+	}
 }
