@@ -38,14 +38,16 @@ public class QuestionTextBox extends DialogBox {
 		sendButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
-				if(Float.parseFloat(answerField.getText())==Float.parseFloat(answer))				
-					process.executeProcess(1);
-				else if(Float.parseFloat(answerField.getText())==-Float.parseFloat(answer))
-					process.executeProcess(0);
-				else
-					process.executeProcess(-1);
-					
-					
+				try {
+					if(Float.parseFloat(answerField.getText())==Float.parseFloat(answer))				
+						process.executeProcess(1);
+					else if(Float.parseFloat(answerField.getText())==-Float.parseFloat(answer))
+						process.executeProcess(0);
+					else
+						process.executeProcess(-1);
+				} catch(NumberFormatException e) {
+					process.executeProcess(-2);
+				}
 			}
 		});
 		answerField.addKeyUpHandler(new KeyUpHandler() {
@@ -66,7 +68,6 @@ public class QuestionTextBox extends DialogBox {
 				}
 			}
 		});
-
 	}
 
 	public void center() {

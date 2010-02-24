@@ -80,15 +80,11 @@ public final class SEs_N_Add extends MOAbstractProcess{
 		where.setChild(new MONumber(Math.abs(floatSum)));
 		// simplification...
 		if(addContainer.size()==1) {
-			System.out.println("ok10");
 			MOElement<?> parent = addContainer.getMathObjectParent();
 			MOElement<?> element = addContainer.get(0).isMinus()?addContainer.get(0):addContainer.get(0).getChild();
-			if(parent instanceof IMOHasOneChild) {
-				System.out.println("ok11");
+			if(parent instanceof IMOHasOneChild)
 				((IMOHasOneChild) parent).setChild(element);
-			}
 			else if(parent instanceof MOEquation) {
-				System.out.println("ok12");
 				boolean atLeft = ((MOEquation)parent).getLeftHandSide()==addContainer;
 				((MOEquation)parent).setHandSide(element, atLeft);
 			}
