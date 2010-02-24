@@ -153,7 +153,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 				}
 			}
 		});
-//		wait.schedule(3000); 		
+		wait.schedule(10000);
 	}
 
 	public abstract void onExecuteProcess(int answer);

@@ -175,12 +175,12 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	@Override
 	public MathWordingWidget getMessage(int answer) {
 		if(answer==1)
-			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.clone()," des deux côtés du signe égal.<br/>"+
+			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.getChild().clone()," des deux côtés du signe égal.<br/>"+
 					"<em>c'est une des opérations qu'on sait faire sur une équation.</em><br/>"+
-					"Ensuite, on a le droit de placer ",selected.clone()," où on veut dans l'addition ! <br/>"+
+					"Ensuite, on a le droit de placer ",selected.clone().setMinus(!selected.isMinus())," où on veut dans l'addition ! <br/>"+
 					"<em>c'est la commutation dans l'addition !</em>");
 		else if(answer==2)
-			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.clone()," des deux côtés du signe égal.<br/>"+
+			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.getChild().clone()," des deux côtés du signe égal.<br/>"+
 					"<em>c'est une des opérations qu'on sait faire sur une équation.</em>");
 		else
 			return new MathWordingWidget("Attention ! Ici, on veut déplacer le terme d'une multiplication !<br/>" +
