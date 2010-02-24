@@ -1,6 +1,7 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
+import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
@@ -45,7 +46,7 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		executeProcess(1);
 	}
 
@@ -53,5 +54,12 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	public void onExecuteProcess(int answer) {
 		parentOfSelected.remove(selected);
 		parentOfSelected.add(selected,(MOMultiplyElement) whereElement,zoneH==MOElement.ZONE_EE);
+	}
+
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		return new MathWordingWidget("<div class='large'>On peut déplacer ",selected.clone(),zoneH==MOElement.ZONE_OO?" avant ":" après ",whereElement.clone(),"<br/>"+
+				"car on a le droit d'échanger les termes d'une multiplication ! <br/>"+
+				"<em>c'est la commutation dans la multiplication !</em></div>");
 	}
 }

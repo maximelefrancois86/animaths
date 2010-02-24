@@ -5,6 +5,8 @@ import java.util.Map;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -23,6 +25,7 @@ import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchHandler;
 import fr.upmf.animaths.client.interaction.process.event.TagDeclarationEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
+import fr.upmf.animaths.client.mvp.MathWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler, ProcessLaunchHandler {
@@ -116,33 +119,45 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 		askQuestion();
 	}
 	
-	public abstract void askQuestion();		
+	public final void askQuestion() {
+		final MessageBox msgLoad = new MessageBox();
+		msgLoad.setAsLoading(new MathWordingWidget("Veuillez patienter..."));
+		onAskQuestion();
+		msgLoad.hide();
+	}
 
+	public abstract void onAskQuestion(); 
+	
 	public final void executeProcess(final int answer) {
-		if(answer>0) {
-			final MessageBox msgOK = new MessageBox();
-			msgOK.setAsCorrect("<div class='large'>Réponse correcte :).</div>");
-			// pour attendre un peu avant d'agir
-			Timer wait = new Timer() {
-			    public void run() {
+		final MessageBox msg = new MessageBox();
+		msg.setWithCode(answer,getMessage(answer));
+		// pour attendre un peu avant d'agir
+		final Timer wait = new Timer() {
+		    public void run() {
+				msg.hide();
+				if(answer>0) {
 					eventBus.fireEvent(new ProcessDoneEvent());
 					onExecuteProcess(answer);
 					presenter.init(presenter.getElement());
-			    }
-			};
-			wait.schedule(1500); 		
-			msgOK.hide();
-		} else {
-			final MessageBox msgFail = new MessageBox();
-			msgFail.setAsError("<div class='large'>Veuillez ré-essayer, la réponse est incorrecte.</div>");
-			// pour attendre un peu avant d'agir
-			Timer wait = new Timer() {
-			    public void run() {}
-			};
-			wait.schedule(1000);
-//			msgFail.hide();
-		}
+				}
+		    }
+		};
+		msg.addCloseButton( new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				wait.cancel();
+				msg.hide();
+				if(answer>0) {
+					eventBus.fireEvent(new ProcessDoneEvent());
+					onExecuteProcess(answer);
+					presenter.init(presenter.getElement());
+				}
+			}
+		});
+//		wait.schedule(3000); 		
 	}
 
 	public abstract void onExecuteProcess(int answer);
+	
+	public abstract MathWordingWidget getMessage(int answer);
+	
 }

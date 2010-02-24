@@ -62,7 +62,7 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		System.out.println("SEs_SEs_ChangeSign : askQuestion");
 		assert whereElement instanceof MOSignedElement;
 		assert selectedElement instanceof MOSignedElement;		
@@ -107,6 +107,14 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 				((MOMultiplyElement) greatParent).setChild(parent.getChild());
 			}
 		}
+	}
+
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		if(answer==1)
+			return new MathWordingWidget("Oui ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait ",parent.isMinus()^child.isMinus()?"moins":"plus"," !");
+		else
+			return new MathWordingWidget("Attention ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait... ?");
 	}
 
 }

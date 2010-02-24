@@ -24,6 +24,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	private MOAddContainer addContainer;
 	private MOSignedElement selected;
 	private boolean atLeft;	
+	private boolean isMinus;
 	private MOAddContainer parentOfWhere;
 	private MOSignedElement where;
 	private MOEquation moeAZ;
@@ -34,6 +35,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	protected boolean isProcessInvolved() {
 		if(selectedElement instanceof MOSignedElement) {
 			selected = (MOSignedElement) selectedElement;
+			isMinus = selected.isMinus();
 			MOElement<?> parentOfSelectedElement = selectedElement.getMathObjectParent();
 			if(parentOfSelectedElement instanceof MOAddContainer) {
 				addContainer = (MOAddContainer) parentOfSelectedElement;
@@ -69,7 +71,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 
 	@Override
-	public void askQuestion() {
+	public void onAskQuestion() {
 		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
@@ -141,7 +143,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			}
 
 			questionButton.addAnswer(moeA, 0);
-			questionButton.addAnswer(moeAZ, 1);
+			questionButton.addAnswer(moeAZ, 2);
 			questionButton.addAnswer(moeM, 0);
 			questionButton.addAnswer(moeMZ, 0);
 			
@@ -168,6 +170,21 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			equation.setLeftHandSide(moeAZ.getLeftHandSide());
 			equation.setRightHandSide(moeAZ.getRightHandSide());
 		}
+	}
+
+	@Override
+	public MathWordingWidget getMessage(int answer) {
+		if(answer==1)
+			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.clone()," des deux côtés du signe égal.<br/>"+
+					"<em>c'est une des opérations qu'on sait faire sur une équation.</em><br/>"+
+					"Ensuite, on a le droit de placer ",selected.clone()," où on veut dans l'addition ! <br/>"+
+					"<em>c'est la commutation dans l'addition !</em>");
+		else if(answer==2)
+			return new MathWordingWidget("Oui ! on a ",isMinus?"ajouté ":"soustrait ",selected.clone()," des deux côtés du signe égal.<br/>"+
+					"<em>c'est une des opérations qu'on sait faire sur une équation.</em>");
+		else
+			return new MathWordingWidget("Attention ! Ici, on veut déplacer le terme d'une multiplication !<br/>" +
+					"On a le droit de faire des opérations <u>des deux côtés du signe égal</u>... mais laquelle utiliser ?");
 	}
 
 }
