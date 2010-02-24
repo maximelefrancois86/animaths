@@ -1,7 +1,7 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
@@ -10,8 +10,8 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 
 	private static final SEs_AC_Commutation instance = new SEs_AC_Commutation();
 	protected SEs_AC_Commutation() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOSignedElement selected;
@@ -57,8 +57,8 @@ public final class SEs_AC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
-		return new MathWordingWidget("On peut déplacer ",selected.clone(),(zoneH==MOElement.ZONE_OO?" avant ":" après "),whereElement.clone(),"<br>"+
+	public MOWordingWidget getMessage(int answer) {
+		return new MOWordingWidget("On peut déplacer ",selected.clone(),(zoneH==MOElement.ZONE_OO?" avant ":" après "),whereElement.clone(),"<br>"+
 				"car on a le droit d'échanger les termes d'une addition ! <br>"+
 				"<em>c'est la commutation dans l'addition !</em>");
 	}

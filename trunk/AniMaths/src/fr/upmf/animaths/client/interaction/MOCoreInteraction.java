@@ -57,7 +57,11 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private static MODynamicPresenter presenter;
 	private static final MODragPresenter dragPresenter = new MODragPresenter();
 	
-	private EventBus eventBus = AniMathsPresenter.eventBus;	
+	private static EventBus eventBus = AniMathsPresenter.eventBus;	
+	
+	private static MOEquation equation;
+	private static boolean interactWithEquation = false;
+	private static boolean interactWithLeftHand = false;
 
 	private MOElement<?> selectedElement = null;
 	MOElement<?> whereElement;
@@ -81,22 +85,58 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	
 	private MOCoreInteraction() { }
 	
-	public static void setPresenterAndRun(MODynamicPresenter presenter) {
+	public static void setPresenterAndRun(MODynamicPresenter presenter, int level) {
+		equation = null;
+		MOCoreInteraction.interactWithEquation = false;
+		SEs_AC_Commutation.setEnabled(false);
+		SEs_SEs_ChangeSign.setEnabled(false);
+		MEs_MC_Commutation.setEnabled(false);
+		SEs_AC_E_ChangeHandSide.setEnabled(false);
+		MEs_MC_E_ChangeHandSide.setEnabled(false);
+		SEs_N_Add.setEnabled(false);
+		MEs_N_Multiply.setEnabled(false);
+		Ns_Is_E_ChangeHandSide.setEnabled(false);
+		MOCoreInteraction.interactWithLeftHand = false;
+		if(level>=1) {
+			SEs_AC_Commutation.setEnabled(true);
+			if(level>=2) {
+				SEs_N_Add.setEnabled(true);
+				if(level>=3) {
+					SEs_SEs_ChangeSign.setEnabled(true);
+					if(level>=4) {
+						MEs_MC_Commutation.setEnabled(true);
+						if(level>=5) {
+							MEs_N_Multiply.setEnabled(true);
+							if(level>=6) {
+								MOCoreInteraction.interactWithLeftHand = true;
+								SEs_AC_E_ChangeHandSide.setEnabled(true);
+								if(level>=7) {
+									MEs_MC_E_ChangeHandSide.setEnabled(true);
+									if(level>=8) {
+										Ns_Is_E_ChangeHandSide.setEnabled(true);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		MOCoreInteraction.presenter = presenter;
+		if(presenter.getElement() instanceof MOEquation)
+			equation = (MOEquation) presenter.getElement();
 		instance.setHandler(FlyOverEvent.getType());
-		SEs_AC_Commutation.setEnabled();
-		SEs_SEs_ChangeSign.setEnabled();
-		MEs_MC_Commutation.setEnabled();
-		SEs_AC_E_ChangeHandSide.setEnabled();
-		MEs_MC_E_ChangeHandSide.setEnabled();
-		SEs_N_Add.setEnabled();
-		MEs_N_Multiply.setEnabled();
-		Ns_Is_E_ChangeHandSide.setEnabled();
 	}
 
 	@Override
 	public void onFlyOver(FlyOverEvent event) {		
 		MOElement<?> element = event.getElement();
+		if(!interactWithEquation && element instanceof MOEquation)
+			return;
+		if(!interactWithLeftHand && element!=null && equation!=null && element.hasMathObjectAncestor(equation.getLeftHandSide())) {
+			System.out.println("okancestor");
+			return;
+		}
 		if(element!=null)
 			element = element.getMathObjectSelectableElement();
 		if(selectedElement==element)
@@ -264,67 +304,5 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		Element view = RootPanel.get("view").getElement();
 		view.setScrollTop(view.getScrollHeight());
 	}
-
-//	public MODynamicPresenter getPresenter() {
-//		return presenter;
-//	}
-//
-//	public MOElement<?> getSelectedElement() {
-//		return selectedElement;
-//	}
-//	
-//	public short getGreatestProcessTagFound() {
-//		return greatestProcessTagFound;
-//	}
-//
-//	public void setTag(short tag) {
-//		if(tag>greatestProcessTagFound)
-//			greatestProcessTagFound = tag;
-//	}
-//
-//	public void setProcessFound() {
-//		processFound = true;
-//	}
-//
-//	public boolean isProcessDone() {
-//		return processDone;
-//	}
-//
-//	public void setProcessDone() {
-//		processDone = true;
-//	}
-//
-//	public MOBasicPresenter getDragPresenter() {
-//		return dragPresenter;
-//	}
-//	
-//	public void changeSign() {
-//		MOElement<?> element = dragPresenter.getElement();
-//		if(element instanceof MOSignedElement)
-//			((MOSignedElement) element).setMinus(!((MOSignedElement) element).isMinus());
-//		else if(element instanceof MOAddContainer)
-//			((MOAddContainer)element).changeSign();
-//		else
-//			element = new MOSignedElement(element,true);
-//		dragPresenter.init(element);
-//		if(element instanceof MOSignedElement)
-//			((MOSignedElement) element).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
-//		else if (element instanceof MOAddContainer)
-//			for(int i=0;i<((MOAddContainer)element).size();i++)
-//				((MOAddContainer)element).get(i).getDisplay().getSign().setStyleClass(IMOHasStyleClass.STYLE_CLASS_FOCUS);
-//	}
-//
-//	public void inverseSign() {
-//		MOElement<?> element = dragPresenter.getElement();
-//		if(element instanceof MOMultiplyElement) {
-//			((MOMultiplyElement) element).setDivided(!((MOMultiplyElement) element).isDivided());
-//			element = new MOMultiplyContainer((MOMultiplyElement) element);
-//		}
-//		else if(element instanceof MOMultiplyContainer)
-//			((MOMultiplyContainer)element).inverseSign();
-//		else
-//			element = new MOMultiplyElement(element,true);
-//		dragPresenter.init(element);
-//	}
 
 }

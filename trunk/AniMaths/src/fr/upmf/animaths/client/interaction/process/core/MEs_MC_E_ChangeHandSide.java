@@ -1,10 +1,8 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.QuestionButton;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
@@ -16,8 +14,8 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 
 	private static final MEs_MC_E_ChangeHandSide instance = new MEs_MC_E_ChangeHandSide();
 	protected MEs_MC_E_ChangeHandSide() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOEquation equation;
@@ -74,7 +72,7 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 		
 		QuestionButton questionButton = 
 			new QuestionButton(this, 
-				new MathWordingWidget("Après avoir déplacé "
+				new MOWordingWidget("Après avoir déplacé "
 										,atNum?selected.clone():new MOMultiplyContainer(selected.clone())
 										," de l'autre côté du signe égal, quel est le résultat ?"));
 		if(whereElement instanceof MOMultiplyElement) {
@@ -173,17 +171,17 @@ public final class MEs_MC_E_ChangeHandSide extends MOAbstractProcess{
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
+	public MOWordingWidget getMessage(int answer) {
 		if(answer==1)
-			return new MathWordingWidget("Oui ! on a ",atNum?"divisé":"multiplié"," par ",selected.clone()," des deux côtés du signe égal.<br/>"+
+			return new MOWordingWidget("Oui ! on a ",atNum?"divisé":"multiplié"," par ",selected.clone()," des deux côtés du signe égal.<br/>"+
 					"<em>c'est une des opérations qu'on sait faire sur une équation.</em><br/>"+
 					"Ensuite, on a le droit de placer ",selected.clone()," où on veut dans la multiplication ! <br/>"+
 					"<em>c'est la commutation dans la multiplication !</em>");
 		else if(answer==2)
-			return new MathWordingWidget("Oui ! on a ",atNum?"divisé":"multiplié"," par ",selected.clone()," des deux côtés du signe égal.<br/>"+
+			return new MOWordingWidget("Oui ! on a ",atNum?"divisé":"multiplié"," par ",selected.clone()," des deux côtés du signe égal.<br/>"+
 					"<em>c'est une des opérations qu'on sait faire sur une équation.</em>");
 		else
-			return new MathWordingWidget("Attention ! Ici, on veut déplacer le terme d'une multiplication !<br/>" +
+			return new MOWordingWidget("Attention ! Ici, on veut déplacer le terme d'une multiplication !<br/>" +
 					"On a le droit de faire des opérations <u>des deux côtés du signe égal</u>... mais laquelle utiliser ?");
 	}
 

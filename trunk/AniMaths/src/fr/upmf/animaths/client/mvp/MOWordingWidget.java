@@ -1,9 +1,13 @@
 package fr.upmf.animaths.client.mvp;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
 
 import fr.upmf.animaths.client.mvp.MathML.MMLMath;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -14,16 +18,16 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
  * @author Maxime Lefran�ois
  *
  */
-public class MathWordingWidget extends Composite {
+public class MOWordingWidget extends Composite {
 
 	private ComplexPanel panel;
 
-	public MathWordingWidget(ComplexPanel panel) {
+	public MOWordingWidget(ComplexPanel panel) {
 		initWidget(panel);
 		this.panel = panel;
 	}
 	
-	public MathWordingWidget(Object... args) {
+	public MOWordingWidget(Object... args) {
 		panel = new FlowPanel();
 		initWidget(panel);
 		setWording(args);
@@ -33,7 +37,6 @@ public class MathWordingWidget extends Composite {
 		clear();
 		for(Object arg : args) {
 			if(arg instanceof String)
-//				panel.getElement().appendChild((new InlineHTML((String) arg).getElement()).getChildNodes().getItem(0));
 				panel.add(new InlineHTML((String) arg));
 			else if(arg instanceof MOElement<?>) {
 				MMLMath wrapper = new MMLMath(false);
@@ -46,10 +49,31 @@ public class MathWordingWidget extends Composite {
 		}
 	}
 
+	public void parse(Element element) {
+		clear();
+		NodeList children = element.getChildNodes();
+		for(int i=0;i<children.getLength();i++) {
+			Node n = children.item(i);
+			if(n.getNodeType() == Node.ELEMENT_NODE) {
+				Element e = (Element) n;
+				String tagName = e.getTagName();
+				if(tagName.equals("text"))
+					panel.add(new InlineHTML(e.getFirstChild().getNodeValue()));
+				else if(tagName.equals("br"))
+					panel.getElement().appendChild(Document.get().createBRElement());
+				else {
+					MMLMath wrapper = new MMLMath(false);
+					MOElement.parse(e).pack(wrapper,null);
+					panel.add(wrapper);
+				}
+			}
+		}
+	}
+
 	public void clear() {
 		panel.clear();
 		while(panel.getElement().hasChildNodes())
 			panel.getElement().getFirstChild().removeFromParent();
 	}
-
+	
 }

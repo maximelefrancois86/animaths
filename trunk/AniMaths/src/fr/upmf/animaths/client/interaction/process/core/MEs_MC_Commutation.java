@@ -1,7 +1,7 @@
 package fr.upmf.animaths.client.interaction.process.core;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
@@ -10,8 +10,8 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 
 	private static final MEs_MC_Commutation instance = new MEs_MC_Commutation();
 	protected MEs_MC_Commutation() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOMultiplyElement selected;
@@ -57,8 +57,8 @@ public class MEs_MC_Commutation extends MOAbstractProcess{
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
-		return new MathWordingWidget("<div class='large'>On peut déplacer ",selected.clone(),zoneH==MOElement.ZONE_OO?" avant ":" après ",whereElement.clone(),"<br/>"+
+	public MOWordingWidget getMessage(int answer) {
+		return new MOWordingWidget("<div class='large'>On peut déplacer ",selected.clone(),zoneH==MOElement.ZONE_OO?" avant ":" après ",whereElement.clone(),"<br/>"+
 				"car on a le droit d'échanger les termes d'une multiplication ! <br/>"+
 				"<em>c'est la commutation dans la multiplication !</em></div>");
 	}

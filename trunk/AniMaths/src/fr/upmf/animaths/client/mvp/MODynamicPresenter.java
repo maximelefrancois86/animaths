@@ -14,7 +14,6 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.interaction.MOCoreInteraction;
 import fr.upmf.animaths.client.interaction.events.DragEvent;
 import fr.upmf.animaths.client.interaction.events.DropEvent;
 import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
@@ -73,7 +72,6 @@ public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.D
 		 		}
 		 	}
 		}));
-		MOCoreInteraction.setPresenterAndRun(this);
 	}
 	
 	static class Display extends MOBasicDisplay implements HasMouseDownHandlers, HasMouseUpHandlers  {

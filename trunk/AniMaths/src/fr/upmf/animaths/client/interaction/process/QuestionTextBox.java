@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 
 public class QuestionTextBox extends DialogBox {
 
@@ -19,7 +19,7 @@ public class QuestionTextBox extends DialogBox {
 	final TextBox answerField;
 	final Button sendButton;
 	
-	public QuestionTextBox(final MOAbstractProcess process, MathWordingWidget wording, final String answer) {
+	public QuestionTextBox(final MOAbstractProcess process, MOWordingWidget wording, final String answer) {
 		super(false);
 		setText("Question...");
 		setAnimationEnabled(true);
@@ -52,13 +52,17 @@ public class QuestionTextBox extends DialogBox {
 			public void onKeyUp(KeyUpEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					hide();
-					if(Float.parseFloat(answerField.getText())==Float.parseFloat(answer))				
-						process.executeProcess(1);
-					else if(Float.parseFloat(answerField.getText())==-Float.parseFloat(answer))
-						process.executeProcess(0);
-					else
-						process.executeProcess(-1);
-
+					try{
+						Float f = Float.parseFloat(answerField.getText());
+						if(f==Float.parseFloat(answer))				
+							process.executeProcess(1);
+						else if(Float.parseFloat(answerField.getText())==-Float.parseFloat(answer))
+							process.executeProcess(0);
+						else
+							process.executeProcess(-1);
+					}catch(NumberFormatException e) {
+						process.executeProcess(-2);
+					}
 				}
 			}
 		});

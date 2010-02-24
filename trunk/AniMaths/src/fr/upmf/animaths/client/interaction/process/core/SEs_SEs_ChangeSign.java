@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.QuestionButton;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
@@ -15,8 +15,8 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 
 	private static final SEs_SEs_ChangeSign instance = new SEs_SEs_ChangeSign();
 	protected SEs_SEs_ChangeSign() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOSignedElement parent;
@@ -83,7 +83,7 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 		MOSignedElement badAnswer = new MOSignedElement(child.getChild().clone(),!isMinus);
 		badAnswer.setNeedsSign(true);
 
-		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());		
+		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());		
 		wording.setWording("Quand on multiplie ",new MOSignedElement(new MONumber(1),parent.isMinus())," par ",child.clone(),", quel est le résultat ?");
 		QuestionButton questionButton = new QuestionButton(this, wording);
 		questionButton.addAnswer(goodAnswer, 1);
@@ -110,11 +110,11 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
+	public MOWordingWidget getMessage(int answer) {
 		if(answer==1)
-			return new MathWordingWidget("Oui ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait ",parent.isMinus()^child.isMinus()?"moins":"plus"," !");
+			return new MOWordingWidget("Oui ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait ",parent.isMinus()^child.isMinus()?"moins":"plus"," !");
 		else
-			return new MathWordingWidget("Attention ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait... ?");
+			return new MOWordingWidget("Attention ! ",parent.isMinus()?"moins":"plus"," par ",child.isMinus()?"moins":"plus"," ça fait... ?");
 	}
 
 }
