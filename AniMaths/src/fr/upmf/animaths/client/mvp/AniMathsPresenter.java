@@ -13,6 +13,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -99,12 +100,16 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		display.getTutorielButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				currentPath=tutoPaths.get(0);
+				display.getPreviousButton().setEnabled(false);
+				display.getNextButton().setEnabled(true);
 				loadProblem(currentPath);
 			}
 		});
 		display.getExerciseButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				currentPath=exoPaths.get(0);
+				display.getPreviousButton().setEnabled(false);
+				display.getNextButton().setEnabled(true);
 				loadProblem(currentPath);
 			}
 		});
@@ -159,6 +164,13 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private void loadProblem(final String path) {
 		final MessageBox loadingBox = new MessageBox();
 		loadingBox.setAsLoading(new MathWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
+		final Timer timer = new Timer() {
+			@Override
+			public void run() {
+				loadingBox.setAsError(new MathWordingWidget("Une erreur est survenue lors du chargement du probleme "+path+", il est vraissemblablement mal décrit. Veuillez recommencer."));
+			}
+		};
+		timer.schedule(10000);
 		
 		for(MOBasicPresenter basicPresenter : mOBasicPresenters)
 			basicPresenter.unbind();
@@ -180,6 +192,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));
 				loadingBox.hide();
+				timer.cancel();
 			}
 
 	    };
@@ -191,7 +204,6 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 * @return
 	 */
 	private void loadPaths(final String path) {
-		System.out.println("ok1");
 		final MessageBox loadingBox = new MessageBox();
 		loadingBox.setAsLoading(new MathWordingWidget("Chargement, veuillez patientez quelques instants."));
 
@@ -202,31 +214,18 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				loadingBox.setAsError(new MathWordingWidget("Erreur de communication avec le serveur. Essayez ultérieurement ou informez l'administrateur."));
 			}
 			public void onSuccess(List<String> result) {
-				System.out.println("ok3");
 				setPathNames(path,result);
-				if(path.equals(tutoDirName));
-				loadProblem(tutoPaths.get(0));
+				if(path.equals(tutoDirName))
+					display.getTutorielButton().click();
 			}
 	    };
     	aniMathsLoadPathNamesService.loadPathNames(path, callback);
-		System.out.println("ok2");
 	}
 
 	public void setPathNames(String path, List<String> pathNames) {
-//		List<String> list = new ArrayList<String>();
-//
-//		int index1 = 0;
-//		int index2 = pathNames.indexOf(";");
-//		do{
-//			System.out.println(pathNames.substring(index1, index2-1));
-//			list.add(pathNames.substring(index1, index2-1));
-//			index1 = index2+1;
-//			index2 = pathNames.indexOf(";",index1);
-//		} while(index2!=-1);
-//		if(path.equals(tutoDirName))
-//		tutoPaths = list;
-//	else if(path.equals(exoDirName))
-//		exoPaths = list;
+		System.out.println("setPathNames : "+path);
+		for(String name : pathNames)
+			System.out.println(">>>"+name);
 		if(path.equals(tutoDirName))
 			tutoPaths = pathNames;
 		else if(path.equals(exoDirName))
@@ -234,6 +233,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	}
 	
 	public String getPreviousPath(String path) {
+		System.out.println(path);
 		int index = tutoPaths.indexOf(path);
 		List<String> list = tutoPaths;
 		if(index==-1) {
@@ -241,10 +241,14 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			assert index!=-1;
 			list = exoPaths;
 		}
+		if(index==0)
+			display.getPreviousButton().setEnabled(false);
+		display.getNextButton().setEnabled(true);
 		return list.get(Math.max(0,index-1));
 	}
 
 	public String getNextPath(String path) {
+		System.out.println(path);
 		int index = tutoPaths.indexOf(path);
 		List<String> list = tutoPaths;
 		if(index==-1) {
@@ -252,6 +256,9 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			assert index!=-1;
 			list = exoPaths;
 		}
+		if(index==list.size()-1)
+			display.getNextButton().setEnabled(false);
+		display.getPreviousButton().setEnabled(true);
 		return list.get(Math.min(list.size()-1,index+1));
 	}
 }
