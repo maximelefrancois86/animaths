@@ -2,7 +2,7 @@
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
 <exercice>
 	<wording>
-		<text>Isoler</text> <moi>x</moi> <text>dans l'équation ci-dessous.</text>
+		<!-- Isoler --><moi>x</moi> <!-- dans l'équation ci-dessous. -->
 	</wording>
 	<moe>
 	  <momc>

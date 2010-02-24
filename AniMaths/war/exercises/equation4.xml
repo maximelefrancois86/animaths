@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exercice>
 	<wording>
-		<text>Isoler</text> <moi>x</moi> <text>dans l'équation ci-dessous.</text>
+		<!-- Isoler --><moi>x</moi> <!-- dans l'équation ci-dessous. -->
 	</wording>
 	<moe>
 	        <moac>

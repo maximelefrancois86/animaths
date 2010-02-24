@@ -314,7 +314,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			public void onSuccess(String result) {
 //				System.out.println(result);
 				Element root = XMLParser.parse(result).getDocumentElement();
-				int level = root.hasAttribute("level")?Integer.parseInt(root.getAttribute("level")):0;
+				int level = root.hasAttribute("level")?Integer.parseInt(root.getAttribute("level")):1000;
 				NodeList children = root.getChildNodes();
 //				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
 				int k=0;
