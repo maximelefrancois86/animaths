@@ -81,6 +81,7 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 	public void onAskQuestion() {
 		System.out.println("MEs_N_Multiply : askQuestion");
 		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());
+		wording.getElement().setId("question-multiply");
 		MOMultiplyElement selectedClone = selected.clone();
 		selectedClone.setDivided(false);
 		MOMultiplyElement whereClone = where.clone();

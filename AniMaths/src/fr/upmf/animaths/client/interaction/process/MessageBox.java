@@ -12,8 +12,8 @@ import fr.upmf.animaths.client.mvp.MathWordingWidget;
 
 public class MessageBox extends DialogBox {
 	
-	VerticalPanel Panel = new VerticalPanel();
-	HorizontalPanel HPanel = new HorizontalPanel();
+	VerticalPanel mPanel = new VerticalPanel();
+	HorizontalPanel hPanel = new HorizontalPanel();
 	private MathWordingWidget message = new MathWordingWidget("<span>message absent.<span>");
 	private HTML icon = new HTML(""); 
 
@@ -22,17 +22,18 @@ public class MessageBox extends DialogBox {
 		setText("Message");
 		setAnimationEnabled(false);
 
-//		Panel.setHorizontalAlignment(HorizontalPanel);
-		Panel.getElement().setId("message");
-		setWidget(Panel);
-		Panel.add(HPanel);
-		HPanel.add(message);
-		HPanel.add(icon);
+//		mPanel.setHorizontalAlignment(HorizontalmPanel);
+		mPanel.getElement().setId("message");
+		setWidget(mPanel);
+		mPanel.add(hPanel);
+		hPanel.add(icon);
+		hPanel.add(message);
 	}
 	
 	public void updateWidget(Widget w, Widget update) {
-		HPanel.remove(w);
-		HPanel.add(update);
+		hPanel.remove(w);
+		hPanel.add(update);
+		hPanel.setCellVerticalAlignment(update, VerticalPanel.ALIGN_MIDDLE);
 	}
 	
 	public void setAsLoading(MathWordingWidget message) {
@@ -80,7 +81,7 @@ public class MessageBox extends DialogBox {
 	
 	public void addCloseButton(ClickHandler clickHandler) {
 		Button close = new Button("Fermer");
-		Panel.add(close);
+		mPanel.add(close);
 		close.addClickHandler(clickHandler);
 	}
 	

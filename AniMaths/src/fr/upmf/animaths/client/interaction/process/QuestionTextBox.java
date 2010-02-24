@@ -23,7 +23,7 @@ public class QuestionTextBox extends DialogBox {
 		super(false);
 		setText("Question...");
 		setAnimationEnabled(true);
-		dialogVPanel.getElement().setId("message");
+		dialogVPanel.getElement().setId("question-text");
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		setWidget(dialogVPanel);

@@ -27,6 +27,7 @@ public class QuestionButton extends DialogBox {
 		setText("Question...");
 		setAnimationEnabled(false);
 		dialogVPanel.addStyleName("dialogVPanel");
+		dialogVPanel.getElement().setId("question-button");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		setWidget(dialogVPanel);
 		dialogVPanel.add(wording);
@@ -57,8 +58,8 @@ public class QuestionButton extends DialogBox {
 			this.answer = answer;
 		}
 		public void onClick(ClickEvent event) {
-			hide();
 			process.executeProcess(answer);
+			hide();
 		}
 	}
 
