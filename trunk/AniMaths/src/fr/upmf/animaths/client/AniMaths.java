@@ -18,7 +18,7 @@ public class AniMaths implements EntryPoint {
 		
 	    Window.enableScrolling(false);
 	    Window.setMargin("0px");
-	    Window.setTitle("AniMaths > exercices");
+	    Window.setTitle("AniMaths › exercices");
 	}
 	
 }
