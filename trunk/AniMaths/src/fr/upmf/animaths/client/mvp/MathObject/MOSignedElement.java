@@ -152,8 +152,9 @@ public class MOSignedElement extends MOElement<MOSignedElement.Display> implemen
 		return isMinus;
 	}
 
-	public void setMinus(boolean isMinus) {
+	public MOSignedElement setMinus(boolean isMinus) {
 		this.isMinus = isMinus;
+		return this;
 	}		
 
 	public boolean needsSign() {

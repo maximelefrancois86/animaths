@@ -43,12 +43,16 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOBasicPresenter> mOBasicPresenters;
 //	public Map<Integer,StaticManipulationWordingPresenter> staticManipulationWordingPresenters = new HashMap<String,StaticManipulationWordingPresenter>();
-	private int exerciceCount = 6;
-	private int exerciceId = 0;
+	private List<String> exercisePaths;
+	private List<String> tutorialPaths;
 
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
 		public MathWordingWidget getExerciseWordingWidget();
-		public Button getLoadButton();
+		public Button getTutorielButton();
+		public Button getExerciseButton();
+		public Button getPreviousButton();
+		public Button getRestartButton();
+		public Button getNextButton();
 	}
 
 	public static final Place PLACE = new Place("a");
@@ -66,8 +70,15 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	public AniMathsPresenter(final Display display, final EventBus eventBus) {
 		super(display, eventBus);
 		AniMathsPresenter.eventBus = eventBus;
+		bind();
+	}
+
+	@Override
+	protected void onBind() {	
+
 		mODynamicPresenter = new MODynamicPresenter();
 		mOBasicPresenters = new ArrayList<MOBasicPresenter>();
+
 		eventBus.addHandler(NewLineEvent.getType(),new NewLineHandler() {
 			public void onNewLine(NewLineEvent event) {
 				MOBasicPresenter newLine = new MOBasicPresenter(mODynamicPresenter.getElement().clone());
@@ -75,28 +86,13 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				RootPanel.get("view").insert(newLine.getDisplay().asWidget(), RootPanel.get("view").getWidgetCount()-1);
 			}
 		});
-		bind();
-	}
 
-	private int getExerciceId() {
-//		int id = new Random().nextInt(5)+1;		
-		int id;
-		System.out.println("exerciceId: "+Integer.toString(exerciceId)
-				+" || exerciceCount: "+Integer.toString(exerciceCount));
-		if (exerciceId < exerciceCount)
-			id = exerciceId+1;
-		else
-			id = 1;
-		
-		System.out.println(Integer.toString(id));
-		return id;
-	}
-	
-	@Override
-	protected void onBind() {	
-		loadProblem("equation"+Integer.toString(getExerciceId()));
+		tutorialPaths = loadPaths("tutoriels");
+		exercisePaths = loadPaths("exercices");
 
-		display.getLoadButton().addClickHandler(new ClickHandler() {
+		loadProblem(tutorialPaths.get(0));
+
+		display.getExerciseButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				loadProblem("equation"+Integer.toString(getExerciceId()));
 			}
@@ -110,6 +106,20 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		if(id != null) {
 			loadProblem(id);
 		}
+	}
+	
+	private int getExerciceId() {
+//		int id = new Random().nextInt(5)+1;		
+		int id;
+		System.out.println("exerciceId: "+Integer.toString(exerciceId)
+				+" || exerciceCount: "+Integer.toString(exerciceCount));
+		if (exerciceId < exerciceCount)
+			id = exerciceId+1;
+		else
+			id = 1;
+		
+		System.out.println(Integer.toString(id));
+		return id;
 	}
 	
 	@Override
