@@ -34,15 +34,15 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 		tutorielButton.getElement().setId("tutoriel");
 		exerciseButton.getElement().setId("exercice");
-	    RootPanel.get("srv-start").add(tutorielButton);
-	    RootPanel.get("srv-start").add(exerciseButton);
+	    RootPanel.get("menu").add(exerciseButton);
+	    RootPanel.get("menu").add(previousButton);
+	    RootPanel.get("menu").add(restartButton);
+	    RootPanel.get("menu").add(nextButton);
+	    RootPanel.get("menu").add(tutorielButton);
 		
 		previousButton.getElement().setId("previous");
 		restartButton.getElement().setId("restart");
 		nextButton.getElement().setId("next");
-	    RootPanel.get("srv-navigation").add(previousButton);
-	    RootPanel.get("srv-navigation").add(restartButton);
-	    RootPanel.get("srv-navigation").add(nextButton);
 		
 		exerciseWordingWidget = new MathWordingWidget(RootPanel.get("exerciseWording"));
 	}

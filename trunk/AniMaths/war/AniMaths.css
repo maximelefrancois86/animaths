@@ -30,9 +30,12 @@ h1 {
 	margin-bottom: 0;
 }
 
-#srv-header .gwt-Button {
+#menu {
+	display:inline-block;
+}
+#menu .gwt-Button {
 	padding: 0 .25em;
-	margin: 0.05em 0.25em;
+	margin: 0.05em 0;
 }
 
 .gwt-DialogBox {
