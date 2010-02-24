@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
-<moe>
+<exercise>
+	<wording>
+		<text>Isoler</text> <moi>x</moi> <text>dans l'équation ci-dessous.</text>
+	</wording>
+	<moe>
   <moac>
     <mose isMinus='true'>
       <moi>x</moi>
@@ -67,3 +71,4 @@
     </mome>
   </momc>
 </moe>
+</exercise>

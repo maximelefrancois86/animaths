@@ -4,9 +4,11 @@ import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.QuestionTextBox;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
+import fr.upmf.animaths.client.mvp.MathObject.IMOHasOneChild;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
@@ -14,8 +16,8 @@ public final class SEs_N_Add extends MOAbstractProcess{
 
 	private static final SEs_N_Add instance = new SEs_N_Add();
 	protected SEs_N_Add() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOAddContainer addContainer;
@@ -61,7 +63,7 @@ public final class SEs_N_Add extends MOAbstractProcess{
 	@Override
 	public void onAskQuestion() {
 		System.out.println("SEs_N_Add : askQuestion");
-		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());
+		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());
 		if(addContainer.indexOf(where)>addContainer.indexOf(selected))
 			wording.setWording("Combien font ",new MOAddContainer(selected.clone(),where.clone())," ?");
 		else
@@ -76,15 +78,34 @@ public final class SEs_N_Add extends MOAbstractProcess{
 		addContainer.remove(selected);
 		where.setMinus(floatSum<0);
 		where.setChild(new MONumber(Math.abs(floatSum)));
+		// simplification...
+		if(addContainer.size()==1) {
+			System.out.println("ok10");
+			MOElement<?> parent = addContainer.getMathObjectParent();
+			MOElement<?> element = addContainer.get(0).isMinus()?addContainer.get(0):addContainer.get(0).getChild();
+			if(parent instanceof IMOHasOneChild) {
+				System.out.println("ok11");
+				((IMOHasOneChild) parent).setChild(element);
+			}
+			else if(parent instanceof MOEquation) {
+				System.out.println("ok12");
+				boolean atLeft = ((MOEquation)parent).getLeftHandSide()==addContainer;
+				((MOEquation)parent).setHandSide(element, atLeft);
+			}
+			else
+				assert -1==0;
+		}
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
+	public MOWordingWidget getMessage(int answer) {
 		if(answer>0)
-			return new MathWordingWidget("Bonne réponse !");
+			return new MOWordingWidget("Bonne réponse !");
 		else if(answer==0)
-			return new MathWordingWidget("Non, réessaie et attention aux signes !");
+			return new MOWordingWidget("Non, réessaie et attention aux signes !");
+		else if(answer==-2)
+			return new MOWordingWidget("La réponse doit être un nombre ! <br/> Si tu pense que la réponse n'est pas un nombre entier, utilise un point plutôt qu'une virgule...");
 		else
-			return new MathWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
+			return new MOWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
 	}
 }

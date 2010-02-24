@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import fr.upmf.animaths.client.mvp.MOBasicPresenter;
 import fr.upmf.animaths.client.mvp.MOFocusWidget;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class QuestionButton extends DialogBox {
@@ -21,7 +21,7 @@ public class QuestionButton extends DialogBox {
 	VerticalPanel dialogVPanel = new VerticalPanel();
 	MOAbstractProcess process;
 	
-	public QuestionButton(MOAbstractProcess process, MathWordingWidget wording) {
+	public QuestionButton(MOAbstractProcess process, MOWordingWidget wording) {
 		super(false);
 		this.process = process;
 		setText("Question...");

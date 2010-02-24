@@ -19,9 +19,9 @@ import com.google.inject.Inject;
  */
 public class AniMathsDisplay extends Composite implements AniMathsPresenter.Display {
 
-	private MathWordingWidget exerciseWordingWidget;
+	private MOWordingWidget exerciseWordingWidget;
 	
-	private Button tutorielButton = new Button("Tutoriel");
+	private Button tutorielButton = new Button("Commencer le tutoriel");
 	private Button exerciseButton = new Button("Commencer un exercice");
 
 	private Button previousButton = new Button("Précédent");
@@ -44,7 +44,7 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 		restartButton.getElement().setId("restart");
 		nextButton.getElement().setId("next");
 		
-		exerciseWordingWidget = new MathWordingWidget(RootPanel.get("exerciseWording"));
+		exerciseWordingWidget = new MOWordingWidget(RootPanel.get("exerciseWording"));
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 	}
 
 	@Override
-	public MathWordingWidget getExerciseWordingWidget() {
+	public MOWordingWidget getExerciseWordingWidget() {
 		return exerciseWordingWidget;
 	}
 

@@ -69,6 +69,8 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 
 	@Override
 	public MOElement<?> getMathObjectFirstSelectableParent() {
+		if(getMathObjectParent() instanceof MOEquation)
+			return this;
 		return getMathObjectParent().getMathObjectSelectableElement();
 	}
 
@@ -208,4 +210,16 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 		return null;
 	}
 
+	public boolean hasMathObjectAncestor(MOElement<?> ancestor) {
+		MOElement<?> element1 = this;
+		MOElement<?> element2;
+		while(true) {
+			element2 = element1;
+			element1 = element1.getMathObjectParent();
+			if(element1==ancestor)
+				return true;
+			else if(element1==null || element1==element2)
+				return false;
+		}
+	}
 }

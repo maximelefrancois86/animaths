@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.interaction.process.MOAbstractProcess;
 import fr.upmf.animaths.client.interaction.process.QuestionTextBox;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
@@ -15,8 +15,8 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 
 	private static final MEs_N_Multiply instance = new MEs_N_Multiply();
 	protected MEs_N_Multiply() {}
-	public static void setEnabled() {
-		MOAbstractProcess.setEnabled(instance);
+	public static void setEnabled(boolean enabled) {
+		MOAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOMultiplyContainer multiplyContainer;
@@ -80,7 +80,7 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 	@Override
 	public void onAskQuestion() {
 		System.out.println("MEs_N_Multiply : askQuestion");
-		MathWordingWidget wording = new MathWordingWidget(new FlowPanel());
+		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());
 		wording.getElement().setId("question-multiply");
 		MOMultiplyElement selectedClone = selected.clone();
 		selectedClone.setDivided(false);
@@ -108,12 +108,14 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 	}
 
 	@Override
-	public MathWordingWidget getMessage(int answer) {
+	public MOWordingWidget getMessage(int answer) {
 		if(answer>0)
-			return new MathWordingWidget("Bonne réponse !");
+			return new MOWordingWidget("Bonne réponse !");
 		else if(answer==0)
-			return new MathWordingWidget("Non, réessaie et attention aux signes !");
+			return new MOWordingWidget("Non, réessaie et attention aux signes !");
+		else if(answer==-2)
+			return new MOWordingWidget("La réponse doit être un nombre ! <br/> Si tu pense que la réponse n'est pas un nombre entier, utilise un point plutôt qu'une virgule...");
 		else
-			return new MathWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
+			return new MOWordingWidget("Non, réessaie, c'est une mauvaise réponse !");
 	}
 }

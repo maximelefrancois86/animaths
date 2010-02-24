@@ -12,6 +12,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Timer;
 
+import fr.upmf.animaths.client.interaction.MessageBox;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedEvent;
 import fr.upmf.animaths.client.interaction.process.event.DragSelectedHandler;
 import fr.upmf.animaths.client.interaction.process.event.DropSelectedEvent;
@@ -25,7 +26,7 @@ import fr.upmf.animaths.client.interaction.process.event.ProcessLaunchHandler;
 import fr.upmf.animaths.client.interaction.process.event.TagDeclarationEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
-import fr.upmf.animaths.client.mvp.MathWordingWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler, ProcessLaunchHandler {
@@ -36,9 +37,13 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	
 	protected final EventBus eventBus = AniMathsPresenter.eventBus;
 
-	protected static final void setEnabled(MOAbstractProcess process) {
-		process.setHandler(GrabSelectedEvent.getType());
+	protected static final void setEnabled(MOAbstractProcess process, boolean enabled) {
+		if(enabled)
+			process.setHandler(GrabSelectedEvent.getType());
+		else
+			process.removeHandler(GrabSelectedEvent.getType());
 	}
+	
 
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 	
@@ -121,7 +126,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	
 	public final void askQuestion() {
 		final MessageBox msgLoad = new MessageBox();
-		msgLoad.setAsLoading(new MathWordingWidget("Veuillez patienter..."));
+		msgLoad.setAsLoading(new MOWordingWidget("Veuillez patienter..."));
 		onAskQuestion();
 		msgLoad.hide();
 	}
@@ -142,13 +147,13 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 				}
 		    }
 		};
-		msg.addCloseButton( new ClickHandler() {
+		msg.addButton("Fermer", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				wait.cancel();
 				msg.hide();
 				if(answer>0) {
-					eventBus.fireEvent(new ProcessDoneEvent());
 					onExecuteProcess(answer);
+					eventBus.fireEvent(new ProcessDoneEvent());
 					presenter.init(presenter.getElement());
 				}
 			}
@@ -158,6 +163,6 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 
 	public abstract void onExecuteProcess(int answer);
 	
-	public abstract MathWordingWidget getMessage(int answer);
+	public abstract MOWordingWidget getMessage(int answer);
 	
 }

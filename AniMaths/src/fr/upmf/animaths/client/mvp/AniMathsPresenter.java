@@ -19,6 +19,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.google.inject.Inject;
 
@@ -26,11 +28,17 @@ import fr.upmf.animaths.client.LoadEquationService;
 import fr.upmf.animaths.client.LoadEquationServiceAsync;
 import fr.upmf.animaths.client.LoadPathNamesService;
 import fr.upmf.animaths.client.LoadPathNamesServiceAsync;
+import fr.upmf.animaths.client.interaction.MOCoreInteraction;
+import fr.upmf.animaths.client.interaction.MessageBox;
+import fr.upmf.animaths.client.interaction.events.ExerciseSolvedEvent;
+import fr.upmf.animaths.client.interaction.events.ExerciseSolvedHandler;
 import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.events.NewLineHandler;
-import fr.upmf.animaths.client.interaction.process.MessageBox;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
+import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
+import fr.upmf.animaths.client.mvp.MathObject.MONumber;
+import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
 /**
  * The business logic for AniMaths.
@@ -51,10 +59,11 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	private String exoDirName = "exercises";
 	private List<String> tutoPaths;
 	private List<String> exoPaths;
+	private boolean currentTuto;
 	private String currentPath;
 	
 	public interface Display extends WidgetDisplay, HasMouseMoveHandlers{
-		public MathWordingWidget getExerciseWordingWidget();
+		public MOWordingWidget getExerciseWordingWidget();
 		public Button getTutorielButton();
 		public Button getExerciseButton();
 		public Button getPreviousButton();
@@ -79,34 +88,52 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		AniMathsPresenter.eventBus = eventBus;
 		bind();
 	}
-
+	
 	@Override
 	protected void onBind() {	
 
 		mODynamicPresenter = new MODynamicPresenter();
 		mOBasicPresenters = new ArrayList<MOBasicPresenter>();
 
-		eventBus.addHandler(NewLineEvent.getType(),new NewLineHandler() {
-			public void onNewLine(NewLineEvent event) {
-				MOBasicPresenter newLine = new MOBasicPresenter(mODynamicPresenter.getElement().clone());
-				mOBasicPresenters.add(newLine);
-				RootPanel.get("view").insert(newLine.getDisplay().asWidget(), RootPanel.get("view").getWidgetCount()-1);
-			}
-		});
-
 		loadPaths(tutoDirName);
 		loadPaths(exoDirName);
 
 		display.getTutorielButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				currentPath=tutoPaths.get(0);
-				display.getPreviousButton().setEnabled(false);
-				display.getNextButton().setEnabled(true);
-				loadProblem(currentPath);
+				System.out.println("oqsdfj");
+				new MessageBox().setAsStart(
+						"<h3>Bienvenue dans notre programme <b>AniMath</b> !</h3>" +
+						"Ce programme a été réalisé par Maxime Lefrançois et Edouard Lopez<br/>" +
+						"Dans le cadre du projet de Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes<br/>" +
+						"A l'Université Pierre Mendès France de Grenoble<br/><br/>" +
+						"Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien d'utiliser le navigateur Mozilla Firefox version v.3 minimum.<br/>" +
+						"Si vous ne l'avez pas, vous pouvez le télécharger <a href='http://www.mozilla.com/fr/'>ici</a><br/>"+
+						"Si vous n'avez pas les droits administrateur sur votre ordinateur, vous pouvez télecharger et utiliser la version portable disponible <a href='http://portableapps.com/apps/internet/firefox_portable'>ici</a>"
+						,"Suivant"
+						,new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								new MessageBox().setAsStart(
+										"Pour commencer, nous vous proposons un tutoriel...<br/>" +
+										"Ce tutoriel a pour but de vous familiariser avec les techniques de manipulation directe des objets mathématiques possibles dans AniMaths"
+										,"Commencer"
+										,new ClickHandler() {
+											@Override
+											public void onClick(ClickEvent event) {
+												currentTuto = true;
+												currentPath=tutoPaths.get(0);
+												display.getPreviousButton().setEnabled(false);
+												display.getNextButton().setEnabled(true);
+												loadProblem(currentPath);
+											}
+								});
+							}
+				});
 			}
 		});
 		display.getExerciseButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				currentTuto = false;
 				currentPath=exoPaths.get(0);
 				display.getPreviousButton().setEnabled(false);
 				display.getNextButton().setEnabled(true);
@@ -128,6 +155,94 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			public void onClick(ClickEvent event) {
 				currentPath=getNextPath(currentPath);
 				loadProblem(currentPath);
+			}
+		});
+		eventBus.addHandler(NewLineEvent.getType(),new NewLineHandler() {
+			public void onNewLine(NewLineEvent event) {
+				MOBasicPresenter newLine = new MOBasicPresenter(mODynamicPresenter.getElement().clone());
+				mOBasicPresenters.add(newLine);
+				RootPanel.get("view").insert(newLine.getDisplay().asWidget(), RootPanel.get("view").getWidgetCount()-1);
+				if(mODynamicPresenter.getElement() instanceof MOEquation) {
+					MOEquation equation = ((MOEquation)mODynamicPresenter.getElement());
+					if(equation.getLeftHandSide() instanceof MOIdentifier
+							&&(equation.getRightHandSide() instanceof MONumber || equation.getRightHandSide() instanceof MOSignedElement))
+						eventBus.fireEvent(new ExerciseSolvedEvent());
+					if(equation.getRightHandSide() instanceof MOIdentifier
+								&&(equation.getLeftHandSide() instanceof MONumber || equation.getLeftHandSide() instanceof MOSignedElement))
+						eventBus.fireEvent(new ExerciseSolvedEvent());
+				}
+			}
+		});
+
+		eventBus.addHandler(ExerciseSolvedEvent.getType(),new ExerciseSolvedHandler() {
+			public void onExerciseSolved(ExerciseSolvedEvent event) {
+				System.out.println("Exercise Solved !");
+				final MessageBox congratulationBox = new MessageBox();
+				if(display.getNextButton().isEnabled()) {
+					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini cet exercice ! Bravo !"));
+					congratulationBox.addButton("Recommencer", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getRestartButton().click();
+						}
+					});
+					congratulationBox.addButton("Passer au suivant", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getNextButton().click();
+						}
+					});
+				}
+				else if(currentTuto) {
+					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini le tutoriel ! Bravo !"));
+					congratulationBox.addButton("Recommencer le tutoriel", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getTutorielButton().click();
+						}
+					});
+					congratulationBox.addButton("Recommencer cette étape", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getRestartButton().click();
+						}
+					});
+					congratulationBox.addButton("Passer aux exercices", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getNextButton().click();
+						}
+					});
+				}
+				else {
+					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini le tutoriel ! Bravo !"));
+					congratulationBox.addButton("Recommencer le tutoriel", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getTutorielButton().click();
+						}
+					});
+					congratulationBox.addButton("Recommencer cette exercice", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getRestartButton().click();
+						}
+					});
+					congratulationBox.addButton("Recommencer les exercices", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							congratulationBox.hide();
+							display.getExerciseButton().click();
+						}
+					});
+				}
 			}
 		});
 	}
@@ -162,12 +277,13 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 * @return
 	 */
 	private void loadProblem(final String path) {
+
 		final MessageBox loadingBox = new MessageBox();
-		loadingBox.setAsLoading(new MathWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
+		loadingBox.setAsLoading(new MOWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
 		final Timer timer = new Timer() {
 			@Override
 			public void run() {
-				loadingBox.setAsError(new MathWordingWidget("Une erreur est survenue lors du chargement du probleme "+path+", il est vraissemblablement mal décrit. Veuillez recommencer."));
+				loadingBox.setAsError(new MOWordingWidget("Une erreur est survenue lors du chargement du probleme "+path+", il est vraissemblablement mal décrit. Veuillez recommencer."));
 			}
 		};
 		timer.schedule(10000);
@@ -180,15 +296,30 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	    // Set up the callback object.
 	    final AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
-				loadingBox.setAsError(new MathWordingWidget("Erreur lors de la récupération de l'exercice. Essayez ultérieurement ou informez l'administrateur."));
+				loadingBox.setAsError(new MOWordingWidget("Erreur lors de la récupération de l'exercice. Essayez ultérieurement ou informez l'administrateur."));
 			}
 
 			public void onSuccess(String result) {
 //				System.out.println(result);
-				Element element = XMLParser.parse(result).getDocumentElement();
-				MOElement<?> eq = MOElement.parse(element);
-				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
-				mODynamicPresenter.init(eq);
+				Element root = XMLParser.parse(result).getDocumentElement();
+				int level = root.hasAttribute("level")?Integer.parseInt(root.getAttribute("level")):0;
+				NodeList children = root.getChildNodes();
+//				display.getExerciseWordingWidget().setWording("Isoler ", new MOIdentifier("x")," dans l'équation ", eq);
+				int k=0;
+				for(int i=0;i<children.getLength();i++) {
+					Node n = children.item(i);
+					if(n.getNodeType() == Node.ELEMENT_NODE) {
+						k++;
+						assert k<=2;
+						if(k==1)
+							display.getExerciseWordingWidget().parse((Element)n);
+						else
+							mODynamicPresenter.init(MOElement.parse((Element)n));
+					}
+				}
+
+				MOCoreInteraction.setPresenterAndRun(mODynamicPresenter,level);
+				
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));
 				loadingBox.hide();
@@ -205,13 +336,13 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 */
 	private void loadPaths(final String path) {
 		final MessageBox loadingBox = new MessageBox();
-		loadingBox.setAsLoading(new MathWordingWidget("Chargement, veuillez patientez quelques instants."));
+		loadingBox.setAsLoading(new MOWordingWidget("Chargement, veuillez patientez quelques instants."));
 
 
 		// Set up the callback object.
 		final AsyncCallback<List<String>> callback = new AsyncCallback<List<String>>() {
 			public void onFailure(Throwable caught) {
-				loadingBox.setAsError(new MathWordingWidget("Erreur de communication avec le serveur. Essayez ultérieurement ou informez l'administrateur."));
+				loadingBox.setAsError(new MOWordingWidget("Erreur de communication avec le serveur. Essayez ultérieurement ou informez l'administrateur."));
 			}
 			public void onSuccess(List<String> result) {
 				setPathNames(path,result);
@@ -261,4 +392,5 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		display.getPreviousButton().setEnabled(true);
 		return list.get(Math.min(list.size()-1,index+1));
 	}
+	
 }

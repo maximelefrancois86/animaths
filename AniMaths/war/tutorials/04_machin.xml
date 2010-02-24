@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<moe>
-        <moac>
-                <mose isMinus='true'>
-                        <moi>x</moi>
-                </mose>
-                <mose>
-                        <mon>10</mon>
-                </mose>
-                <mose>
-                        <momc>
-                                <mome>
-                                        <mon>2</mon>
-                                </mome>
-                                <mome>
-                                        <moac>
-                                                <mose>
-                                                        <moi>x</moi>
-                                                </mose>
-                                                <mose isMinus='true'>
-                                                        <mon>1</mon>
-                                                </mose>
-                                        </moac>
-                                </mome>
-                        </momc>
-                </mose>
-        </moac>
-        <moac>
-                <mose isMinus='true'>
-                        <moi>x</moi>
-                </mose>
-                <mose isMinus='true'>
-                        <mon>2</mon>
-                </mose>
-                <mose isMinus='true'>
-                        <momc>
-                                <mome>
-                                        <moac>
-                                                <mose>
-                                                        <mon>2</mon>
-                                                </mose>
-                                                <mose>
-                                                        <moi>x</moi>
-                                                </mose>
-                                        </moac>
-                                </mome>
-                                <mome>
-                                        <mose>
-                                                <mose>
-                                                        <mose isMinus='true'>
-                                                                <mose isMinus='true'>
-                                                                        <moi>x</moi>
-                                                                </mose>
-                                                        </mose>
-                                                </mose>
-                                        </mose>
-                                </mome>
-                        </momc>
-                </mose>
-        </moac>
-</moe>
+<tutoriel>
+	<wording>
+		<text>Les outils de sélection</text><br/>
+	</wording>
+	<moe>
+	        <moac>
+	                <mose isMinus='true'>
+	                        <moi>x</moi>
+	                </mose>
+	                <mose>
+	                        <mon>10</mon>
+	                </mose>
+	                <mose>
+	                        <momc>
+	                                <mome>
+	                                        <mon>2</mon>
+	                                </mome>
+	                                <mome>
+	                                        <moac>
+	                                                <mose>
+	                                                        <moi>x</moi>
+	                                                </mose>
+	                                                <mose isMinus='true'>
+	                                                        <mon>1</mon>
+	                                                </mose>
+	                                        </moac>
+	                                </mome>
+	                        </momc>
+	                </mose>
+	        </moac>
+	        <moac>
+	                <mose isMinus='true'>
+	                        <moi>x</moi>
+	                </mose>
+	                <mose isMinus='true'>
+	                        <mon>2</mon>
+	                </mose>
+	                <mose isMinus='true'>
+	                        <momc>
+	                                <mome>
+	                                        <moac>
+	                                                <mose>
+	                                                        <mon>2</mon>
+	                                                </mose>
+	                                                <mose>
+	                                                        <moi>x</moi>
+	                                                </mose>
+	                                        </moac>
+	                                </mome>
+	                                <mome>
+	                                        <mose>
+	                                                <mose>
+	                                                        <mose isMinus='true'>
+	                                                                <mose isMinus='true'>
+	                                                                        <moi>x</moi>
+	                                                                </mose>
+	                                                        </mose>
+	                                                </mose>
+	                                        </mose>
+	                                </mome>
+	                        </momc>
+	                </mose>
+	        </moac>
+	</moe>
+</tutoriel>
