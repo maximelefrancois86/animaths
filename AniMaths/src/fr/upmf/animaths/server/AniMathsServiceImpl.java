@@ -10,17 +10,19 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import fr.upmf.animaths.client.AniMathsService;
+import fr.upmf.animaths.client.LoadEquationService;
+import fr.upmf.animaths.client.LoadPathNamesService;
 
 /**
  * @description server-side load and save current exercice 
  */
-public class AniMathsServiceImpl extends RemoteServiceServlet implements AniMathsService {
+public class AniMathsServiceImpl extends RemoteServiceServlet implements LoadPathNamesService, LoadEquationService {
 
 	private static final long serialVersionUID = 8772776810359697699L;
 
 	@Override
 	public String loadEquation(String path) {
+		System.out.println("okImplLoadEquation "+path);
 		try {
 	        StringBuffer fileData = new StringBuffer(1000);
 	        BufferedReader reader = new BufferedReader(new FileReader(path));
@@ -44,16 +46,26 @@ public class AniMathsServiceImpl extends RemoteServiceServlet implements AniMath
 	}
 
 	@Override
-	public List<String> loadPaths(String path) {
-		List<String> list = new ArrayList<String>();		
+	public List<String> loadPathNames(String path) {
+//		System.out.println("okImplLoadPaths "+path);
+//		String list = "";
+//		File dir = new File(path);
+//		assert dir.isDirectory();
+//		for(String fileName : dir.list())
+//			if(fileName.contains(".xml")) {
+//				System.out.println(path+File.pathSeparator+fileName);
+//				list.concat(";").concat(path+File.pathSeparator+fileName);
+//			}
+//		return list;
+		System.out.println("okImplLoadPaths "+path);
+		List<String> list = new ArrayList<String>();
 		File dir = new File(path);
 		assert dir.isDirectory();
 		for(String fileName : dir.list())
 			if(fileName.contains(".xml")) {
-				list.add(path+File.pathSeparator+fileName);
-				System.out.println(path+File.pathSeparator+fileName);
+				System.out.println(path+"/"+fileName);
+				list.add(path+"/"+fileName);
 			}
 		return list;
 	}
-
 }

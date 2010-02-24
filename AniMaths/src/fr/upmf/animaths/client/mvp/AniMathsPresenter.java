@@ -21,8 +21,10 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
 import com.google.inject.Inject;
 
-import fr.upmf.animaths.client.AniMathsService;
-import fr.upmf.animaths.client.AniMathsServiceAsync;
+import fr.upmf.animaths.client.LoadEquationService;
+import fr.upmf.animaths.client.LoadEquationServiceAsync;
+import fr.upmf.animaths.client.LoadPathNamesService;
+import fr.upmf.animaths.client.LoadPathNamesServiceAsync;
 import fr.upmf.animaths.client.interaction.events.NewLineEvent;
 import fr.upmf.animaths.client.interaction.events.NewLineHandler;
 import fr.upmf.animaths.client.interaction.process.MessageBox;
@@ -38,7 +40,8 @@ import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
 public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display> {
 
 	public static EventBus eventBus;
-	private static final AniMathsServiceAsync aniMathsService = GWT.create(AniMathsService.class);
+	private static final LoadPathNamesServiceAsync aniMathsLoadPathNamesService = GWT.create(LoadPathNamesService.class);
+	private static final LoadEquationServiceAsync aniMathsLoadEquationService = GWT.create(LoadEquationService.class);
 
 	private MODynamicPresenter mODynamicPresenter;
 	public List<MOBasicPresenter> mOBasicPresenters;
@@ -90,10 +93,8 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			}
 		});
 
-		loadPathss(tutoDirName);
-		loadPathss(exoDirName);
-
-		loadProblem(tutoPaths.get(0));
+		loadPaths(tutoDirName);
+		loadPaths(exoDirName);
 
 		display.getTutorielButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -183,13 +184,14 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 
 	    };
 
-    	aniMathsService.loadEquation(path, callback);
+    	aniMathsLoadEquationService.loadEquation(path, callback);
 	}
 
 	/**
 	 * @return
 	 */
-	private void loadPathss(final String path) {
+	private void loadPaths(final String path) {
+		System.out.println("ok1");
 		final MessageBox loadingBox = new MessageBox();
 		loadingBox.setAsLoading(new MathWordingWidget("Chargement, veuillez patientez quelques instants."));
 
@@ -200,13 +202,31 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				loadingBox.setAsError(new MathWordingWidget("Erreur de communication avec le serveur. Essayez ultérieurement ou informez l'administrateur."));
 			}
 			public void onSuccess(List<String> result) {
+				System.out.println("ok3");
 				setPathNames(path,result);
+				if(path.equals(tutoDirName));
+				loadProblem(tutoPaths.get(0));
 			}
 	    };
-    	aniMathsService.loadPaths(path, callback);
+    	aniMathsLoadPathNamesService.loadPathNames(path, callback);
+		System.out.println("ok2");
 	}
 
 	public void setPathNames(String path, List<String> pathNames) {
+//		List<String> list = new ArrayList<String>();
+//
+//		int index1 = 0;
+//		int index2 = pathNames.indexOf(";");
+//		do{
+//			System.out.println(pathNames.substring(index1, index2-1));
+//			list.add(pathNames.substring(index1, index2-1));
+//			index1 = index2+1;
+//			index2 = pathNames.indexOf(";",index1);
+//		} while(index2!=-1);
+//		if(path.equals(tutoDirName))
+//		tutoPaths = list;
+//	else if(path.equals(exoDirName))
+//		exoPaths = list;
 		if(path.equals(tutoDirName))
 			tutoPaths = pathNames;
 		else if(path.equals(exoDirName))
