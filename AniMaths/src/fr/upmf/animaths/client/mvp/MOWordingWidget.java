@@ -1,6 +1,5 @@
 package fr.upmf.animaths.client.mvp;
 
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -54,18 +53,14 @@ public class MOWordingWidget extends Composite {
 		NodeList children = element.getChildNodes();
 		for(int i=0;i<children.getLength();i++) {
 			Node n = children.item(i);
+			if(n.getNodeType() == Node.COMMENT_NODE)
+				panel.add(new InlineHTML(n.getNodeValue()));
 			if(n.getNodeType() == Node.ELEMENT_NODE) {
-				Element e = (Element) n;
-				String tagName = e.getTagName();
-				if(tagName.equals("text"))
-					panel.add(new InlineHTML(e.getFirstChild().getNodeValue()));
-				else if(tagName.equals("br"))
-					panel.getElement().appendChild(Document.get().createBRElement());
-				else {
-					MMLMath wrapper = new MMLMath(false);
-					MOElement.parse(e).pack(wrapper,null);
-					panel.add(wrapper);
-				}
+				MMLMath wrapper = new MMLMath(false);
+				MOElement<?> mOElement = MOElement.parse((Element)n);
+				if(mOElement!=null)
+					mOElement.pack(wrapper,null);
+				panel.add(wrapper);
 			}
 		}
 	}

@@ -86,8 +86,9 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private MOCoreInteraction() { }
 	
 	public static void setPresenterAndRun(MODynamicPresenter presenter, int level) {
-		equation = null;
-		MOCoreInteraction.interactWithEquation = false;
+		MOCoreInteraction.presenter = presenter;
+		equation = (presenter.getElement() instanceof MOEquation)?(MOEquation) presenter.getElement():null;
+
 		SEs_AC_Commutation.setEnabled(false);
 		SEs_SEs_ChangeSign.setEnabled(false);
 		MEs_MC_Commutation.setEnabled(false);
@@ -96,25 +97,27 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		SEs_N_Add.setEnabled(false);
 		MEs_N_Multiply.setEnabled(false);
 		Ns_Is_E_ChangeHandSide.setEnabled(false);
+
+		MOCoreInteraction.interactWithEquation = false;
 		MOCoreInteraction.interactWithLeftHand = false;
+		
 		if(level>=1) {
-			SEs_AC_Commutation.setEnabled(true);
+			instance.setHandler(FlyOverEvent.getType());
 			if(level>=2) {
+				SEs_AC_Commutation.setEnabled(true);
 				SEs_N_Add.setEnabled(true);
 				if(level>=3) {
-					SEs_SEs_ChangeSign.setEnabled(true);
 					if(level>=4) {
-						MEs_MC_Commutation.setEnabled(true);
+						SEs_SEs_ChangeSign.setEnabled(true);
 						if(level>=5) {
-							MEs_N_Multiply.setEnabled(true);
+							MEs_MC_Commutation.setEnabled(true);
 							if(level>=6) {
-								MOCoreInteraction.interactWithLeftHand = true;
-								SEs_AC_E_ChangeHandSide.setEnabled(true);
+								MEs_N_Multiply.setEnabled(true);
 								if(level>=7) {
+									MOCoreInteraction.interactWithLeftHand = true;
+									SEs_AC_E_ChangeHandSide.setEnabled(true);
 									MEs_MC_E_ChangeHandSide.setEnabled(true);
-									if(level>=8) {
-										Ns_Is_E_ChangeHandSide.setEnabled(true);
-									}
+									Ns_Is_E_ChangeHandSide.setEnabled(true);
 								}
 							}
 						}
@@ -122,10 +125,6 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 				}
 			}
 		}
-		MOCoreInteraction.presenter = presenter;
-		if(presenter.getElement() instanceof MOEquation)
-			equation = (MOEquation) presenter.getElement();
-		instance.setHandler(FlyOverEvent.getType());
 	}
 
 	@Override

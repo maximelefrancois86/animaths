@@ -4,9 +4,9 @@
 		<text>Les outils de sélection</text><br/>
 	</wording>
 	<moe>
-	        <moac>
-	                <mose isMinus='true'>
-	                        <moi>x</moi>
+        <moac>
+          <mose isMinus='true'>
+                        <moi>x</moi>
 	                </mose>
 	                <mose>
 	                        <mon>10</mon>

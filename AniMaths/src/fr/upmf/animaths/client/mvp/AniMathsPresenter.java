@@ -98,15 +98,22 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		loadPaths(tutoDirName);
 		loadPaths(exoDirName);
 
+		display.getExerciseButton().setEnabled(false);
+		display.getTutorielButton().setEnabled(true);
+		display.getNextButton().setEnabled(false);
+		display.getPreviousButton().setEnabled(false);
+		display.getRestartButton().setEnabled(false);
+		
 		display.getTutorielButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				display.getTutorielButton().setEnabled(false);
 				System.out.println("oqsdfj");
 				new MessageBox().setAsStart(
 						"<h3>Bienvenue dans notre programme <b>AniMath</b> !</h3>" +
-						"Ce programme a été réalisé par Maxime Lefrançois et Edouard Lopez<br/>" +
+						"<b>Ce programme a été réalisé par Maxime Lefrançois et Edouard Lopez<br/>" +
 						"Dans le cadre du projet de Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes<br/>" +
-						"A l'Université Pierre Mendès France de Grenoble<br/><br/>" +
-						"Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien d'utiliser le navigateur Mozilla Firefox version v.3 minimum.<br/>" +
+						"A l'Université Pierre Mendès France de Grenoble</b><br/><br/>" +
+						"Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien utiliser le navigateur Mozilla Firefox, version 3 minimum.<br/>" +
 						"Si vous ne l'avez pas, vous pouvez le télécharger <a href='http://www.mozilla.com/fr/'>ici</a><br/>"+
 						"Si vous n'avez pas les droits administrateur sur votre ordinateur, vous pouvez télecharger et utiliser la version portable disponible <a href='http://portableapps.com/apps/internet/firefox_portable'>ici</a>"
 						,"Suivant"
@@ -125,6 +132,11 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 												display.getPreviousButton().setEnabled(false);
 												display.getNextButton().setEnabled(true);
 												loadProblem(currentPath);
+												display.getExerciseButton().setEnabled(true);
+												display.getTutorielButton().setEnabled(true);
+												display.getNextButton().setEnabled(true);
+												display.getPreviousButton().setEnabled(false);
+												display.getRestartButton().setEnabled(true);
 											}
 								});
 							}
