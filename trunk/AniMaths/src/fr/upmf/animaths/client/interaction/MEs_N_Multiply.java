@@ -9,12 +9,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class MEs_N_Multiply extends AniMathAbstractProcess{
+public final class MEs_N_Multiply extends AniMathsAbstractProcess{
 
 	private static final MEs_N_Multiply instance = new MEs_N_Multiply();
 	protected MEs_N_Multiply() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOMultiplyContainer multiplyContainer;
@@ -90,9 +90,9 @@ public final class MEs_N_Multiply extends AniMathAbstractProcess{
 			wording.setWording("Combien font ",new MOMultiplyContainer(whereClone,selectedClone)," ?");
 		System.out.println(String.valueOf(floatMult));
 		if(Math.round(floatMult)==floatMult)
-			(new AniMathQuestionTextBox(this, wording, String.valueOf(Math.round(floatMult)))).center();
+			(new AniMathsQuestionTextBox(this, wording, String.valueOf(Math.round(floatMult)))).center();
 		else
-			(new AniMathQuestionTextBox(this, wording, String.valueOf(floatMult))).center();
+			(new AniMathsQuestionTextBox(this, wording, String.valueOf(floatMult))).center();
 	}
 
 	@Override

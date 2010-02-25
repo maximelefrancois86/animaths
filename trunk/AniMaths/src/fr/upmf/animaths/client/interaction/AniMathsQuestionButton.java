@@ -14,14 +14,14 @@ import fr.upmf.animaths.client.mvp.MOFocusWidget;
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
-public class AniMathQuestionButton extends DialogBox {
+public class AniMathsQuestionButton extends DialogBox {
 
 
 	private List<MOFocusWidget> answers = new ArrayList<MOFocusWidget>();
 	VerticalPanel dialogVPanel = new VerticalPanel();
-	AniMathAbstractProcess process;
+	AniMathsAbstractProcess process;
 	
-	public AniMathQuestionButton(AniMathAbstractProcess process, MOWordingWidget wording) {
+	public AniMathsQuestionButton(AniMathsAbstractProcess process, MOWordingWidget wording) {
 		super(false);
 		this.process = process;
 		setText("Question...");

@@ -5,12 +5,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 
-public class MEs_MC_Commutation extends AniMathAbstractProcess{
+public class MEs_MC_Commutation extends AniMathsAbstractProcess{
 
 	private static final MEs_MC_Commutation instance = new MEs_MC_Commutation();
 	protected MEs_MC_Commutation() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOMultiplyElement selected;

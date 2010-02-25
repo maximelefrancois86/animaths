@@ -5,12 +5,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_AC_Commutation extends AniMathAbstractProcess{
+public final class SEs_AC_Commutation extends AniMathsAbstractProcess{
 
 	private static final SEs_AC_Commutation instance = new SEs_AC_Commutation();
 	protected SEs_AC_Commutation() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOSignedElement selected;

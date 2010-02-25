@@ -10,12 +10,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_AC_E_ChangeHandSide extends AniMathAbstractProcess{
+public final class SEs_AC_E_ChangeHandSide extends AniMathsAbstractProcess{
 
 	private static final SEs_AC_E_ChangeHandSide instance = new SEs_AC_E_ChangeHandSide();
 	protected SEs_AC_E_ChangeHandSide() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 	
 	private MOEquation equation;
@@ -73,7 +73,7 @@ public final class SEs_AC_E_ChangeHandSide extends AniMathAbstractProcess{
 		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
 		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());		
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
-		AniMathQuestionButton aniMathQuestionButton = new AniMathQuestionButton(this, wording);
+		AniMathsQuestionButton aniMathsQuestionButton = new AniMathsQuestionButton(this, wording);
 		
 		if(whereElement.getMathObjectParent() instanceof MOAddContainer) {
 			int index = parentOfWhere.indexOf(where);
@@ -85,14 +85,14 @@ public final class SEs_AC_E_ChangeHandSide extends AniMathAbstractProcess{
 			good.setMinus(!good.isMinus());
 			MOAddContainer goodAnswer = parentOfWhere.clone();
 			goodAnswer.add(index,good);
-			aniMathQuestionButton.addAnswer(goodAnswer, 1);
+			aniMathsQuestionButton.addAnswer(goodAnswer, 1);
 	
 			MOSignedElement bad = selected.clone();
 			MOAddContainer badAnswer = parentOfWhere.clone();
 			badAnswer.add(index,bad);
-			aniMathQuestionButton.addAnswer(badAnswer, 0);	
+			aniMathsQuestionButton.addAnswer(badAnswer, 0);	
 			
-			aniMathQuestionButton.center();
+			aniMathsQuestionButton.center();
 			good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 		}
@@ -140,12 +140,12 @@ public final class SEs_AC_E_ChangeHandSide extends AniMathAbstractProcess{
 				moeMZ.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moeMZ.getHandSide(!atLeft)), momeZ ), !atLeft);
 			}
 
-			aniMathQuestionButton.addAnswer(moeA, 0);
-			aniMathQuestionButton.addAnswer(moeAZ, 2);
-			aniMathQuestionButton.addAnswer(moeM, 0);
-			aniMathQuestionButton.addAnswer(moeMZ, 0);
+			aniMathsQuestionButton.addAnswer(moeA, 0);
+			aniMathsQuestionButton.addAnswer(moeAZ, 2);
+			aniMathsQuestionButton.addAnswer(moeM, 0);
+			aniMathsQuestionButton.addAnswer(moeMZ, 0);
 			
-			aniMathQuestionButton.center();
+			aniMathsQuestionButton.center();
 			mose.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			moseZ.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			mome.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
