@@ -157,7 +157,8 @@ public abstract class AniMathsAbstractProcess implements GrabSelectedHandler, Dr
 					presenter.init(presenter.getElement());
 				}
 			}
-		});
+		},true);
+		
 		wait.schedule(10000);
 	}
 

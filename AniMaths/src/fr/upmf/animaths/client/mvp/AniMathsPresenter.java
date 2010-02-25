@@ -199,14 +199,14 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 							congratulationBox.hide();
 							display.getRestartButton().click();
 						}
-					});
+					},false);
 					congratulationBox.addButton("Passer au suivant", new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							congratulationBox.hide();
 							display.getNextButton().click();
 						}
-					});
+					},true);
 				}
 				else if(currentTuto) {
 					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini le tutoriel ! Bravo !"));
@@ -216,21 +216,21 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 							congratulationBox.hide();
 							display.getTutorielButton().click();
 						}
-					});
+					},false);
 					congratulationBox.addButton("Recommencer cette étape", new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							congratulationBox.hide();
 							display.getRestartButton().click();
 						}
-					});
+					},false);
 					congratulationBox.addButton("Passer aux exercices", new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							congratulationBox.hide();
 							display.getNextButton().click();
 						}
-					});
+					},true);
 				}
 				else {
 					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini le tutoriel ! Bravo !"));
@@ -240,21 +240,21 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 							congratulationBox.hide();
 							display.getTutorielButton().click();
 						}
-					});
+					},false);
 					congratulationBox.addButton("Recommencer cette exercice", new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							congratulationBox.hide();
 							display.getRestartButton().click();
 						}
-					});
+					},false);
 					congratulationBox.addButton("Recommencer les exercices", new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							congratulationBox.hide();
 							display.getExerciseButton().click();
 						}
-					});
+					},true);
 				}
 			}
 		});
