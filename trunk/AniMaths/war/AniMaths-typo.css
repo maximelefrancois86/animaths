@@ -26,11 +26,16 @@ math {
 	border-bottom: thick solid #888;
 }
 
+#exerciseWording img {
+	background-color: #FFFFFF;
+	border: thin solid #DDDDDD;
+}
+
 #exerciseWording,#help,#view {
 	font-family: 'DejaVu Sans', Arial, sans-serif;
 	padding: 0 1em;
 }
-
+#exerciseWording mi { font-style: italic; font-family: serif;}
 #help,#view {
 	border: thin solid #aaa;
 	padding: 1em;
@@ -162,10 +167,10 @@ tr:hover {
 	border-style: inset;
 }
 
-#message div,#question-text div,#question-button div{
+#message div,#question-text div,#question-button div {
 	margin: 0.5em;
 }
 
 table {
-color:#333333;
+	color: #333333;
 }

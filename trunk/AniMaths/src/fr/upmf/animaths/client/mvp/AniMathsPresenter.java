@@ -108,13 +108,15 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 				display.getTutorielButton().setEnabled(false);
 				System.out.println("oqsdfj");
 				new AniMathsMessageBox().setAsStart(
-						"<h3>Bienvenue dans notre programme <b>AniMath</b> !</h3>" +
-						"<b>Ce programme a été réalisé par Maxime Lefrançois et Edouard Lopez<br/>" +
-						"Dans le cadre du projet de Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes<br/>" +
-						"A l'Université Pierre Mendès France de Grenoble</b><br/><br/>" +
-						"Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien utiliser le navigateur Mozilla Firefox, version 3 minimum.<br/>" +
-						"Si vous ne l'avez pas, vous pouvez le télécharger <a href='http://www.mozilla.com/fr/'>ici</a><br/>"+
-						"Si vous n'avez pas les droits administrateur sur votre ordinateur, vous pouvez télecharger et utiliser la version portable disponible <a href='http://portableapps.com/apps/internet/firefox_portable'>ici</a>"
+						"<h3>Bienvenue dans notre programme <strong>AniMath</strong> !</h3>" +
+						"<div style='font-size: medium;'><span>Ce programme a été réalisé par <strong>Maxime Lefrançois et Edouard Lopez</strong></span>, " +
+						"dans le cadre du projet de <a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/'>Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes</a>" +
+						"A l'<em>Université Pierre Mendès France de Grenoble</em>" +
+						"<p>Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien " +
+						"utiliser le navigateur Mozilla Firefox, version 3 ou supérieure.</p>" +
+						"<ul><li>Si vous ne l'avez pas, vous pouvez le télécharger <a href='http://www.mozilla.com/fr/'>la dernière version</a>;</li>"+
+						"<li>Si vous n'avez pas les droits administrateur sur votre ordinateur, vous pouvez télecharger et utiliser " +
+						"la <a href='http://portableapps.com/apps/internet/firefox_portable'>version portable</a>.</li></ul></div>"
 						,"Suivant"
 						,new ClickHandler() {
 							@Override

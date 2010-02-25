@@ -25,14 +25,22 @@ h1 {
 	width: *;
 }
 
+#exerciseWording img {
+	float: right;
+	margin: 0.25em;
+	max-width: 100px;
+	padding: 0.25em;
+}
+
 #srv-header {
 	margin-bottom: 0;
 }
 
 #menu {
-	display:inline-block;
+	display: inline-block;
 }
-#menu .gwt-Button, button.gwt-Button {
+
+#menu .gwt-Button,button.gwt-Button {
 	padding: 0 .25em;
 	margin: 0.05em 0;
 }
@@ -62,9 +70,11 @@ math {
 	padding: 1em;
 	width: auto;
 }
+
 #exerciseWording h2 {
-	margin:0 auto 0.25em;
+	margin: 0 auto 0.25em;
 }
+
 #view {
 	position: relative;
 	float: left;
@@ -137,4 +147,6 @@ table {
 	vertical-align: middle;
 }
 
-dt {margin-top: .5em;}
+dt {
+	margin-top: .5em;
+}
