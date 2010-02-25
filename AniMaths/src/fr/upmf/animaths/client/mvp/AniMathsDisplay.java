@@ -21,12 +21,12 @@ public class AniMathsDisplay extends Composite implements AniMathsPresenter.Disp
 
 	private MOWordingWidget exerciseWordingWidget;
 	
-	private Button tutorielButton = new Button("Commencer le tutoriel");
-	private Button exerciseButton = new Button("Commencer un exercice");
+	private Button tutorielButton = new Button("Charger le tutoriel");
+	private Button exerciseButton = new Button("Charger un exercice");
 
-	private Button previousButton = new Button("Précédent");
-	private Button restartButton = new Button("Recommencer");
-	private Button nextButton = new Button("Suivant");
+	private Button previousButton = new Button("← Précédent");
+	private Button restartButton = new Button("↻ Recommencer");
+	private Button nextButton = new Button("Suivant →");
 
 	@Inject
 	public AniMathsDisplay() {

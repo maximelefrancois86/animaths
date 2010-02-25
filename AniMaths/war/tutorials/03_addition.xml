@@ -4,6 +4,9 @@
 	<wording>
 		<!-- Passons aux choses serieuses !
 		<h2>3. Additionner</h2>
+		<p>Pour manipuler les objets, il faut savoir comment ils sont découpé. Le schéma suivant illustre
+		le découpage d'un objet MathObject en zones : verticales.</p>
+		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction"/>
 		<ul>
 		<li>Sélectionnez un des termes additifs, puis cliquez et maintenez le bouton de la souris enfoncé... Vous avez attrapé un objet mathématique !</li>
 		<li>Si vous gardez le bouton de la souris enfoncé et que vous glissez la souris, vous déplacerez l'objet mathématique... celui qui reste dans l'équation devient grisé, et une copie suit la souris.</li>
