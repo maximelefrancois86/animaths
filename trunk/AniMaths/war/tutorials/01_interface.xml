@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
-<tutoriel level="0">
+<tutoriel level="10">
 	<wording>
 		<!-- 
 		<h2>1. L'interface</h2>
@@ -13,7 +13,7 @@
 			<li><b>[Précédent]</b> permet de revenir à la page précédente de ce tutoriel. Lors de la résolution d'un exercice, cliquer sur ce bouton arrête l'exercice en cours pour revenir à l'exercice précédent.</li>
 			<li><b>[Suivant]</b> permet de passer directement à la page suivante de ce tutoriel. Lors de la résolution d'un exercice, cliquer sur ce bouton arrête l'exercice en cours pour passer directement à l'exercice suivant.</li>
 			<li><b>[Recommencer]</b> permet de réinitialiser les lignes d'équations pour recommencer la résolution de l'exercice.</li>
-			<li><b>[Commencer le tutoriel]</b> Redirige vers cette page. Le tutoriel est importan, il permet de comprendre comment on peut manipuler les objets mathématiques avec AniMaths.</li>
+			<li><b>[Commencer le tutoriel]</b> Redirige vers cette page. Le tutoriel est important, il permet de comprendre comment on peut manipuler les objets mathématiques avec AniMaths.</li>
 			</ul>
 		<li>L'énoncé de l'exercice sera écrite dans la zone où se trouve ce texte.</li>
 		<li>Enfin, la zone encadrée en bleu ci-dessous est la zone la plus importante de l'application AniMaths, c'est la zone de manipulation des objets mathématiques.</li>
