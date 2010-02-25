@@ -32,7 +32,7 @@ import fr.upmf.animaths.client.events.ExerciseSolvedEvent;
 import fr.upmf.animaths.client.events.ExerciseSolvedHandler;
 import fr.upmf.animaths.client.events.NewLineEvent;
 import fr.upmf.animaths.client.events.NewLineHandler;
-import fr.upmf.animaths.client.interaction.MOCoreInteraction;
+import fr.upmf.animaths.client.interaction.AniMathCoreInteraction;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
@@ -107,7 +107,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 			public void onClick(ClickEvent event) {
 				display.getTutorielButton().setEnabled(false);
 				System.out.println("oqsdfj");
-				new MessageBox().setAsStart(
+				new AniMathsMessageBox().setAsStart(
 						"<h3>Bienvenue dans notre programme <b>AniMath</b> !</h3>" +
 						"<b>Ce programme a été réalisé par Maxime Lefrançois et Edouard Lopez<br/>" +
 						"Dans le cadre du projet de Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes<br/>" +
@@ -119,7 +119,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 						,new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
-								new MessageBox().setAsStart(
+								new AniMathsMessageBox().setAsStart(
 										"Pour commencer, nous vous proposons un tutoriel...<br/>" +
 										"Ce tutoriel a pour but de vous familiariser avec les techniques de manipulation directe des objets mathématiques possibles dans AniMaths"
 										,"Commencer"
@@ -188,7 +188,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 		eventBus.addHandler(ExerciseSolvedEvent.getType(),new ExerciseSolvedHandler() {
 			public void onExerciseSolved(ExerciseSolvedEvent event) {
 				System.out.println("Exercise Solved !");
-				final MessageBox congratulationBox = new MessageBox();
+				final AniMathsMessageBox congratulationBox = new AniMathsMessageBox();
 				if(display.getNextButton().isEnabled()) {
 					congratulationBox.setAsCorrect(new MOWordingWidget("Vous avez fini cet exercice ! Bravo !"));
 					congratulationBox.addButton("Recommencer", new ClickHandler() {
@@ -289,7 +289,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 */
 	private void loadProblem(final String path) {
 
-		final MessageBox loadingBox = new MessageBox();
+		final AniMathsMessageBox loadingBox = new AniMathsMessageBox();
 		loadingBox.setAsLoading(new MOWordingWidget("Chargement de l'exercice, veuillez patientez quelques instants."));
 		final Timer timer = new Timer() {
 			@Override
@@ -329,7 +329,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 					}
 				}
 
-				MOCoreInteraction.setPresenterAndRun(mODynamicPresenter,level);
+				AniMathCoreInteraction.setPresenterAndRun(mODynamicPresenter,level);
 				
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));
@@ -346,7 +346,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 	 * @return
 	 */
 	private void loadPaths(final String path) {
-		final MessageBox loadingBox = new MessageBox();
+		final AniMathsMessageBox loadingBox = new AniMathsMessageBox();
 		loadingBox.setAsLoading(new MOWordingWidget("Chargement, veuillez patientez quelques instants."));
 
 

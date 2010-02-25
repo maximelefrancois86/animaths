@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.mvp;
+package fr.upmf.animaths.client.interaction;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -10,16 +10,16 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import fr.upmf.animaths.client.interaction.MOAbstractProcess;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 
-public class QuestionTextBox extends DialogBox {
+public class AniMathQuestionTextBox extends DialogBox {
 
 
 	VerticalPanel dialogVPanel = new VerticalPanel();
 	final TextBox answerField;
 	final Button sendButton;
 	
-	public QuestionTextBox(final MOAbstractProcess process, MOWordingWidget wording, final String answer) {
+	public AniMathQuestionTextBox(final AniMathAbstractProcess process, MOWordingWidget wording, final String answer) {
 		super(false);
 		setText("Question...");
 		setAnimationEnabled(true);

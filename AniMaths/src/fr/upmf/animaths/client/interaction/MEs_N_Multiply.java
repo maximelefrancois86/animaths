@@ -3,19 +3,18 @@ package fr.upmf.animaths.client.interaction;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.QuestionTextBox;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class MEs_N_Multiply extends MOAbstractProcess{
+public final class MEs_N_Multiply extends AniMathAbstractProcess{
 
 	private static final MEs_N_Multiply instance = new MEs_N_Multiply();
 	protected MEs_N_Multiply() {}
 	public static void setEnabled(boolean enabled) {
-		MOAbstractProcess.setEnabled(instance, enabled);
+		AniMathAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOMultiplyContainer multiplyContainer;
@@ -91,9 +90,9 @@ public final class MEs_N_Multiply extends MOAbstractProcess{
 			wording.setWording("Combien font ",new MOMultiplyContainer(whereClone,selectedClone)," ?");
 		System.out.println(String.valueOf(floatMult));
 		if(Math.round(floatMult)==floatMult)
-			(new QuestionTextBox(this, wording, String.valueOf(Math.round(floatMult)))).center();
+			(new AniMathQuestionTextBox(this, wording, String.valueOf(Math.round(floatMult)))).center();
 		else
-			(new QuestionTextBox(this, wording, String.valueOf(floatMult))).center();
+			(new AniMathQuestionTextBox(this, wording, String.valueOf(floatMult))).center();
 	}
 
 	@Override

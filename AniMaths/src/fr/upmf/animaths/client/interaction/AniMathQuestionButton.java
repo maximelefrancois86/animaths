@@ -1,4 +1,4 @@
-package fr.upmf.animaths.client.mvp;
+package fr.upmf.animaths.client.interaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,19 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import fr.upmf.animaths.client.interaction.MOAbstractProcess;
+import fr.upmf.animaths.client.mvp.MOBasicPresenter;
+import fr.upmf.animaths.client.mvp.MOFocusWidget;
+import fr.upmf.animaths.client.mvp.MOWordingWidget;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
-public class QuestionButton extends DialogBox {
+public class AniMathQuestionButton extends DialogBox {
 
 
 	private List<MOFocusWidget> answers = new ArrayList<MOFocusWidget>();
 	VerticalPanel dialogVPanel = new VerticalPanel();
-	MOAbstractProcess process;
+	AniMathAbstractProcess process;
 	
-	public QuestionButton(MOAbstractProcess process, MOWordingWidget wording) {
+	public AniMathQuestionButton(AniMathAbstractProcess process, MOWordingWidget wording) {
 		super(false);
 		this.process = process;
 		setText("Question...");

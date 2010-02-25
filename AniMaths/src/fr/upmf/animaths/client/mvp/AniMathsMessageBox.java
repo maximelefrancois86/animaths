@@ -10,14 +10,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class MessageBox extends DialogBox {
+public class AniMathsMessageBox extends DialogBox {
 	
 	VerticalPanel mPanel = new VerticalPanel();
 	HorizontalPanel hPanel = new HorizontalPanel();
 	private MOWordingWidget message = new MOWordingWidget("<span>message absent.<span>");
 	private HTML icon = new HTML(""); 
 
-	public MessageBox() {
+	public AniMathsMessageBox() {
 		super(false);
 		setText("Message");
 		setAnimationEnabled(false);
