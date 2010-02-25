@@ -2,6 +2,7 @@ package fr.upmf.animaths.server;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -23,6 +24,8 @@ public class LoadPathNamesServiceImpl extends RemoteServiceServlet implements Lo
 		for(String fileName : dir.list())
 			if(fileName.contains(".xml"))
 				list.add(path+"/"+fileName);
+		Collections.sort(list); // sinon ordre dépendant du système (?)
+		System.out.println(list.toString());
 		return list;
 	}
 

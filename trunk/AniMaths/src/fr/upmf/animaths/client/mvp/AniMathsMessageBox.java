@@ -42,6 +42,7 @@ public class AniMathsMessageBox extends DialogBox {
 	public void setAsStart(String html, String buttonText, ClickHandler handler) {
 		setText("Bienvenue dans l'application AniMaths");
 		hPanel.remove(message);
+		updateWidget(icon, new HTML("<img id='box-icon' src='favicon.png' alt='logo' />"));
 		hPanel.add(new HTML(html));
 		addButton(buttonText, handler, true).addClickHandler(new ClickHandler() {
 			@Override

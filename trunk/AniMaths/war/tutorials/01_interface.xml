@@ -2,36 +2,40 @@
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
 <tutoriel level="10">
 	<wording>
-		<!-- 
-		<h2>1. L'interface</h2>
-		Voici à quoi ressemble l'interface lorsqu'on commence un exercice.
-		<ul>
-		<li>En haut, <b>AniMaths... tutorials/01_interface.xml</b> est ce qu'on appel un <em>fil d'ariane</em>. Il permet de savoir ce qu'on est en train de faire...</li>
-		<li>Juste en dessous, nous avons 5 boutons de navigation :</li>
-			<ul>
-			<dt><button class='gwt-button'>Commencer un exercice</button></dt>
-				<dd>Permet de passer directement à la résolution de la série d'exercices. 
-				Ce tutoriel est arrêté, mais pourra être recommencé plus tard.</dd>
-			<dt><button class='gwt-button'>Précédent</button></dt>
-				<dd>permet de revenir à la page précédente de ce tutoriel. Lors de la résolution d'un exercice, 
-				cliquer sur ce bouton arrête l'exercice en cours pour revenir à l'exercice précédent.</dd>
-			<dt><button class='gwt-button'>Suivant</button></dt>
-				 <dd>permet de passer directement à la page suivante de ce tutoriel. 
-				 Lors de la résolution d'un exercice, cliquer sur ce bouton arrête l'exercice en cours pour passer directement à l'exercice suivant.</dd>
-			<dt><button class='gwt-button'>Recommencer</button></dt>
-				<dd>permet de réinitialiser les lignes d'équations pour recommencer la résolution de l'exercice.</dd>
-			<dt><button class='gwt-button'>Commencer le tutoriel</button></dt>
-				<dd>Redirige vers cette page. Le tutoriel est important, il permet de comprendre
-				 comment on peut manipuler les objets mathématiques avec AniMaths.</dd>
-			</ul>
-		<dt>l'énoncé de l'exercice,</dt>
-			<dd>sera écrit dans même zone que ce texte.</dd>
-		<dt>la zone de manipulation</dt>
-			<dd>encadrée en bleu, ci-dessous, c'est la zone la plus importante de l'application AniMaths, 
-			c'est la zone de manipulation des objets mathématiques.</dd>
+    <!--
+		<h2>Interface</h2>
+		<img src='images/interface.png'>
+		<p>L'espace de travail que vous voyez actuellement et le même que celui que vous aurez pendant l'utilisation normal.
+		Cet espace ce divise en 5 zones, illustrer dans la figure ci-contre et détaillées dans la liste ci-dessous :
+		</p>
+		<ol>
+  		<li>Ce qu'on appel un <em>fil d'ariane</em>, il permet d'avoir des informations de navigation : 
+  		où sommes-nous et d'où venons-nous. Ici on constate que nous sommes dans le tutoriel, partie 1 : interface ;</li>
+  		<li>En dessous on retrouve le menu d'action, composé 5 boutons:
+			  <ul>
+			  <li><button class='gwt-Button'>Lancer un exercice</button>,
+				  Permet de passer directement à la résolution de la série d'exercices. 
+				  Attention ! L'action en cours est <strong>terminé sans sommation</strong>.</li>
+			  <li><button class='gwt-Button'>← Précédent</button>
+				  permet de revenir à la page précédente de ce tutoriel. Lors de la résolution d'un exercice, 
+				  cliquer sur ce bouton arrête l'exercice en cours pour revenir à l'exercice précédent.</li>
+			  <li><button class='gwt-Button'>Suivant →</button>
+				   permet de passer directement à la page suivante de ce tutoriel. 
+				   Lors de la résolution d'un exercice, cliquer sur ce bouton arrête l'exercice en cours pour passer directement à l'exercice suivant.</li>
+			  <li><button class='gwt-Button'>↻ Recommencer</button>
+				  permet de réinitialiser les lignes d'équations pour recommencer la résolution de l'exercice.</li>
+			  <li><button class='gwt-Button'>Lancer le tutoriel</button>
+				  Redirige vers cette page. Le tutoriel est important, il permet de comprendre
+				   comment on peut manipuler les objets mathématiques avec AniMaths.</li>
+			  </ul>
+		  </li>
+		  <li>l'énoncé de l'exercice, sera écrit à l'emplacement de ce descriptif.</li>
+		  <li>La zone passive n'est pas afficher sur cette page car elle ce construit au fur est à mesure de vos manipulations</li>
+		  <li>Enfin la zone ci-dessous encadrée en bleue. C'est la zone la plus importante de l'application AniMaths, 
+			appelé la zone de manipulation des objets mathématiques.</li>
 		</ul>
-		Pour passer à l'étape suivante du tutoriel, cliquez sur le bouton <button class='gwt-button'>Suivant</button> <strong>situé en haute de page</strong>.
-		-->
+		<p>Pour passer à l'étape suivante du tutoriel, cliquez sur le bouton « Suivant → » <strong>situé en <a href='#menu'>haut de page</a>, dans le menu d'actions</strong>.
+  -->
 	</wording>
 	<moe>
 		<moi>x</moi>
