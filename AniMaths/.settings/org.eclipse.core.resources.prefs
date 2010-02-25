@@ -1,6 +1,6 @@
-#Thu Feb 25 06:59:26 CET 2010
+#Thu Feb 25 07:05:49 CET 2010
 eclipse.preferences.version=1
-encoding//src/fr/upmf/animaths/client/interaction/AniMathCoreInteraction.java=UTF-8
+encoding//src/fr/upmf/animaths/client/interaction/AniMathsCoreInteraction.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/AniMathsPresenter.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLElement.java=UTF-8
 encoding//src/fr/upmf/animaths/client/mvp/MathML/MMLFrac.java=UTF-8

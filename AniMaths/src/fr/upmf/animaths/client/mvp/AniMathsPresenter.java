@@ -32,7 +32,7 @@ import fr.upmf.animaths.client.events.ExerciseSolvedEvent;
 import fr.upmf.animaths.client.events.ExerciseSolvedHandler;
 import fr.upmf.animaths.client.events.NewLineEvent;
 import fr.upmf.animaths.client.events.NewLineHandler;
-import fr.upmf.animaths.client.interaction.AniMathCoreInteraction;
+import fr.upmf.animaths.client.interaction.AniMathsCoreInteraction;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOIdentifier;
@@ -329,7 +329,7 @@ public class AniMathsPresenter extends WidgetPresenter<AniMathsPresenter.Display
 					}
 				}
 
-				AniMathCoreInteraction.setPresenterAndRun(mODynamicPresenter,level);
+				AniMathsCoreInteraction.setPresenterAndRun(mODynamicPresenter,level);
 				
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));

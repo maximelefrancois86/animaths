@@ -10,12 +10,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_N_Add extends AniMathAbstractProcess{
+public final class SEs_N_Add extends AniMathsAbstractProcess{
 
 	private static final SEs_N_Add instance = new SEs_N_Add();
 	protected SEs_N_Add() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOAddContainer addContainer;
@@ -67,7 +67,7 @@ public final class SEs_N_Add extends AniMathAbstractProcess{
 		else
 			wording.setWording("Combien font ",new MOAddContainer(where.clone(),selected.clone())," ?");
 		System.out.println(String.valueOf(floatSum));
-		(new AniMathQuestionTextBox(this, wording, String.valueOf(floatSum))).center();
+		(new AniMathsQuestionTextBox(this, wording, String.valueOf(floatSum))).center();
 	}
 
 	@Override

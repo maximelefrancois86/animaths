@@ -8,12 +8,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class MEs_MC_E_ChangeHandSide extends AniMathAbstractProcess{
+public final class MEs_MC_E_ChangeHandSide extends AniMathsAbstractProcess{
 
 	private static final MEs_MC_E_ChangeHandSide instance = new MEs_MC_E_ChangeHandSide();
 	protected MEs_MC_E_ChangeHandSide() {}
 	public static void setEnabled(boolean enabled) {
-		AniMathAbstractProcess.setEnabled(instance, enabled);
+		AniMathsAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	private MOEquation equation;
@@ -68,8 +68,8 @@ public final class MEs_MC_E_ChangeHandSide extends AniMathAbstractProcess{
 	public void onAskQuestion() {
 		System.out.println("MEs_MC_E_ChangeHandSide : askQuestion");
 		
-		AniMathQuestionButton aniMathQuestionButton = 
-			new AniMathQuestionButton(this, 
+		AniMathsQuestionButton aniMathsQuestionButton = 
+			new AniMathsQuestionButton(this, 
 				new MOWordingWidget("Après avoir déplacé "
 										,atNum?selected.clone():new MOMultiplyContainer(selected.clone())
 										," de l'autre côté du signe égal, quel est le résultat ?"));
@@ -83,14 +83,14 @@ public final class MEs_MC_E_ChangeHandSide extends AniMathAbstractProcess{
 			good.setDivided(!good.isDivided());
 			MOMultiplyContainer goodAnswer = parentOfWhere.clone();
 			goodAnswer.add(index,good);
-			aniMathQuestionButton.addAnswer(goodAnswer, 1);
+			aniMathsQuestionButton.addAnswer(goodAnswer, 1);
 	
 			MOMultiplyElement bad = selected.clone();
 			MOMultiplyContainer badAnswer = parentOfWhere.clone();
 			badAnswer.add(index,bad);
-			aniMathQuestionButton.addAnswer(badAnswer, 0);	
+			aniMathsQuestionButton.addAnswer(badAnswer, 0);	
 			
-			aniMathQuestionButton.center();
+			aniMathsQuestionButton.center();
 			good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 		}
@@ -138,12 +138,12 @@ public final class MEs_MC_E_ChangeHandSide extends AniMathAbstractProcess{
 				moeMZ.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moeMZ.getHandSide(!atLeft)), momeZ ), !atLeft);
 			}
 
-			aniMathQuestionButton.addAnswer(moeA, 0);
-			aniMathQuestionButton.addAnswer(moeAZ, 0);
-			aniMathQuestionButton.addAnswer(moeM, 0);
-			aniMathQuestionButton.addAnswer(moeMZ, 2);
+			aniMathsQuestionButton.addAnswer(moeA, 0);
+			aniMathsQuestionButton.addAnswer(moeAZ, 0);
+			aniMathsQuestionButton.addAnswer(moeM, 0);
+			aniMathsQuestionButton.addAnswer(moeMZ, 2);
 			
-			aniMathQuestionButton.center();
+			aniMathsQuestionButton.center();
 			mose.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			moseZ.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			mome.setStyleClass(MOElement.STYLE_CLASS_FOCUS);

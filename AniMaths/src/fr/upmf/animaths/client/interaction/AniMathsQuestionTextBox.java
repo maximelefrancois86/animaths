@@ -12,14 +12,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
 
-public class AniMathQuestionTextBox extends DialogBox {
+public class AniMathsQuestionTextBox extends DialogBox {
 
 
 	VerticalPanel dialogVPanel = new VerticalPanel();
 	final TextBox answerField;
 	final Button sendButton;
 	
-	public AniMathQuestionTextBox(final AniMathAbstractProcess process, MOWordingWidget wording, final String answer) {
+	public AniMathsQuestionTextBox(final AniMathsAbstractProcess process, MOWordingWidget wording, final String answer) {
 		super(false);
 		setText("Question...");
 		setAnimationEnabled(true);
