@@ -254,12 +254,10 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 				process.setHandler(ProcessLaunchEvent.getType());
 				switch(tag) {
 				case AniMathsAbstractProcess.PROCESS_CAUTION:
-					System.out.println("MOCoreInteraction : PROCESS_CAUTION");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
 					break;
 				case AniMathsAbstractProcess.PROCESS_OK:
-					System.out.println("MOCoreInteraction : PROCESS_OK");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);
 					break;

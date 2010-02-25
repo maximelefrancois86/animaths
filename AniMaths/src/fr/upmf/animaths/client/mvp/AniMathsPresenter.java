@@ -116,27 +116,28 @@ public class AniMathsPresenter extends
 		display.getTutorielButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				display.getTutorielButton().setEnabled(false);
-				System.out.println("oqsdfj");
 				new AniMathsMessageBox()
 						.setAsStart(
-								"<h3>Bienvenue dans notre programme <strong>AniMath</strong> !</h3>"
-										+ "<div class='tuto'>Ce programme a été réalisé par <em>Maxime Lefrançois et Edouard Lopez</em>, "
-										+ "dans le cadre du projet de <a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/'>Génie Lociciel M2P Ingénierie de la Communication Personne Systèmes</a>"
+								"<h3>Bienvenue dans l'application <strong>AniMaths</strong> !</h3>"
+										+ "<div class='tuto'>Cette application a été réalisée par <br/>" +
+												"<em>Maxime Lefrançois et Edouard Lopez</em>, <br/>"
+										+ "dans le cadre du projet de génie lociciel du <br/>" +
+												"<a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/'>M2P Ingénierie de la Communication Personne Systèmes</a>"
 										+ "<div class='txt-right'>À l'<em>Université Pierre Mendès France de Grenoble</em>.</div><hr/>"
 										+ "<p>Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien "
 										+ "utiliser le navigateur <strong>Mozilla Firefox</strong>, version 3 ou supérieure. Si vous ne l'avez pas, vous pouvez télécharger :</p>"
-										+ "<ul><li><a href='http://www.mozilla.com/fr/'>la dernière version</a> sur le site officiel;</li>"
-										+ "<li>la <a href='http://portableapps.com/apps/internet/firefox_portable'>version portable</a>, si vous ne pouvez installer d'application sur l'ordinateur que vous utiliser.</li></ul></div>",
+										+ "<ul><li><a href='http://www.mozilla.com/fr/' target='_blank'>la dernière version de Mozilla Firefox</a> sur le site officiel;</li>"
+										+ "<li><a href='http://portableapps.com/apps/internet/firefox_portable' target='_blank'>la version portable de Mozilla Firefox</a>, si vous ne pouvez pas installer d'application sur l'ordinateur que vous utilisez.</li></ul></div>",
 								"Suivant →", new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
 										new AniMathsMessageBox()
 												.setAsStart(
 														"<h3>Pour commencer&hellip;</h3>"
-																+ "<p>Nous vous proposons de suivre ce tutoriel, qui a va vous <strong>apprendre à utiliser</strong> cette application, "
+																+ "<p>Nous vous proposons de suivre un tutoriel pour <strong>vous familiariser avec cette application</strong>, "
 																+ "grâce à des <em>exemples simples, des explications et des illustrations</em>.</p>"
-																+ "<p>AniMahts utilise une interface basé sur le paradigme de <a href='http://fr.wikipedia.org/wiki/WIMP_%28informatique%29'>manipulation directe</a>. "
-																+ "L'intéraction avec les différents objets mathématiques sera donc grandement <strong>facilité</strong>.</p>",
+																+ "<p>Notre but étant de <strong>faciliter l'interaction</strong> avec les différents objets mathématiques, "
+																+ "AniMaths utilise une interface basée sur le paradigme de la <a href='http://fr.wikipedia.org/wiki/WIMP_%28informatique%29' target='_blank'>manipulation directe</a>.</p>",
 														"Commencer →", new ClickHandler() {
 															@Override
 															public void onClick(ClickEvent event) {
