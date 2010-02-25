@@ -98,8 +98,6 @@ public abstract class AniMathsAbstractProcess implements GrabSelectedHandler, Dr
 			return;
 		short tag = getTagOfProcess();
 		if(tag>this.tag) {
-			if(tag>0)
-				System.out.println("MOAbstractProcess : tag 1 ou 2");
 			this.tag = tag;
 			choosenWhereElement = whereElement;
 			choosenZoneH = zoneH;

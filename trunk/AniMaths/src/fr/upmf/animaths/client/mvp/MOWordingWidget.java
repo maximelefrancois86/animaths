@@ -49,9 +49,24 @@ public class MOWordingWidget extends Composite {
 	}
 
 	public void parse(Element element) {
+//		clear();
+//		NodeList children = element.getChildNodes();
+//		for(int i=0;i<children.getLength();i++) {
+//			Node n = children.item(i);
+//			if(n.getNodeType() == Node.COMMENT_NODE)
+//				panel.add(new InlineHTML(n.getNodeValue()));
+//			if(n.getNodeType() == Node.ELEMENT_NODE) {
+//				MMLMath wrapper = new MMLMath(false);
+//				MOElement<?> mOElement = MOElement.parse((Element)n);
+//				if(mOElement!=null)
+//					mOElement.pack(wrapper,null);
+//				panel.add(wrapper);
+//			}
+//		}
 		clear();
 		NodeList children = element.getChildNodes();
 		for(int i=0;i<children.getLength();i++) {
+			
 			Node n = children.item(i);
 			if(n.getNodeType() == Node.COMMENT_NODE)
 				panel.add(new InlineHTML(n.getNodeValue()));
@@ -65,6 +80,8 @@ public class MOWordingWidget extends Composite {
 		}
 	}
 
+	
+	
 	public void clear() {
 		panel.clear();
 		while(panel.getElement().hasChildNodes())
