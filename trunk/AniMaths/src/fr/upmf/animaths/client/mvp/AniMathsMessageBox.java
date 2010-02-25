@@ -2,6 +2,9 @@ package fr.upmf.animaths.client.mvp;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -40,14 +43,13 @@ public class AniMathsMessageBox extends DialogBox {
 		setText("Bienvenue dans l'application AniMaths");
 		hPanel.remove(message);
 		hPanel.add(new HTML(html));
-		addButton(buttonText, handler).addClickHandler(new ClickHandler() {
+		addButton(buttonText, handler, true).addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
 			}
 		});
 		center();
-		System.out.println("ok2");
 	}
 	
 	public void setAsLoading(MOWordingWidget message) {
@@ -93,10 +95,17 @@ public class AniMathsMessageBox extends DialogBox {
 		this.message = message;
 	}
 	
-	public Button addButton(String text, ClickHandler clickHandler) {
-		Button button = new Button(text);
+	public Button addButton(String text, ClickHandler clickHandler, boolean addNativeEvent) {
+		final Button button = new Button(text, clickHandler);
 		mPanel.add(button);
-		button.addClickHandler(clickHandler);
+		if(addNativeEvent) {
+			Event.addNativePreviewHandler(new NativePreviewHandler() {
+			 	public void onPreviewNativeEvent(NativePreviewEvent event) {
+			 		if(event.getTypeInt() == Event.ONKEYUP && event.getNativeEvent().getKeyCode()==13)
+			 			button.click();
+			 	}
+			});
+		}
 		return button;
 	}
 	
