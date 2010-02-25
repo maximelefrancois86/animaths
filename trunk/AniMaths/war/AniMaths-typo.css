@@ -152,7 +152,6 @@ tr:hover {
 	background-color: #f5f5f5;
 	-moz-border-radius: .5em/ .5em;
 	border-radius: .5em/ .5em;
-	display: inline-block;
 }
 
 #question-text td>math:hover,#question-button td>math:hover {
