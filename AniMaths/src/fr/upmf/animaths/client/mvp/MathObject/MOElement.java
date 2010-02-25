@@ -192,6 +192,7 @@ public abstract class MOElement<D extends MOElementDisplay> extends BasicPresent
 //	abstract public com.google.gwt.dom.client.Element getLastDOMElement();
 
 	public static MOElement<?> parse(Element element) {
+		System.out.println(element.getNodeValue());
 		String tagName = element.getTagName();
 		if(tagName.equals("moe"))
 			return MOEquation.parse(element);

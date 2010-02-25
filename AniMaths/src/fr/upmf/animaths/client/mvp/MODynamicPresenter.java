@@ -14,12 +14,12 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import fr.upmf.animaths.client.interaction.events.DragEvent;
-import fr.upmf.animaths.client.interaction.events.DropEvent;
-import fr.upmf.animaths.client.interaction.events.FlyOverEvent;
-import fr.upmf.animaths.client.interaction.events.GrabEvent;
-import fr.upmf.animaths.client.interaction.events.SelectionChangeEvent;
-import fr.upmf.animaths.client.interaction.events.SelectionEvent;
+import fr.upmf.animaths.client.events.DragEvent;
+import fr.upmf.animaths.client.events.DropEvent;
+import fr.upmf.animaths.client.events.FlyOverEvent;
+import fr.upmf.animaths.client.events.GrabEvent;
+import fr.upmf.animaths.client.events.SelectionChangeEvent;
+import fr.upmf.animaths.client.events.SelectionEvent;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
 public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.Display> {
