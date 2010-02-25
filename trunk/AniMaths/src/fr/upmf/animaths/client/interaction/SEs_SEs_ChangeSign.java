@@ -3,19 +3,18 @@ package fr.upmf.animaths.client.interaction;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
+public final class SEs_SEs_ChangeSign extends AniMathAbstractProcess{
 
 	private static final SEs_SEs_ChangeSign instance = new SEs_SEs_ChangeSign();
 	protected SEs_SEs_ChangeSign() {}
 	public static void setEnabled(boolean enabled) {
-		MOAbstractProcess.setEnabled(instance, enabled);
+		AniMathAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOSignedElement parent;
@@ -84,10 +83,10 @@ public final class SEs_SEs_ChangeSign extends MOAbstractProcess{
 
 		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());		
 		wording.setWording("Quand on multiplie ",new MOSignedElement(new MONumber(1),parent.isMinus())," par ",child.clone(),", quel est le résultat ?");
-		QuestionButton questionButton = new QuestionButton(this, wording);
-		questionButton.addAnswer(goodAnswer, 1);
-		questionButton.addAnswer(badAnswer, 0);	
-		questionButton.center();
+		AniMathQuestionButton aniMathQuestionButton = new AniMathQuestionButton(this, wording);
+		aniMathQuestionButton.addAnswer(goodAnswer, 1);
+		aniMathQuestionButton.addAnswer(badAnswer, 0);	
+		aniMathQuestionButton.center();
 	}
 
 	@Override

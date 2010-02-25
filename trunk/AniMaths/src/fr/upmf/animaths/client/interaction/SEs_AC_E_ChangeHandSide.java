@@ -3,7 +3,6 @@ package fr.upmf.animaths.client.interaction;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
@@ -11,12 +10,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
+public final class SEs_AC_E_ChangeHandSide extends AniMathAbstractProcess{
 
 	private static final SEs_AC_E_ChangeHandSide instance = new SEs_AC_E_ChangeHandSide();
 	protected SEs_AC_E_ChangeHandSide() {}
 	public static void setEnabled(boolean enabled) {
-		MOAbstractProcess.setEnabled(instance, enabled);
+		AniMathAbstractProcess.setEnabled(instance, enabled);
 	}
 	
 	private MOEquation equation;
@@ -74,7 +73,7 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 		System.out.println("SEs_AC_E_ChangeHandSide : askQuestion");
 		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());		
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
-		QuestionButton questionButton = new QuestionButton(this, wording);
+		AniMathQuestionButton aniMathQuestionButton = new AniMathQuestionButton(this, wording);
 		
 		if(whereElement.getMathObjectParent() instanceof MOAddContainer) {
 			int index = parentOfWhere.indexOf(where);
@@ -86,14 +85,14 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 			good.setMinus(!good.isMinus());
 			MOAddContainer goodAnswer = parentOfWhere.clone();
 			goodAnswer.add(index,good);
-			questionButton.addAnswer(goodAnswer, 1);
+			aniMathQuestionButton.addAnswer(goodAnswer, 1);
 	
 			MOSignedElement bad = selected.clone();
 			MOAddContainer badAnswer = parentOfWhere.clone();
 			badAnswer.add(index,bad);
-			questionButton.addAnswer(badAnswer, 0);	
+			aniMathQuestionButton.addAnswer(badAnswer, 0);	
 			
-			questionButton.center();
+			aniMathQuestionButton.center();
 			good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			bad.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 		}
@@ -141,12 +140,12 @@ public final class SEs_AC_E_ChangeHandSide extends MOAbstractProcess{
 				moeMZ.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moeMZ.getHandSide(!atLeft)), momeZ ), !atLeft);
 			}
 
-			questionButton.addAnswer(moeA, 0);
-			questionButton.addAnswer(moeAZ, 2);
-			questionButton.addAnswer(moeM, 0);
-			questionButton.addAnswer(moeMZ, 0);
+			aniMathQuestionButton.addAnswer(moeA, 0);
+			aniMathQuestionButton.addAnswer(moeAZ, 2);
+			aniMathQuestionButton.addAnswer(moeM, 0);
+			aniMathQuestionButton.addAnswer(moeMZ, 0);
 			
-			questionButton.center();
+			aniMathQuestionButton.center();
 			mose.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			moseZ.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 			mome.setStyleClass(MOElement.STYLE_CLASS_FOCUS);

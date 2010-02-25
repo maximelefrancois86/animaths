@@ -3,7 +3,6 @@ package fr.upmf.animaths.client.interaction;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.QuestionButton;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
@@ -13,12 +12,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOMultiplyElement;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
+public final class Ns_Is_E_ChangeHandSide extends AniMathAbstractProcess{
 
 	private static final Ns_Is_E_ChangeHandSide instance = new Ns_Is_E_ChangeHandSide();
 	protected Ns_Is_E_ChangeHandSide() {}
 	public static void setEnabled(boolean enabled) {
-		MOAbstractProcess.setEnabled(instance, enabled);
+		AniMathAbstractProcess.setEnabled(instance, enabled);
 	}
 	
 	private MOEquation equation;
@@ -81,7 +80,7 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 
 		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());		
 		wording.setWording("Après avoir déplacé ",selectedElement.clone()," de l'autre côté du signe égal, quel est le résultat ?");
-		QuestionButton questionButton = new QuestionButton(this, wording);
+		AniMathQuestionButton aniMathQuestionButton = new AniMathQuestionButton(this, wording);
 		
 		if(whereElement == otherHandSide) {
 			mose = (selectedElement instanceof MOSignedElement)? ((MOSignedElement)selectedElement).clone() : new MOSignedElement(selectedElement.clone()); 
@@ -146,17 +145,17 @@ public final class Ns_Is_E_ChangeHandSide extends MOAbstractProcess{
 				moe1MZ.setHandSide(new MOMultiplyContainer( new MOMultiplyElement(moe1MZ.getHandSide(!atLeft)), momeZ.clone() ), !atLeft);
 			}
 
-			questionButton.addAnswer(moe0A, 0);
-			questionButton.addAnswer(moe0AZ, 1);
-			questionButton.addAnswer(moe0M, 0);
-			questionButton.addAnswer(moe0MZ, 0);
-			questionButton.addAnswer(moe1A, 0);
-			questionButton.addAnswer(moe1AZ, 0);
-			questionButton.addAnswer(moe1M, 0);
-			questionButton.addAnswer(moe1MZ, 2);
+			aniMathQuestionButton.addAnswer(moe0A, 0);
+			aniMathQuestionButton.addAnswer(moe0AZ, 1);
+			aniMathQuestionButton.addAnswer(moe0M, 0);
+			aniMathQuestionButton.addAnswer(moe0MZ, 0);
+			aniMathQuestionButton.addAnswer(moe1A, 0);
+			aniMathQuestionButton.addAnswer(moe1AZ, 0);
+			aniMathQuestionButton.addAnswer(moe1M, 0);
+			aniMathQuestionButton.addAnswer(moe1MZ, 2);
 		}			
 
-		questionButton.center();
+		aniMathQuestionButton.center();
 //		good.setStyleClass(MOElement.STYLE_CLASS_FOCUS);
 	}
 	

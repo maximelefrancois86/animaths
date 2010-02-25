@@ -3,7 +3,6 @@ package fr.upmf.animaths.client.interaction;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.QuestionTextBox;
 import fr.upmf.animaths.client.mvp.MathObject.IMOHasOneChild;
 import fr.upmf.animaths.client.mvp.MathObject.MOAddContainer;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -11,12 +10,12 @@ import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 import fr.upmf.animaths.client.mvp.MathObject.MONumber;
 import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 
-public final class SEs_N_Add extends MOAbstractProcess{
+public final class SEs_N_Add extends AniMathAbstractProcess{
 
 	private static final SEs_N_Add instance = new SEs_N_Add();
 	protected SEs_N_Add() {}
 	public static void setEnabled(boolean enabled) {
-		MOAbstractProcess.setEnabled(instance, enabled);
+		AniMathAbstractProcess.setEnabled(instance, enabled);
 	}
 
 	MOAddContainer addContainer;
@@ -68,7 +67,7 @@ public final class SEs_N_Add extends MOAbstractProcess{
 		else
 			wording.setWording("Combien font ",new MOAddContainer(where.clone(),selected.clone())," ?");
 		System.out.println(String.valueOf(floatSum));
-		(new QuestionTextBox(this, wording, String.valueOf(floatSum))).center();
+		(new AniMathQuestionTextBox(this, wording, String.valueOf(floatSum))).center();
 	}
 
 	@Override

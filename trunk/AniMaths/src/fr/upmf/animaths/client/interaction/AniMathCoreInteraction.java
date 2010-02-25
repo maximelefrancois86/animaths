@@ -41,10 +41,10 @@ import fr.upmf.animaths.client.mvp.MODynamicPresenter;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 import fr.upmf.animaths.client.mvp.MathObject.MOEquation;
 
-public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler,
+public class AniMathCoreInteraction implements FlyOverHandler, SelectionHandler, SelectionChangeHandler, GrabHandler, DragHandler, DropHandler,
 											ProcessInterestedHandler, TagDeclarationHandler, ProcessDoneHandler {
 	
-	private static MOCoreInteraction instance = new MOCoreInteraction();
+	private static AniMathCoreInteraction instance = new AniMathCoreInteraction();
 	private static MODynamicPresenter presenter;
 	private static final MODragPresenter dragPresenter = new MODragPresenter();
 	
@@ -57,7 +57,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	private MOElement<?> selectedElement = null;
 	MOElement<?> whereElement;
 	private short tag = -1;
-	private MOAbstractProcess process;
+	private AniMathAbstractProcess process;
 	//	private boolean processDone = false;
 	private Map<Type<?>,HandlerRegistration> hr = new HashMap<Type<?>,HandlerRegistration>();
 
@@ -74,10 +74,10 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		}
 	}
 	
-	private MOCoreInteraction() { }
+	private AniMathCoreInteraction() { }
 	
 	public static void setPresenterAndRun(MODynamicPresenter presenter, int level) {
-		MOCoreInteraction.presenter = presenter;
+		AniMathCoreInteraction.presenter = presenter;
 		equation = (presenter.getElement() instanceof MOEquation)?(MOEquation) presenter.getElement():null;
 
 		SEs_AC_Commutation.setEnabled(false);
@@ -89,8 +89,8 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 		MEs_N_Multiply.setEnabled(false);
 		Ns_Is_E_ChangeHandSide.setEnabled(false);
 
-		MOCoreInteraction.interactWithEquation = false;
-		MOCoreInteraction.interactWithLeftHand = false;
+		AniMathCoreInteraction.interactWithEquation = false;
+		AniMathCoreInteraction.interactWithLeftHand = false;
 		
 		if(level>=1) {
 			instance.setHandler(FlyOverEvent.getType());
@@ -105,7 +105,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 							if(level>=6) {
 								MEs_N_Multiply.setEnabled(true);
 								if(level>=7) {
-									MOCoreInteraction.interactWithLeftHand = true;
+									AniMathCoreInteraction.interactWithLeftHand = true;
 									SEs_AC_E_ChangeHandSide.setEnabled(true);
 									MEs_MC_E_ChangeHandSide.setEnabled(true);
 									Ns_Is_E_ChangeHandSide.setEnabled(true);
@@ -243,7 +243,7 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 	public void onTagDeclaration(TagDeclarationEvent event) {
 		if(event.getTag()>tag) {
 			tag = event.getTag();
-			if(tag==MOAbstractProcess.PROCESS_NO) {
+			if(tag==AniMathAbstractProcess.PROCESS_NO) {
 				whereElement.setStyleClass(MOElement.STYLE_CLASS_NO_DROP);
 				dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_NO);
 			}
@@ -253,12 +253,12 @@ public class MOCoreInteraction implements FlyOverHandler, SelectionHandler, Sele
 				process = event.getProcess();
 				process.setHandler(ProcessLaunchEvent.getType());
 				switch(tag) {
-				case MOAbstractProcess.PROCESS_CAUTION:
+				case AniMathAbstractProcess.PROCESS_CAUTION:
 					System.out.println("MOCoreInteraction : PROCESS_CAUTION");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_CAUTION);
 					break;
-				case MOAbstractProcess.PROCESS_OK:
+				case AniMathAbstractProcess.PROCESS_OK:
 					System.out.println("MOCoreInteraction : PROCESS_OK");
 					whereElement.setStyleClass(MOElement.STYLE_CLASS_OK_DROP);
 					dragPresenter.getElement().setStyleClass(MOElement.STYLE_CLASS_OK);

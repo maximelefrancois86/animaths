@@ -26,10 +26,10 @@ import fr.upmf.animaths.client.events.TagDeclarationEvent;
 import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 import fr.upmf.animaths.client.mvp.MODynamicPresenter;
 import fr.upmf.animaths.client.mvp.MOWordingWidget;
-import fr.upmf.animaths.client.mvp.MessageBox;
+import fr.upmf.animaths.client.mvp.AniMathsMessageBox;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 
-public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler, ProcessLaunchHandler {
+public abstract class AniMathAbstractProcess implements GrabSelectedHandler, DragSelectedHandler, DropSelectedHandler, ProcessLaunchHandler {
 	
 	public static final short PROCESS_NO = 0;
 	public static final short PROCESS_CAUTION = 1;
@@ -37,7 +37,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	
 	protected final EventBus eventBus = AniMathsPresenter.eventBus;
 
-	protected static final void setEnabled(MOAbstractProcess process, boolean enabled) {
+	protected static final void setEnabled(AniMathAbstractProcess process, boolean enabled) {
 		if(enabled)
 			process.setHandler(GrabSelectedEvent.getType());
 		else
@@ -125,7 +125,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	}
 	
 	public final void askQuestion() {
-		final MessageBox msgLoad = new MessageBox();
+		final AniMathsMessageBox msgLoad = new AniMathsMessageBox();
 		msgLoad.setAsLoading(new MOWordingWidget("Veuillez patienter..."));
 		onAskQuestion();
 		msgLoad.hide();
@@ -134,7 +134,7 @@ public abstract class MOAbstractProcess implements GrabSelectedHandler, DragSele
 	public abstract void onAskQuestion(); 
 	
 	public final void executeProcess(final int answer) {
-		final MessageBox msg = new MessageBox();
+		final AniMathsMessageBox msg = new AniMathsMessageBox();
 		msg.setWithCode(answer,getMessage(answer));
 		// pour attendre un peu avant d'agir
 		final Timer wait = new Timer() {

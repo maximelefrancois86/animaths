@@ -2,7 +2,7 @@ package fr.upmf.animaths.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.upmf.animaths.client.interaction.MOAbstractProcess;
+import fr.upmf.animaths.client.interaction.AniMathAbstractProcess;
 
 public class TagDeclarationEvent extends GwtEvent<TagDeclarationHandler> {
 
@@ -13,9 +13,9 @@ public class TagDeclarationEvent extends GwtEvent<TagDeclarationHandler> {
     }
 
     private short tag;
-    private MOAbstractProcess process;
+    private AniMathAbstractProcess process;
     
-    public TagDeclarationEvent(short tag, MOAbstractProcess process) {
+    public TagDeclarationEvent(short tag, AniMathAbstractProcess process) {
     	this.tag = tag;
     	this.process = process;
     }
@@ -34,7 +34,7 @@ public class TagDeclarationEvent extends GwtEvent<TagDeclarationHandler> {
 		return tag;
 	}
 	
-	public MOAbstractProcess getProcess() {
+	public AniMathAbstractProcess getProcess() {
 		return process;
 	}
 }
