@@ -19,7 +19,6 @@ h1 {
 }
 
 #exerciseWording {
-	font-size: 10pt;
 	position: relative;
 	padding: 1em;
 	padding-bottom: 0.5em;
@@ -33,7 +32,7 @@ h1 {
 #menu {
 	display:inline-block;
 }
-#menu .gwt-Button {
+#menu .gwt-Button, button.gwt-Button {
 	padding: 0 .25em;
 	margin: 0.05em 0;
 }
@@ -63,7 +62,9 @@ math {
 	padding: 1em;
 	width: auto;
 }
-
+#exerciseWording h2 {
+	margin:0 auto 0.25em;
+}
 #view {
 	position: relative;
 	float: left;
@@ -136,3 +137,4 @@ table {
 	vertical-align: middle;
 }
 
+dt {margin-top: .5em;}
