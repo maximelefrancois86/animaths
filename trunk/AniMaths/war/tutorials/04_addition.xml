@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
+<tutoriel level="2">
+	<wording>
+		<!--
+		<h2>4. Zones de relâchement</h2>
+		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction"/>    
+    <p>Selon la zone d'un objet où vous relâcher votre sélection, <strong>l'action variera</strong>, et c'est ce que nous étudierons dans cette page. Le schéma ci-contre illustre les différentes zones verticale d'un objet. Pour bien comprendre cela, nous allons détailler <em>l'action liées à chaque zone dans le cas de l'addition</em>. Déplacer un élément et le relâcher dans les zones suivantes :</p>
+    <dl>
+      <dt><strong>bord gauche</strong> d'un élément</dt>
+        <dd>l'objet sélectionner ce place <strong>avant</strong>.</dd>
+      <dt><strong>partie centrale</strong> d'un élément</dt>
+        <dd>l'objet sélectionner est <strong>additioné</strong>.</dd>
+      <dt><strong>bord droit</strong> d'un élément</dt>
+        <dd>l'objet sélectionner ce place <strong>après</strong>.</dd>
+    </dl>
+    <p>Nous allons maintenant voir qu'aux différentes actions sont associés des notifications visuelles. Vous pouvez passez à l'étape suivante.</p>
+		-->
+	</wording>
+	<moe>
+		<moi>x</moi>
+		<moac>
+		    <mose isMinus='true'>
+		      <mon>24</mon>
+		    </mose>
+		    <mose>
+		      <mon>50</mon>
+		    </mose>
+		    <mose>
+		      <mon>5</mon>
+		    </mose>
+		    <mose isMinus='true'>
+		      <mon>11</mon>
+		    </mose>
+		</moac>
+	</moe>
+</tutoriel>
