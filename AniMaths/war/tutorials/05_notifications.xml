@@ -2,7 +2,19 @@
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
 <tutoriel>
 	<wording>
-		<text>Les outils de sélection</text><br/>
+<!--
+    <h2>Notifications</h2>
+		<p>Pendant que vous le glissez, observez les couleurs que prend l'objet copié, et les changements de forme de curseurs ! </p>
+			<dl>
+			  <dt><strong>Rouge avec un sens interdit</strong></dt>
+			    <dd>Il n'y a aucune interaction a faire ici !</dd>
+			  <dt><strong>Orange avec la petite flèche courbe</strong></dt>
+			    <dd>Une question vous sera posée...</dd>
+			  <dt><strong>Vert avec la petite flèche courbe</strong></dt>
+    			<dd>Vous pouvez lâcher !</dd>
+			  </dl>
+		<p>Vous pouvez passer à l'étape suivante.</p>
+-->
 	</wording>
 	<moe>
 	  <mose isMinus='true'>

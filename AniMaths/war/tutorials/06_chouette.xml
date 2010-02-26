@@ -2,7 +2,15 @@
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
 <tutoriel>
 	<wording>
-		<text>Les outils de sélection</text><br/>
+<!--	
+		<ul>
+		  <li>Lorsque vous déplacez un terme additif entre deux autres (couleur verte), ça va le faire changer de place... Essayez !</li>
+		  <li>Lorsque vous déplacez un terme additif sur un autre (couleur orange), on va les additionner (ou les soustraire). Une question vous sera posée... Essayez !</li>
+		</ul>
+		<p>Lorsqu'il ne reste plus que x d'un côté, et un nombre de l'autre, l'équation est résolue ! Vous avez fini l'exercice, et on vous proposera de passer à l'exercice suivant... Essayez !</p>
+
+	-->
+		
 	</wording>
 	<moe>
 	  <momc>
