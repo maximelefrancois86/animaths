@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
+<tutoriel level="2">
+	<wording>
+		<!--
+		<h2>3. Glisser-déposer</h2>
+		<p>Nous allons maintenant apprendre à utiliser l'intéraction <strong>la plus importante</strong>: le glisser-déposer ou <span lang='en'>drag & drop</span> :</p>
+		  <ol>
+		    <li>commencer par <strong>sélectionner un élément</strong>, comme décrit dans l'étape précédente, </li>
+		    <li><em>placer vous au dessus</em> de l'élément sélectionner (curseur: main ouverte),</li>
+		    <li><strong>cliquer</strong> au dessus de la sélection et <strong>garder enfoncé</strong> le bouton de la souris (curseur: main fermé),</li>
+		    <li><strong>déplacer</strong> la souris, en <strong>maintenant le clic</strong>. Vous déplacez l'objet mathématique! Celui qui reste dans l'équation devient grisé, et une copie suit la souris.</li>
+		    <li><strong>placez-vous</strong> au dessus d'un autre élément (curseur avec flèche),</li>
+		    <li><strong>relâcher</strong> le clic.</li>
+	    </ol>
+    <p>Nous allons maintenant mettre en pratique cela avec l'opération d'addition. Passez à l'étape suivante du tutoriel.</p>
+    -->
+	</wording>
+	<moe>
+		<moi>x</moi>
+		<moac>
+		    <mose isMinus='true'>
+		      <mon>24</mon>
+		    </mose>
+		    <mose>
+		      <mon>50</mon>
+		    </mose>
+		    <mose>
+		      <mon>5</mon>
+		    </mose>
+		    <mose isMinus='true'>
+		      <mon>11</mon>
+		    </mose>
+		</moac>
+	</moe>
+</tutoriel>
