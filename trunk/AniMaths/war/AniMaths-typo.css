@@ -20,12 +20,14 @@ math {
 
 #exerciseWording {
 	font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
-	font-size: larger;
+
 	background-color: #F5F5F5;
 	color: #333;
 	border-bottom: thick solid #888;
 }
-
+#exerciseWording math {
+	font-size: larger;
+}
 #exerciseWording img {
 	background-color: #FFFFFF;
 	border: thin solid #DDDDDD;
@@ -123,7 +125,7 @@ h1 {
 	color: #33FF33;
 }
 
-/*Attention � quelquechose*/
+/*Attention   � quelquechose*/
 #drag math .caution {
 	background-color: #FFFFDD;
 	color: #FFFF33;
@@ -140,7 +142,8 @@ h1 {
 	color: red;
 }
 
-#message div {
+/*#message div {*/
+#message {
 	font-size: larger;
 }
 
@@ -173,4 +176,14 @@ tr:hover {
 
 table {
 	color: #333333;
+}
+.tuto {
+  font-size: medium;
+}
+.txt-right {
+  text-align: right;
+}
+kbd {
+  border: thin outset #ccc;
+padding:0 0.25em;
 }

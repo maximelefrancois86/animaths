@@ -23,15 +23,16 @@ h1 {
 	padding: 1em;
 	padding-bottom: 0.5em;
 	width: *;
+	max-height:20em;
+  overflow:auto;
 }
-
+#exerciseWording>*>* { max-width: 70%; }
 #exerciseWording img {
 	float: right;
 	margin: 0.25em;
-	max-width: 100px;
 	padding: 0.25em;
+	max-width:300px;
 }
-
 #srv-header {
 	margin-bottom: 0;
 }
@@ -42,8 +43,9 @@ h1 {
 
 #menu .gwt-Button,button.gwt-Button {
 	padding: 0 .25em;
-	margin: 0.05em 0;
+  min-width:5em;
 }
+
 
 .gwt-DialogBox {
 	width: 90%;
@@ -60,7 +62,7 @@ math {
 }
 
 /**
-/* EQUATIONS LIST 
+ EQUATIONS LIST 
 */
 #exerciseWording,#view {
 	width: 70%;
@@ -70,9 +72,13 @@ math {
 	padding: 1em;
 	width: auto;
 }
-
 #exerciseWording h2 {
-	margin: 0 auto 0.25em;
+	margin-bottom: 0.25em;
+}
+.shadow {
+-moz-box-shadow:0 0 8px rgba(0, 0, 0, 0.6);
+background-color:#F5F5F5;
+height:1px;
 }
 
 #view {
@@ -141,6 +147,10 @@ table {
 
 #message .gwt-Button {
 	float: right;
+	margin: 0.05em 0;
+	margin-bottom:1em;
+  margin-right:1em;
+
 }
 
 #message td {
@@ -150,3 +160,11 @@ table {
 dt {
 	margin-top: .5em;
 }
+p:first-letter {margin-left: 1em; }
+ul, ol { margin:0.25em auto; }
+hr { 
+margin: 1em auto ;
+width:50%;
+}
+#exerciseWording ol, #exerciseWording ul { margin-left: 0;}
+
