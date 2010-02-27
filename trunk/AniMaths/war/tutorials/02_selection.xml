@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
-<tutoriel level="1">
+<tutoriel level="1"  interactWithLeftHand="false">
 	<wording>
 		<!--
-		<h2>2. La sélection</h2>
+		<h2>La sélection</h2>
 		<ol>
 		  <li>
 		    <p>La première étape avant de manipuler les objets mathématiques avec AniMaths est de comprendre comment s'effectue une sélection d'objet.</p>
@@ -29,7 +29,7 @@
         </ul>
 	    </li>
     </ol>
-    <p>Essayez, puis une fois que vous maîtriser ces manipulations, cliquez sur le bouton « Suivant → ».</p>
+    <p>Essayez, puis une fois que vous pensez maîtriser ces manipulations, cliquez sur le bouton « Suivant → ».</p>
 		 -->
 	</wording>
 	<moe>

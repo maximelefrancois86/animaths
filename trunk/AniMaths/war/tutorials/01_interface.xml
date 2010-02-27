@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
-<tutoriel level="10">
+<tutoriel level="0" interactWithLeftHand="false">
 	<wording>
     <!--
 		<h2>1. Interface</h2>

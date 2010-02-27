@@ -99,7 +99,7 @@ height:1px;
 #drag {
 	position: absolute;
 	z-index: 10000;
-	left: -99em;
+/*	left: -99em;*/
 }
 
 #drag math>* {

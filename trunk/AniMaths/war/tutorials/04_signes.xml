@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
+<tutoriel level="3"  interactWithLeftHand="false">
+	<wording>
+		<!--
+		<h2>4. Simplifier les signes</h2>
+		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction"/>
+		<ul>
+		<li>Lorsque vous déplacez un terme additif sur un autre terme additif qui est juste dedans ou juste dehors, on va pouvoir simplifier les signes. Une question vous sera posée... Essayez !</li>
+		<li>Vous pouvez toujours échanger des termes de place... Essayez de comprendre quand ce qui peut être déplacé dans l'addition !</li>
+		<li>Lorsqu'il ne reste plus que x d'un côté, et un nombre de l'autre, l'équation est résolue ! Vous avez fini l'exercice, et on vous proposera de passer à l'exercice suivant... Essayez !</li>
+		</ul>-->
+	</wording>
+	<moe>
+		<moi>x</moi>
+		<moac>
+		    <mose isMinus='true'>
+		      <mon>24</mon>
+		    </mose>
+		    <mose>
+		    <mose isMinus='true'>
+		    <mose>
+		    <mose isMinus='true'>
+		      <mon>50</mon>
+		    </mose>
+		    </mose>
+		    </mose>
+		    </mose>
+		    <mose>
+		      <mon>5</mon>
+		    </mose>
+		    <mose>
+		    <mose isMinus='true'>
+		    <mose>
+		    <mose isMinus='true'>
+		    <mose isMinus='true'>
+		      <mon>11</mon>
+		    </mose>
+		    </mose>
+		    </mose>
+		    </mose>
+		    </mose>
+		</moac>
+	</moe>
+</tutoriel>

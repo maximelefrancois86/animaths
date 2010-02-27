@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
-<tutoriel level="2">
+<tutoriel level="2"  interactWithLeftHand="false">
 	<wording>
 		<!--
+<<<<<<< .mine
+		<h2>3. Passons aux choses serieuses ! Additionner</h2>
+		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction"/>
+		<p>Pour manipuler les objets, il faut savoir comment ils sont définis. Le schéma suivant illustre
+		le découpage d'un objet objets mathématiques en zones : verticales.</p>
+		<ul>
+		<li>Sélectionnez un des termes additifs, puis cliquez et maintenez le bouton de la souris enfoncé... Vous avez attrapé un objet mathématique !</li>
+		<li>Si vous gardez le bouton de la souris enfoncé et que vous glissez la souris, vous déplacerez l'objet mathématique... celui qui reste dans l'équation devient grisé, et une copie suit la souris.</li>
+		<li>Pendant que vous le glissez, observez les couleurs que prend l'objet copié, et les changements de forme de curseurs ! </li>
+			<ul>
+			<li>Rouge avec un sens interdit : Il n'y a aucune interaction a faire ici !</li>
+			<li>Orange avec la petite flèche courbe : Une question vous sera posée...</li>
+			<li>Vert avec la petite flèche courbe : Vous pouvez lâcher !</li>
+			</ul>
+		</ul>
+		<li>Lorsque vous déplacez un terme additif entre deux autres (couleur verte), ça va le faire changer de place... Essayez !</li>
+		<li>Lorsque vous déplacez un terme additif sur un autre (couleur orange), on va les additionner (ou les soustraire). Une question vous sera posée... Essayez !</li>
+		<li>Lorsqu'il ne reste plus que x d'un côté, et un nombre de l'autre, l'équation est résolue ! Vous avez fini l'exercice, et on vous proposera de passer à l'exercice suivant... Essayez !</li>
+		</ul>-->
+=======
 		<h2>3. Glisser-déposer</h2>
 		<p>Nous allons maintenant apprendre à utiliser l'intéraction <strong>la plus importante</strong>: le glisser-déposer ou <span lang='en'>drag & drop</span> :</p>
 		  <ol>
@@ -15,6 +35,7 @@
 	    </ol>
     <p>Nous allons maintenant mettre en pratique cela avec l'opération d'addition. Passez à l'étape suivante du tutoriel.</p>
     -->
+>>>>>>> .r85
 	</wording>
 	<moe>
 		<moi>x</moi>
