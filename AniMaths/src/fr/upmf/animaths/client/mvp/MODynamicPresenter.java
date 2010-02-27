@@ -29,7 +29,6 @@ public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.D
 
 	public MODynamicPresenter() {
 		super(new Display());
-		display.asWrapper().getElement().setAttribute("id","dynamic");
 	}
 
 	@Override
@@ -39,6 +38,8 @@ public class MODynamicPresenter extends MOAbstractPresenter<MODynamicPresenter.D
 	
 	@Override
 	protected void onBind() {
+		display.asWrapper().getElement().setAttribute("id","dynamic");
+
 		registerHandler(display.addMouseDownHandler(new MouseDownHandler(){
 			public void onMouseDown(MouseDownEvent event) {	
 				MOElement<?> element = map.get(Element.as(event.getNativeEvent().getEventTarget()));

@@ -48,4 +48,9 @@ public class MMLMath extends MMLElement {
 		return new MMLMath(displayBlock);
 	}
 
-  }
+	public void clear() {
+		while(getElement().hasChildNodes())
+			getElement().getFirstChild().removeFromParent();
+	}
+
+}

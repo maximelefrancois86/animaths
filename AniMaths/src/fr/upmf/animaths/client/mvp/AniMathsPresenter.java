@@ -1,5 +1,6 @@
 package fr.upmf.animaths.client.mvp;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseMoveHandlers;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -122,7 +122,7 @@ public class AniMathsPresenter extends
 										+ "<div class='tuto'>Cette application a été réalisée par <br/>" +
 												"<em>Maxime Lefrançois et Edouard Lopez</em>, <br/>"
 										+ "dans le cadre du projet de génie lociciel du <br/>" +
-												"<a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/'>M2P Ingénierie de la Communication Personne Systèmes</a>"
+												"<a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/' target='_blank'>M2P Ingénierie de la Communication Personne Systèmes</a>"
 										+ "<div class='txt-right'>À l'<em>Université Pierre Mendès France de Grenoble</em>.</div><hr/>"
 										+ "<p>Pour profiter au mieux des possibilités d'interaction avec les objets mathématiques, assurez vous de bien "
 										+ "utiliser le navigateur <strong>Mozilla Firefox</strong>, version 3 ou supérieure. Si vous ne l'avez pas, vous pouvez télécharger :</p>"
@@ -333,11 +333,14 @@ public class AniMathsPresenter extends
 //		};
 //		timer.schedule(60000);
 
+//		RootPanel.get("view").clear();
 		for (MOBasicPresenter basicPresenter : mOBasicPresenters)
 			basicPresenter.unbind();
 		mOBasicPresenters.clear();
+//		mODynamicPresenter = new MODynamicPresenter();
 		while (RootPanel.get("view").getElement().getChildCount() > 1)
 			RootPanel.get("view").getElement().getFirstChild().removeFromParent();
+//		mODynamicPresenter.unbind();
 		// Set up the callback object.
 		final AsyncCallback<String> callback = new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
@@ -353,13 +356,11 @@ public class AniMathsPresenter extends
 			}
 
 			public void onSuccess(String result) {
-				// System.out.println(result);
-				Element root = XMLParser.parse(result).getDocumentElement();
+				String resultStr = new String(result);
+				Element root = XMLParser.parse(resultStr).getDocumentElement();
 				int level = root.hasAttribute("level") ? Integer.parseInt(root.getAttribute("level")) : 1000;
 				boolean interactWithLeftHand = root.hasAttribute("interactWithLeftHand") ? Boolean.parseBoolean(root.getAttribute("interactWithLeftHand")) : true;
 				NodeList children = root.getChildNodes();
-				// display.getExerciseWordingWidget().setWording("Isoler ", new
-				// MOIdentifier("x")," dans l'équation ", eq);
 				int k = 0;
 				for (int i = 0; i < children.getLength(); i++) {
 					Node n = children.item(i);
@@ -378,7 +379,7 @@ public class AniMathsPresenter extends
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));
 				loadingBox.hide();
-//				timer.cancel();
+//					timer.cancel();
 			}
 
 		};

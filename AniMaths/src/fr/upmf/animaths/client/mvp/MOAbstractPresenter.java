@@ -9,6 +9,7 @@ import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 import fr.upmf.animaths.client.mvp.MathML.MMLMath;
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
@@ -21,6 +22,7 @@ public abstract class MOAbstractPresenter<D extends MOAbstractPresenter.Display>
 	}
 	
 	public interface Display extends WidgetDisplay {
+		public void init();
 		public MMLMath asWrapper();
 	}
 
@@ -54,8 +56,7 @@ public abstract class MOAbstractPresenter<D extends MOAbstractPresenter.Display>
 	
 	@Override
 	protected void onUnbind() {
-		while(display.asWrapper().getElement().hasChildNodes())
-			display.asWrapper().getElement().getFirstChild().removeFromParent();
+		display.init();
 		isBound = false;
 	}
 
