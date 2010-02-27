@@ -16,6 +16,7 @@ public class LoadEquationServiceImpl extends RemoteServiceServlet implements Loa
 
 	private static final long serialVersionUID = 8772776573359873699L;
 
+	
 	@Override
 	public String loadEquation(String path) {
 		System.out.println("okImplLoadEquation "+path);
@@ -32,7 +33,8 @@ public class LoadEquationServiceImpl extends RemoteServiceServlet implements Loa
 	        reader.close();
 	        String string = fileData.toString();
 	        string = string.trim();
-	        return string;
+	        byte[] bytes = string.getBytes("UTF-8");
+	        return new String(bytes,"UTF-8");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

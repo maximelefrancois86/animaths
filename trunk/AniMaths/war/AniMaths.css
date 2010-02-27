@@ -1,9 +1,6 @@
 @CHARSET "UTF-8";
-
 @import "./server-typo.css";
-
 @import "./server-layout.css";
-
 @import "./AniMaths-typo.css";
 
 body {
@@ -26,13 +23,18 @@ h1 {
 	max-height:20em;
   overflow:auto;
 }
-#exerciseWording>*>* { max-width: 70%; }
+
+#exerciseWording>*>* {
+	max-width: 70%;
+}
+
 #exerciseWording img {
 	float: right;
 	margin: 0.25em;
 	padding: 0.25em;
 	max-width:300px;
 }
+
 #srv-header {
 	margin-bottom: 0;
 }
@@ -72,13 +74,15 @@ math {
 	padding: 1em;
 	width: auto;
 }
+
 #exerciseWording h2 {
 	margin-bottom: 0.25em;
 }
+
 .shadow {
--moz-box-shadow:0 0 8px rgba(0, 0, 0, 0.6);
-background-color:#F5F5F5;
-height:1px;
+	-moz-box-shadow:0 0 8px rgba(0, 0, 0, 0.6);
+	background-color:#F5F5F5;
+	height:1px;
 }
 
 #view {
@@ -160,11 +164,20 @@ table {
 dt {
 	margin-top: .5em;
 }
-p:first-letter {margin-left: 1em; }
-ul, ol { margin:0.25em auto; }
+
+p:first-letter {
+	margin-left: 1em;
+}
+
+ul, ol {
+	margin:0.25em auto;
+}
+
 hr { 
 margin: 1em auto ;
 width:50%;
 }
-#exerciseWording ol, #exerciseWording ul { margin-left: 0;}
 
+#exerciseWording ol, #exerciseWording ul {
+	margin-left: 0;
+}

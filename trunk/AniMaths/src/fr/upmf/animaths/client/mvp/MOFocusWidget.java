@@ -11,7 +11,7 @@ public class MOFocusWidget extends FocusWidget {
 	}
 
 	public MOFocusWidget(String html) {
-		super((new HTML("sdklfh").getElement()));
+		super((new HTML("").getElement()));
 		setStyleName("gwt-Button");
 	}
 
