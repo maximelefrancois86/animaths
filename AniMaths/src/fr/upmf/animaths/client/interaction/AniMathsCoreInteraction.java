@@ -76,7 +76,7 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 	
 	private AniMathsCoreInteraction() { }
 	
-	public static void setPresenterAndRun(MODynamicPresenter presenter, int level) {
+	public static void setPresenterAndRun(MODynamicPresenter presenter, int level, boolean interactWithLeftHand) {
 		AniMathsCoreInteraction.presenter = presenter;
 		equation = (presenter.getElement() instanceof MOEquation)?(MOEquation) presenter.getElement():null;
 
@@ -90,7 +90,8 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 		Ns_Is_E_ChangeHandSide.setEnabled(false);
 
 		AniMathsCoreInteraction.interactWithEquation = false;
-		AniMathsCoreInteraction.interactWithLeftHand = false;
+		AniMathsCoreInteraction.interactWithLeftHand = interactWithLeftHand;
+		System.out.println(interactWithLeftHand);
 		
 		if(level>=1) {
 			instance.setHandler(FlyOverEvent.getType());
@@ -98,19 +99,14 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 				SEs_AC_Commutation.setEnabled(true);
 				SEs_N_Add.setEnabled(true);
 				if(level>=3) {
+					SEs_SEs_ChangeSign.setEnabled(true);
 					if(level>=4) {
-						SEs_SEs_ChangeSign.setEnabled(true);
+						MEs_MC_Commutation.setEnabled(true);
+						MEs_N_Multiply.setEnabled(true);
 						if(level>=5) {
-							MEs_MC_Commutation.setEnabled(true);
-							if(level>=6) {
-								MEs_N_Multiply.setEnabled(true);
-								if(level>=7) {
-									AniMathsCoreInteraction.interactWithLeftHand = true;
-									SEs_AC_E_ChangeHandSide.setEnabled(true);
-									MEs_MC_E_ChangeHandSide.setEnabled(true);
-									Ns_Is_E_ChangeHandSide.setEnabled(true);
-								}
-							}
+							SEs_AC_E_ChangeHandSide.setEnabled(true);
+							MEs_MC_E_ChangeHandSide.setEnabled(true);
+							Ns_Is_E_ChangeHandSide.setEnabled(true);
 						}
 					}
 				}
@@ -123,7 +119,13 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 		MOElement<?> element = event.getElement();
 		if(!interactWithEquation && element instanceof MOEquation)
 			return;
-		if(!interactWithLeftHand && element!=null && equation!=null && element.hasMathObjectAncestor(equation.getLeftHandSide())) {
+		if(element!=null) {
+			System.out.println("<<<<<<<<<<test>>>>>>>>>");
+			System.out.println(!interactWithLeftHand);
+			System.out.println(equation!=null);
+			System.out.println(element.hasMathObjectAncestor(equation.getLeftHandSide()));
+		}
+		if(!interactWithLeftHand && element!=null && (equation==null || equation!=null && element.hasMathObjectAncestor(equation.getLeftHandSide()))) {
 			System.out.println("okancestor");
 			return;
 		}
@@ -205,6 +207,7 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 		removeHandler(ProcessInterestedEvent.getType());
 		removeHandler(FlyOverEvent.getType());
 		removeHandler(SelectionEvent.getType());
+		System.out.println("INIT0");
 		dragPresenter.init(selectedElement.clone());
 		selectedElement.setStyleClass(MOElement.STYLE_CLASS_DRAGGED);
         setHandler(DragEvent.getType());

@@ -29,7 +29,7 @@
                 <when-property-is name="user.agent" value="ie6"/>
         </replace-with>
  
-	<inherits name='com.google.gwt.widgetideas.GWTCanvas'/>
+<!-- <inherits name='com.google.gwt.widgetideas.GWTCanvas'/>-->
 
 	<inherits name="com.google.gwt.xml.XML" />
 	

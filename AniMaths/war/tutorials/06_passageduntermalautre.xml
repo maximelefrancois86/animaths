@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- <!DOCTYPE agency SYSTEM "AniMaths.dtd">  -->
+<tutoriel level="5">
+	<wording>
+		<!--
+			<h2>5. Le passage d'un terme à l'autre</h2>
+			<p> Dorenavant, vous pourrez manipuler des équations et essayer de passer un terme de l'autre côté du signe...</p>
+			<p> Essayez d'isoler x dans l'équation ci-dessous !...</p>
+			</ul>
+		-->
+	</wording>
+	<moe>
+		<moac>
+			<mose>
+				<moi>x</moi>
+			</mose>
+			<mose>
+					<mon>5</mon>
+			</mose>
+			<mose isMinus="true">
+				<moac>
+					<mose>
+							<mon>3</mon>
+					</mose>
+					<mose isMinus="true">
+							<mon>8</mon>
+					</mose>
+				
+				</moac>
+			</mose>
+		
+		</moac>
+		<momc>
+			   
+			<mome>
+				   
+				<mose isMinus='true'>
+					     
+					<mon>10</mon>
+					   
+				</mose>
+				   
+			</mome>
+			   
+			<mome>
+				     
+					<moi>x</moi>
+				   
+			</mome>
+			   
+			<mome isDivided='true'>
+				<mose isMinus='true'>
+					<mon>5</mon>
+				</mose>
+			</mome>
+			   
+			<mome isDivided='true'>
+				<mose isMinus='true'>
+					<moi>x</moi>
+				</mose>
+			</mome>
+			   
+		</momc>
+	</moe>
+</tutoriel>

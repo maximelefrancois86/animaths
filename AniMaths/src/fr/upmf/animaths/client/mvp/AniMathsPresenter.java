@@ -320,18 +320,18 @@ public class AniMathsPresenter extends
 		final AniMathsMessageBox loadingBox = new AniMathsMessageBox();
 		loadingBox.setAsLoading(new MOWordingWidget(
 				"Chargement de l'exercice, veuillez patientez quelques instants."));
-		final Timer timer = new Timer() {
-			@Override
-			public void run() {
-				loadingBox
-						.setAsError(new MOWordingWidget(
-								"<h3>Erreur lors du chargement du problème</h3>"
-										+ path
-										+ "<p>Le document XML décrivant le problème est probablement mal formé. "
-										+ "Veuillez vérifier la validité du document et recommencer.</p>"));
-			}
-		};
-		timer.schedule(10000);
+//		final Timer timer = new Timer() {
+//			@Override
+//			public void run() {
+//				loadingBox
+//						.setAsError(new MOWordingWidget(
+//								"<h3>Erreur lors du chargement du problème</h3>"
+//										+ path
+//										+ "<p>Le document XML décrivant le problème est probablement mal formé. "
+//										+ "Veuillez vérifier la validité du document et recommencer.</p>"));
+//			}
+//		};
+//		timer.schedule(60000);
 
 		for (MOBasicPresenter basicPresenter : mOBasicPresenters)
 			basicPresenter.unbind();
@@ -355,8 +355,8 @@ public class AniMathsPresenter extends
 			public void onSuccess(String result) {
 				// System.out.println(result);
 				Element root = XMLParser.parse(result).getDocumentElement();
-				int level = root.hasAttribute("level") ? Integer.parseInt(root
-						.getAttribute("level")) : 1000;
+				int level = root.hasAttribute("level") ? Integer.parseInt(root.getAttribute("level")) : 1000;
+				boolean interactWithLeftHand = root.hasAttribute("interactWithLeftHand") ? Boolean.parseBoolean(root.getAttribute("interactWithLeftHand")) : true;
 				NodeList children = root.getChildNodes();
 				// display.getExerciseWordingWidget().setWording("Isoler ", new
 				// MOIdentifier("x")," dans l'équation ", eq);
@@ -373,12 +373,12 @@ public class AniMathsPresenter extends
 					}
 				}
 
-				AniMathsCoreInteraction.setPresenterAndRun(mODynamicPresenter, level);
+				AniMathsCoreInteraction.setPresenterAndRun(mODynamicPresenter, level, interactWithLeftHand);
 
 				RootPanel.get("currentPath").clear();
 				RootPanel.get("currentPath").add(new InlineLabel(path));
 				loadingBox.hide();
-				timer.cancel();
+//				timer.cancel();
 			}
 
 		};

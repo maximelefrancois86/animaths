@@ -122,13 +122,13 @@ h1 {
 /*Tout va bien*/
 #drag math .ok {
 	background-color: #DDFFDD;
-	color: #33FF33;
+	color: black;
 }
 
 /*Attention   � quelquechose*/
 #drag math .caution {
 	background-color: #FFFFDD;
-	color: #FFFF33;
+	color: black;
 }
 
 /*Impossible de l�cher*/
@@ -179,7 +179,7 @@ table {
 }
 .tuto {
   font-size: medium;
-}
+}	
 .txt-right {
   text-align: right;
 }
