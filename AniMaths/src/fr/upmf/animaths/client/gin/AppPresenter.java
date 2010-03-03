@@ -7,7 +7,7 @@ import fr.upmf.animaths.client.mvp.AniMathsPresenter;
 /**
  * Represents the main application
  * 
- * @author Maxime Lefran�ois
+ * @author Maxime Lefrançois & Édouard Lopez
  *
  */
 public class AppPresenter {

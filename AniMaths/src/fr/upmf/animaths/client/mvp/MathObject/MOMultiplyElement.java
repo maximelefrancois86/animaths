@@ -40,7 +40,8 @@ public class MOMultiplyElement extends MOElement<MOMultiplyElement.Display> impl
 	@Override
 	public void pack(MMLElement mathMLParent, MOAbstractPresenter<?> presenter) {
 		if(needsSign) {
-			display.setSign(MMLOperator.times());
+//			display.setSign(MMLOperator.times());
+			display.setSign(MMLOperator.invisibleTimes());
 			mathMLParent.appendChild(display.getSign());
 			if(presenter!=null)
 				presenter.putDOMElement(display.getSign().getElement(),this);

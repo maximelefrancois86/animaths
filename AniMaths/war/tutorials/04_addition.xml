@@ -4,7 +4,7 @@
 	<wording>
 		<!--
 		<h2>4. Zones de relâchement</h2>
-		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction"/>    
+		<img src='images/manip-zone.jpg' alt="zones verticales d'interaction" rel='lightbox' />    
     <p>Selon la zone d'un objet où vous relâcher votre sélection, <strong>l'action variera</strong>, et c'est ce que nous étudierons dans cette page. Le schéma ci-contre illustre les différentes zones verticale d'un objet. Pour bien comprendre cela, nous allons détailler <em>l'action liées à chaque zone dans le cas de l'addition</em>. Déplacer un élément et le relâcher dans les zones suivantes :</p>
     <dl>
       <dt><strong>bord gauche</strong> d'un élément</dt>

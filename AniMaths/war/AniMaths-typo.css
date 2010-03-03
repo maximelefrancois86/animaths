@@ -1,189 +1,218 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: 'DejaVu Sans', Arial, sans-serif;
-	font-size: 9pt;
+  font-family: 'DejaVu Sans', Arial, sans-serif;
+  font-size: 9pt;
 }
 
 math {
-	padding: 0.15em 0.25em;
+  padding: 0.15em 0.25em;
+}
+
+kbd {
+  -moz-border-radius: .25em .25em;
+  border-radius: .25em .25em;
+  border: 2px outset #666;
+  font-family: "Dejavu Sans Monospace";
+  padding: 0 0.75em;
 }
 
 /* RootLayoutPanel */
 .gwt-HTML {
-	background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .gwt-SplitLayoutPanel-VDragger,.gwt-SplitLayoutPanel-HDragger {
-	background-color: #E3E9FF;
+  background-color: #E3E9FF;
 }
 
 #exerciseWording {
-	font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
+  font-family: 'DejaVu Serif', Georgia, 'Times New Roman', serif;
+  background-color: #F5F5F5;
+  color: #333;
+  border-bottom: thick solid #888;
+}
 
-	background-color: #F5F5F5;
-	color: #333;
-	border-bottom: thick solid #888;
-}
 #exerciseWording math {
-	font-size: larger;
+  font-size: larger;
 }
+
 #exerciseWording img {
-	background-color: #FFFFFF;
-	border: thin solid #DDDDDD;
+  background-color: #FFF;
+  border: thin solid #DDD;
 }
 
 #exerciseWording,#help,#view {
-	font-family: 'DejaVu Sans', Arial, sans-serif;
-	padding: 0 1em;
+  font-family: 'DejaVu Sans', Arial, sans-serif;
+  padding: 0 1em;
 }
-#exerciseWording mi { font-style: italic; font-family: serif;}
+
+#exerciseWording mi {
+  font-style: italic;
+  font-family: serif;
+}
+
 #help,#view {
-	border: thin solid #aaa;
-	padding: 1em;
+  border: thin solid #aaa;
+  padding: 1em;
 }
 
 #exerciseWording>div {
-	font-size: large;
+  font-size: large;
 }
 
 math {
-	color: darkblue;
+  -moz-user-select: none;
+  font-size: 11pt;
+  cursor: default;
+  color: darkblue;
 }
 
 #help {
-	cursor: help;
+  cursor: help;
 }
 
 h1 {
-	font-size: larger;
-	font-weight: bold;
-	color: #777777;
+  font-size: larger;
+  font-weight: bold;
+  color: #777777;
 }
 
 /* View */
 #view math * {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 #view math {
-	background-color: #F5F5F5;
-	color: #CCCCCC;
-	/*opacity: .7;*/
+  background-color: #F5F5F5;
+  color: #CCCCCC;
+  /*opacity: .7;*/
 }
 
 #view #dynamic {
-	background-color: #fff;
-	color: #333;
-	opacity: 1;
-	border: thick solid #C3D9FF;
+  background-color: #fff;
+  color: #333;
+  opacity: 1;
+  border: thick solid #C3D9FF;
 }
 
-/*L'objet s�lectionnable*/
+/* item is selectable */
 #view math .selectable {
-	background-color: #DDDDFF;
+  background-color: #729fcf;
 }
 
-/*L'objet slectionn�*/
+/* current selected item */
 #view math .selected {
-	background-color: #AAAAFF;
-	cursor: -moz-grab;
+  background-color: #ad7fa8;
+  cursor: -moz-grab;
 }
 
-/*L'objet d�plac�*/
-#view math .dragged {
-	background-color: #EEEEEE;
-	color: #888888;
-	cursor: -moz-grabbing;
+/* source object, which is duplicate */
+#view math .dragged { /*	background-color: #EEE; */ /*	color: #888;*/
+  cursor: -moz-grabbing;
+  background-color: transparent;
+  color: transparent;
+  border: thin dashed #aaa;
+  border-collapse: collapse;
+}
+
+#view math .selectable,#view math .selected,#drag math {
+  color: #fff;
 }
 
 /*Quand il est possible de s�lectionner un deuxieme objet*/
 #view math .okAdd {
-	cursor: copy;
+  cursor: copy;
 }
 
 /*Quand il est possible de l�cher l'objet ici*/
 #view math .okDrop {
-	cursor: alias;
+  cursor: alias;
 }
 
 /*Quand il n'est pas permi de l�cher l'objet ici*/
 #view math .noDrop {
-	cursor: no-drop;
+  cursor: no-drop;
 }
 
 /**
 /*DRAGGED OBJECT 
 */
 #drag {
-	position: absolute;
+  font-weight: bold;
 }
 
-/*Tout va bien*/
+#drag math>* {
+  box-shadow: 2px 2px 5px #CCCCCC;
+  -moz-box-shadow: 2px 2px 5px #CCCCCC;
+}
+
+/* Drop destination is valid*/
 #drag math .ok {
-	background-color: #DDFFDD;
-	color: black;
+  background-color: #8ae234;
 }
 
-/*Attention   � quelquechose*/
+/* several action possible */
 #drag math .caution {
-	background-color: #FFFFDD;
-	color: black;
+  background-color: #fcaf3e;
 }
 
-/*Impossible de l�cher*/
+/* drop forbidden*/
 #drag math .no {
-	background-color: #FFDDDD;
-	color: #FF333;
+  background-color: #ef2929;
+  font-size: x-small;
+  font-weight: normal;
 }
 
 #focus {
-	font-size: 14pt;
-	color: red;
+  font-size: 14pt;
+  color: red;
 }
 
-/*#message div {*/
 #message {
-	font-size: larger;
+  font-size: larger;
 }
 
 tr:hover {
-	background-color: inherit;
+  background-color: inherit;
 }
 
 #message td .gwt-HTML {
-	background-color: inherit;
+  background-color: inherit;
 }
 
 #question-text td>math,#question-button td>math {
-	border: 2px outset #D0E4F6;
-	background-color: #f5f5f5;
-	-moz-border-radius: .5em/ .5em;
-	border-radius: .5em/ .5em;
+  border: 2px outset #D0E4F6;
+  background-color: #f5f5f5;
+  -moz-border-radius: .5em/ .5em;
+  border-radius: .5em/ .5em;
 }
 
 #question-text td>math:hover,#question-button td>math:hover {
-	border-style: solid;
+  border-style: solid;
 }
 
 #question-text td>math:active,#question-button td>math:active {
-	border-style: inset;
+  border-style: inset;
 }
 
 #message div,#question-text div,#question-button div {
-	margin: 0.5em;
+  margin: 0.5em;
 }
 
 table {
-	color: #333333;
+  color: #333333;
 }
+
 .tuto {
   font-size: medium;
-}	
+}
+
 .txt-right {
   text-align: right;
 }
+
 kbd {
   border: thin outset #ccc;
-padding:0 0.25em;
+  padding: 0 0.25em;
 }

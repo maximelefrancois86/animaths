@@ -57,11 +57,6 @@ h1 {
 	margin: 5px;
 }
 
-math {
-	-moz-user-select: none;
-	font-size: 11pt;
-	cursor: default;
-}
 
 /**
  EQUATIONS LIST 
@@ -103,31 +98,8 @@ math {
 #drag {
 	position: absolute;
 	z-index: 10000;
-/*	left: -99em;*/
 }
 
-#drag math>* {
-	box-shadow: 2px 2px 5px #CCCCCC;
-	-moz-box-shadow: 2px 2px 5px #CCCCCC;
-}
-
-/*OK pour lacher*/
-#drag .ok {
-	background-color: #DDFFDD;
-	color: #33FF33;
-}
-
-/*Attention � quelquechose*/
-#drag .caution {
-	background-color: #FFCC00;
-	color: #FFFFFF;
-}
-
-/*Impossible de l�cher*/
-#drag .no {
-	background-color: #FFDDDD;
-	color: #FF3333;
-}
 
 math .focus {
 	font-size: 14pt;

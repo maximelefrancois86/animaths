@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-presenter-1.0.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Maxime Lefrançois/workspace/AniMaths/war/WEB-INF/lib/datanucleus-appengine-1.0.5.final.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -14,7 +14,7 @@
 //import fr.upmf.animaths.client.LoadPathNamesService;
 //
 ///**
-// * @description server-side load and save current exercice 
+// * @description server-side load and save current exercise 
 // */
 //public class AniMathsServiceImpl extends RemoteServiceServlet implements LoadPathNamesService, LoadEquationService {
 //

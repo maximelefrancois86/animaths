@@ -103,7 +103,10 @@ public class AniMathsMessageBox extends DialogBox {
 			Event.addNativePreviewHandler(new NativePreviewHandler() {
 			 	public void onPreviewNativeEvent(NativePreviewEvent event) {
 			 		if(event.getTypeInt() == Event.ONKEYUP && 
-			 			(event.getNativeEvent().getKeyCode()==13 || event.getNativeEvent().getKeyCode()==27))
+			 			(event.getNativeEvent().getKeyCode()==13 || //enter
+			 					event.getNativeEvent().getKeyCode()==27 || // escape
+			 					event.getNativeEvent().getKeyCode()==32 // space
+			 					))
 			 			button.click();
 			 	}
 			});
