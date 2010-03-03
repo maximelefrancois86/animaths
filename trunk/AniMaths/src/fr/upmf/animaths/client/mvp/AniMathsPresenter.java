@@ -42,7 +42,7 @@ import fr.upmf.animaths.client.mvp.MathObject.MOSignedElement;
 /**
  * The business logic for AniMaths.
  * 
- * @author Maxime Lefrançois
+ * @author Maxime Lefrançois & Édouard Lopez
  * 
  */
 public class AniMathsPresenter extends

@@ -16,7 +16,7 @@ import fr.upmf.animaths.client.mvp.MathML.MMLElement;
  * Abstract super-class for {@link BasicPresenter}s that work with GWT
  * {@link Widget}s via {@link WidgetDisplay}s.
  * 
- * @author Maxime Lefran�ois
+ * @author Maxime Lefrançois & Édouard Lopez
  * 
  * @param <D>
  *            The {@link WidgetDisplay} type.

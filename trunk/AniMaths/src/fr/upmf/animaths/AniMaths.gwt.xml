@@ -37,8 +37,8 @@
   <entry-point class='fr.upmf.animaths.client.AniMaths'/>
 
 	  <!-- <servlet path="/exerciceService" class="fr.upmf.animaths.rpc.server.ExerciceServiceImpl"/> -->
-	<inherits name="com.google.gwt.xml.XML" />
 	<inherits name='com.google.gwt.user.User'/>
+	<inherits name="com.google.gwt.http.HTTP" />
 	<source path="client" />
 
 </module>

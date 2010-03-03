@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 /**
  *  The RPC api available to the client. The asynchronous version that is used
  * directly by the client is {@link LoadPathNamesServiceAsync}.
- * @author Édouard Lopez & Maxime Lefrancois
+ * @author Maxime Lefrançois & Édouard Lopez
  *0
  */
 @RemoteServiceRelativePath("loadPathNamesService")

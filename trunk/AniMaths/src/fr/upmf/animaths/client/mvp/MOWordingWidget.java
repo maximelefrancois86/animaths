@@ -3,6 +3,7 @@ package fr.upmf.animaths.client.mvp;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -14,7 +15,7 @@ import fr.upmf.animaths.client.mvp.MathObject.MOElement;
 /**
  * The wording of an exercise...
  * 
- * @author Maxime Lefran�ois
+ * @author Maxime Lefrançois & Édouard Lopez
  *
  */
 public class MOWordingWidget extends Composite {
@@ -36,15 +37,15 @@ public class MOWordingWidget extends Composite {
 		clear();
 		for(Object arg : args) {
 			if(arg instanceof String)
-				panel.add(new InlineHTML((String) arg));
+				panel.add(new HTML((String) arg)); //		  panel.add(new InlineHTML((String) arg));
 			else if(arg instanceof MOElement<?>) {
 				MMLMath wrapper = new MMLMath(false);
 				((MOElement<?>) arg).clone().pack(wrapper,null);
 				panel.add(wrapper);
 			}
 			else
-				throw new IllegalArgumentException("Probl�me d'arguments, "+
-						"seuls les chaines de caract�res et les objets math�matiques sont accept�s.");
+				throw new IllegalArgumentException("Problème d'arguments, "+
+						"seuls les chaines de caractères et les objets mathématiques sont acceptés.");
 		}
 	}
 

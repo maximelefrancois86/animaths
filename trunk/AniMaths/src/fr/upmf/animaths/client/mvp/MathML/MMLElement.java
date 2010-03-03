@@ -40,11 +40,17 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 import fr.upmf.animaths.client.mvp.MathObject.MOElement;
-
+/**
+ * @author Édouard Lopez & Maxime Lefrançois
+ * Manage CSS class attribute attachement/removal and some JavaScript method (box coordinates)
+ */
 public abstract class MMLElement extends Widget {
 
 	private static MMLImpl impl = MMLImpl.getInstance();
 	
+	/**
+	 * define all CSS class attribute name to use on MOElement. 
+	 */
 	private static final ArrayList<String> styleClasses = new ArrayList<String>();
 	static {
 		styleClasses.add(MOElement.STYLE_CLASS_NONE,"");

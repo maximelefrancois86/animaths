@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 /**
  * The GUI components for AniMath view.
  * 
- * @author Maxime Lefran&#65533;ois
+ * @author Maxime Lefrançois & Édouard Lopez
  *
  */
 public class AniMathsDisplay extends Composite implements AniMathsPresenter.Display {

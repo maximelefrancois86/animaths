@@ -42,7 +42,7 @@ public class MMLOperator extends MMLGenericAtom {
     }
     
     public static MMLOperator times() {
-    	return new MMLOperator("×");
+    	return new MMLOperator("×");    	
     }
     
     public static MMLOperator invisibleTimes() {
