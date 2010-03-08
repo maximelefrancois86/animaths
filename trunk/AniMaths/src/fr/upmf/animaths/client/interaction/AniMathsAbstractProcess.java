@@ -150,8 +150,8 @@ public abstract class AniMathsAbstractProcess implements GrabSelectedHandler, Dr
 				wait.cancel();
 				msg.hide();
 				if(answer>0) {
-					onExecuteProcess(answer);
 					eventBus.fireEvent(new ProcessDoneEvent());
+					onExecuteProcess(answer);
 					presenter.init(presenter.getElement());
 				}
 			}
