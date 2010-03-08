@@ -290,7 +290,6 @@ public class AniMathsCoreInteraction implements FlyOverHandler, SelectionHandler
 
 	@Override
 	public void onProcessDone(ProcessDoneEvent event) {
-		System.out.println("MOCoreInteraction : ProcessDone");
 		eventBus.fireEvent(new NewLineEvent());
 		Element view = RootPanel.get("view").getElement();
 		view.setScrollTop(view.getScrollHeight());

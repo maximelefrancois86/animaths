@@ -62,6 +62,7 @@ public final class SEs_N_Add extends AniMathsAbstractProcess{
 	public void onAskQuestion() {
 		System.out.println("SEs_N_Add : askQuestion");
 		MOWordingWidget wording = new MOWordingWidget(new FlowPanel());
+		where = (MOSignedElement) whereElement;
 		if(addContainer.indexOf(where)>addContainer.indexOf(selected))
 			wording.setWording("Combien font ",new MOAddContainer(selected.clone(),where.clone())," ?");
 		else
