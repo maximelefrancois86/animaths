@@ -120,7 +120,7 @@ public class AniMathsPresenter extends
 						.setAsStart(
 								"<h3>Bienvenue dans l'application <strong>AniMaths</strong> !</h3>"
 										+ "<div class='tuto'>Cette application a été réalisée par <br/>" +
-												"<em>Maxime Lefrançois et Edouard Lopez</em>, <br/>"
+												"<em> <a href='http://maxime-lefrancois.info' target='_blank'>Maxime Lefrançois</a> et <a href='http://edouard-lopez.com/' target='_blank'> Edouard Lopez</a></em>, <br/>"
 										+ "dans le cadre du projet de génie lociciel du <br/>" +
 												"<a href='http://imss.upmf-grenoble.fr/HMICOAP_43/0/fiche___formation/' target='_blank'>M2P Ingénierie de la Communication Personne Systèmes</a>"
 										+ "<div class='txt-right'>À l'<em>Université Pierre Mendès France de Grenoble</em>.</div><hr/>"
